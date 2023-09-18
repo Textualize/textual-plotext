@@ -13,6 +13,11 @@ from typing import Any, Callable
 import plotext
 
 SAFE: set[str] = {"sin"}
+"""The set of functions that are safe to call without holding back.
+
+Some Plotext functions are simple helpers that return values that are needed
+right away. If they are named within this set they'll be called as such.
+"""
 
 
 class PlotCall:
