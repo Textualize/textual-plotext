@@ -29,7 +29,6 @@ class PlotCall:
     def __call__(self, *args: Any, **kwargs: Any) -> None:
         self._args = args
         self._kwargs = kwargs
-        return None
 
     def execute(self) -> None:
         return self._function(*self._args, **self._kwargs)
