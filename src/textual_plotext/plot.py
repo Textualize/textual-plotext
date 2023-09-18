@@ -41,9 +41,14 @@ class PlotCall:
 
 
 class Plot:
-    """A Plottext-wrapper class."""
+    """A Plottext-wrapper class.
+
+    This class is designed to wrap the Plotext module and, where possible,
+    capture plotting functions for later playback.
+    """
 
     def __init__(self) -> None:
+        """Initialise the Plotext-wrapper class."""
         self._calls: list[PlotCall] = []
 
     def __getattr__(self, attr: str):
@@ -56,17 +61,26 @@ class Plot:
         return self._calls[-1]
 
     def clear_figure(self) -> None:
+        """Clear the plot."""
         self._calls = []
 
     def _run(self) -> None:
+        """Run the plot.
+
+        Calling this method has the side-effect of clearing the current
+        figure and playing back all of the calls made on the instance of
+        this class.
+        """
         plotext.clear_figure()
         for step in self._calls:
             step.execute()
 
     def show(self) -> None:
+        """Runs the plot commands and calls the Plotext `show` method."""
         self._run()
-        return plotext.show()
+        plotext.show()
 
     def build(self) -> str:
+        """Runs the plot commands and calls the Plotext `build` method."""
         self._run()
         return plotext.build()

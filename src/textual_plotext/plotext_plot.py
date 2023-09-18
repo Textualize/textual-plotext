@@ -21,14 +21,17 @@ class PlotextPlot(Widget):
         classes: str | None = None,
         disabled: bool = False,
     ) -> None:
-        # TODO: Usual widget stuff here.
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
 
     @property
     def plot(self) -> Plot:
+        """The plotting object.
+
+        Use this property as you'd normally use the `plotext` module.
+        """
         return self._plot
 
     def render(self) -> RenderResult:
-        self._plot.plotsize(self.size.width, self.size.height)
-        return Text.from_ansi(self._plot.build())
+        self.plot.plotsize(self.size.width, self.size.height)
+        return Text.from_ansi(self.plot.build())
