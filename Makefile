@@ -12,6 +12,12 @@ black         := $(run) black
 isort         := $(run) isort
 
 ##############################################################################
+# Run the demo.
+.PHONY: demo
+demo:
+	$(python) -m $(package)
+
+##############################################################################
 # Setup/update packages the system requires.
 .PHONY: setup
 setup:				# Set up the development environment
