@@ -8,11 +8,11 @@ provided.
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Any, Callable, Final
 
 import plotext
 
-SAFE: set[str] = {"sin"}
+SAFE: Final[set[str]] = {"sin"}
 """The set of functions that are safe to call without holding back.
 
 Some Plotext functions are simple helpers that return values that are needed
