@@ -23,17 +23,31 @@ right away. If they are named within this set they'll be called as such.
 
 
 class PlotCall:
+    """Class that holds the details of a single call to Plotext."""
+
     def __init__(self, function: Callable[[Any], Any]) -> None:
+        """Initialise the all to Plotext.
+
+        Args:
+            function: The function that will be called.
+        """
         self._function = function
         self._args: tuple[Any, ...] = tuple()
         self._kwargs: dict[str, Any] = {}
 
     def __call__(self, *args: Any, **kwargs: Any) -> None:
+        """Capture the arguments for the call.
+
+        Args:
+            args: The positional arguments for the call.
+            kwargs: The keyword arguments for the call.
+        """
         self._args = args
         self._kwargs = kwargs
 
     def execute(self) -> None:
-        return self._function(*self._args, **self._kwargs)
+        """Execute the call to Plotext."""
+        self._function(*self._args, **self._kwargs)
 
     def __repr__(self) -> str:
         # TODO: Just for debugging now; tidy up so it looks correct.
