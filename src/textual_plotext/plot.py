@@ -36,3 +36,6 @@ class Plot(Figure):
     def square(periods: int = 2, length: int = 200, amplitude: float = 1) -> list[int]:
         # TODO: The types here are guesswork as Plotext isn't typed.
         return plotext.square(periods=periods, length=length, amplitude=amplitude)
+
+    def show(self) -> None:
+        """Stub function. This should never be called within Textual."""
