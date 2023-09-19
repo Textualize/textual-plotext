@@ -8,7 +8,9 @@ provided.
 
 from __future__ import annotations
 
-from typing import Any, Callable, Final
+from typing import Any, Callable
+
+from typing_extensions import Final
 
 import plotext
 
