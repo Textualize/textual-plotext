@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import random
 from datetime import datetime
-from typing import Callable
 
 from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
@@ -33,82 +32,85 @@ class ExamplesPane(VerticalScroll):
     }
     """
 
-    def make_a(self, example: Callable[[Plot], None]) -> PlotextPlot:
-        plot = PlotextPlot()
-        example(plot.plot)
-        return plot
-
-    def examples(
-        self, source: str, examples: list[Callable[[Plot], None]]
-    ) -> ComposeResult:
+    def examples(self, source: str, examples: list[PlotextPlot]) -> ComposeResult:
         yield Label(
             f"Examples taken from https://github.com/piccolomo/plotext/blob/master/readme/{source}.md"
         )
         for example in examples:
-            yield self.make_a(example)
+            yield example
             yield Rule()
 
 
 class BasicPlots(ExamplesPane):
     """Examples from the basic section of the Plotext documentation."""
 
-    def scatter_plot(self, plt: Plot) -> None:
-        """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot"""
-        y = plt.sin()
-        plt.scatter(y)
-        plt.title("Scatter Plot")
+    class ScatterPlot(PlotextPlot):
+        def plot(self) -> None:
+            """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot"""
+            y = self.plt.sin()
+            self.plt.scatter(y)
+            self.plt.title("Scatter Plot")
 
-    def line_plot(self, plt: Plot) -> None:
-        """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#line-plot"""
-        y = plt.sin()
-        plt.plot(y)
-        plt.title("Line Plot")
+    class LinePlot(PlotextPlot):
+        def plot(self) -> None:
+            """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#line-plot"""
+            y = self.plt.sin()
+            self.plt.plot(y)
+            self.plt.title("Line Plot")
 
-    def log_plot(self, plt: Plot) -> None:
+    class LogPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#log-plot"""
-        l = 10**4
-        y = plt.sin(periods=2, length=l)
-        plt.plot(y)
-        plt.xscale("log")  # for logarithmic x scale
-        plt.yscale("linear")  # for linear y scale
-        plt.grid(0, 1)  # to add vertical grid lines
-        plt.title("Logarithmic Plot")
-        plt.xlabel("logarithmic scale")
-        plt.ylabel("linear scale")
 
-    def stem_plot(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            l = 10**4
+            y = self.plt.sin(periods=2, length=l)
+            self.plt.plot(y)
+            self.plt.xscale("log")  # for logarithmic x scale
+            self.plt.yscale("linear")  # for linear y scale
+            self.plt.grid(0, 1)  # to add vertical grid lines
+            self.plt.title("Logarithmic Plot")
+            self.plt.xlabel("logarithmic scale")
+            self.plt.ylabel("linear scale")
+
+    class StemPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#stem-plot"""
-        y = plt.sin()
-        plt.plot(y, fillx=True)
-        plt.title("Stem Plot")
 
-    def multiple_data_sets(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            y = self.plt.sin()
+            self.plt.plot(y, fillx=True)
+            self.plt.title("Stem Plot")
+
+    class MultipleDataSets(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#multiple-data-sets"""
-        y1 = plt.sin()
-        y2 = plt.sin(phase=-1)
-        plt.plot(y1, label="plot")
-        plt.scatter(y2, label="scatter")
-        plt.title("Multiple Data Set")
 
-    def multiple_axes_plot(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            y1 = self.plt.sin()
+            y2 = self.plt.sin(phase=-1)
+            self.plt.plot(y1, label="plot")
+            self.plt.scatter(y2, label="scatter")
+            self.plt.title("Multiple Data Set")
+
+    class MultipleAxesPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#multiple-axes-plot"""
-        y1 = plt.sin()
-        y2 = plt.sin(2, phase=-1)
-        plt.plot(y1, xside="lower", yside="left", label="lower left")
-        plt.plot(y2, xside="upper", yside="right", label="upper right")
-        plt.title("Multiple Axes Plot")
+
+        def plot(self) -> None:
+            y1 = self.plt.sin()
+            y2 = self.plt.sin(2, phase=-1)
+            self.plt.plot(y1, xside="lower", yside="left", label="lower left")
+            self.plt.plot(y2, xside="upper", yside="right", label="upper right")
+            self.plt.title("Multiple Axes Plot")
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         return self.examples(
             "basic",
             [
-                self.scatter_plot,
-                self.line_plot,
-                self.log_plot,
-                self.stem_plot,
-                self.multiple_data_sets,
-                self.multiple_axes_plot,
+                self.ScatterPlot(),
+                self.LinePlot(),
+                self.LogPlot(),
+                self.StemPlot(),
+                self.MultipleDataSets(),
+                self.MultipleAxesPlot(),
             ],
         )
 
@@ -116,41 +118,49 @@ class BasicPlots(ExamplesPane):
 class BarPlots(ExamplesPane):
     """Examples from the bar plots section of the Plotext documentation."""
 
-    def vertical_bar_plot(self, plt: Plot) -> None:
+    class VerticalBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#vertical-bar-plot"""
-        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
-        percentages = [14, 36, 11, 8, 7, 4]
-        plt.bar(pizzas, percentages)
-        plt.title("Most Favored Pizzas in the World")
 
-    def horizontal_bar_plot(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+            percentages = [14, 36, 11, 8, 7, 4]
+            self.plt.bar(pizzas, percentages)
+            self.plt.title("Most Favored Pizzas in the World")
+
+    class HorizontalBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#horizontal-bar-plot"""
-        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
-        percentages = [14, 36, 11, 8, 7, 4]
-        plt.bar(
-            pizzas, percentages, orientation="horizontal", width=3 / 5
-        )  # or in short orientation = 'h'
-        plt.title("Most Favoured Pizzas in the World")
 
-    def multiple_bar_plot(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+            percentages = [14, 36, 11, 8, 7, 4]
+            self.plt.bar(
+                pizzas, percentages, orientation="horizontal", width=3 / 5
+            )  # or in short orientation = 'h'
+            self.plt.title("Most Favoured Pizzas in the World")
+
+    class MultipleBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#multiple-bar-plot"""
-        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
-        male_percentages = [14, 36, 11, 8, 7, 4]
-        female_percentages = [12, 20, 35, 15, 2, 1]
-        plt.multiple_bar(
-            pizzas, [male_percentages, female_percentages]
-        )  # , labels = ["men", "women"])
-        plt.title("Most Favored Pizzas in the World by Gender")
 
-    def stacked_bar_plot(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+            male_percentages = [14, 36, 11, 8, 7, 4]
+            female_percentages = [12, 20, 35, 15, 2, 1]
+            self.plt.multiple_bar(
+                pizzas, [male_percentages, female_percentages]
+            )  # , labels = ["men", "women"])
+            self.plt.title("Most Favored Pizzas in the World by Gender")
+
+    class StackedBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#stacked-bar-plot"""
-        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
-        male_percentages = [14, 36, 11, 8, 7, 4]
-        female_percentages = [12, 20, 35, 15, 2, 1]
-        plt.stacked_bar(
-            pizzas, [male_percentages, female_percentages]
-        )  # , labels = ["men", "women"])
-        plt.title("Most Favored Pizzas in the World by Gender")
+
+        def plot(self) -> None:
+            pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+            male_percentages = [14, 36, 11, 8, 7, 4]
+            female_percentages = [12, 20, 35, 15, 2, 1]
+            self.plt.stacked_bar(
+                pizzas, [male_percentages, female_percentages]
+            )  # , labels = ["men", "women"])
+            self.plt.title("Most Favored Pizzas in the World by Gender")
 
     # def box_plot(self, plt: Plot) -> None:
     #     """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#box-plot"""
@@ -165,29 +175,31 @@ class BarPlots(ExamplesPane):
     #     plt.box(labels, datas, width=0.3)
     #     plt.title("The weight of the fruit")
 
-    def histogram_plot(self, plt: Plot) -> None:
+    class HistogramPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#histogram-plot"""
-        l = 7 * 10**4
-        data1 = [random.gauss(0, 1) for _ in range(10 * l)]
-        data2 = [random.gauss(3, 1) for _ in range(6 * l)]
-        data3 = [random.gauss(6, 1) for _ in range(4 * l)]
-        bins = 60
-        plt.hist(data1, bins, label="mean 0")
-        plt.hist(data2, bins, label="mean 3")
-        plt.hist(data3, bins, label="mean 6")
-        plt.title("Histogram Plot")
+
+        def plot(self) -> None:
+            l = 7 * 10**4
+            data1 = [random.gauss(0, 1) for _ in range(10 * l)]
+            data2 = [random.gauss(3, 1) for _ in range(6 * l)]
+            data3 = [random.gauss(6, 1) for _ in range(4 * l)]
+            bins = 60
+            self.plt.hist(data1, bins, label="mean 0")
+            self.plt.hist(data2, bins, label="mean 3")
+            self.plt.hist(data3, bins, label="mean 6")
+            self.plt.title("Histogram Plot")
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         return self.examples(
             "bar",
             [
-                self.vertical_bar_plot,
-                self.horizontal_bar_plot,
-                self.multiple_bar_plot,
-                self.stacked_bar_plot,
-                # self.box_plot,
-                self.histogram_plot,
+                self.VerticalBarPlot(),
+                self.HorizontalBarPlot(),
+                self.MultipleBarPlot(),
+                self.StackedBarPlot(),
+                # self.boxplot(),
+                self.HistogramPlot(),
             ],
         )
 
@@ -195,38 +207,42 @@ class BarPlots(ExamplesPane):
 class SpecialPlots(ExamplesPane):
     """Examples from the special plots section of the Plotext documentation."""
 
-    def error_plot(self, plt: Plot) -> None:
+    class ErrorPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#error-plot"""
-        l = 20
-        n = 1
-        ye = [random.random() * n for _ in range(l)]
-        xe = [random.random() * n for _ in range(l)]
-        y = plt.sin(length=l)
-        plt.error(y, xerr=xe, yerr=ye)
-        plt.title("Error Plot")
 
-    def event_plot(self, plt: Plot) -> None:
+        def plot(self) -> None:
+            l = 20
+            n = 1
+            ye = [random.random() * n for _ in range(l)]
+            xe = [random.random() * n for _ in range(l)]
+            y = self.plt.sin(length=l)
+            self.plt.error(y, xerr=xe, yerr=ye)
+            self.plt.title("Error Plot")
+
+    class EventPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#event-plot"""
-        plt.date_form("H:M")  # also just "H" looks ok
-        times = [
-            datetime(
-                2022,
-                3,
-                27,
-                random.randint(0, 23),
-                random.randint(0, 59),
-                random.randint(0, 59),
-            )
-            for _ in range(100)
-        ]  # A random list of times during the day
-        times = plt.datetimes_to_string(times)
-        plt.event_plot(times)
+
+        def plot(self) -> None:
+            self.plt.date_form("H:M")  # also just "H" looks ok
+            times = [
+                datetime(
+                    2022,
+                    3,
+                    27,
+                    random.randint(0, 23),
+                    random.randint(0, 59),
+                    random.randint(0, 59),
+                )
+                for _ in range(100)
+            ]  # A random list of times during the day
+            times = self.plt.datetimes_to_string(times)
+            self.plt.event_plot(times)
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         return self.examples(
             "special",
-            [self.error_plot, self.event_plot],
+            [self.ErrorPlot(), self.EventPlot()],
         )
 
 

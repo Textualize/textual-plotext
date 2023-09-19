@@ -43,20 +43,21 @@ class PlotextPlot(Widget):
         self.watch(self.app, "dark", self._dark_mode, init=False)
 
     @property
-    def plot(self) -> Plot:
-        """The plotting object.
-
-        Use this property as you'd normally use the `plotext` module.
-        """
+    def plt(self) -> Plot:
         return self._plot
 
+    def plot(self) -> None:
+        pass
+
     def render(self) -> RenderResult:
-        self.plot.plotsize(self.size.width, self.size.height)
+        self.plt.clear_figure()
+        self.plot()
+        self.plt.plotsize(self.size.width, self.size.height)
         if self.auto_theme:
-            self.plot.theme(
+            self.plt.theme(
                 self.dark_mode_theme if self.app.dark else self.light_mode_theme
             )
-        return Text.from_ansi(self.plot.build())
+        return Text.from_ansi(self._plot.build())
 
     def _watch_light_mode_theme(self) -> None:
         """React to changes to the light mode theme."""
