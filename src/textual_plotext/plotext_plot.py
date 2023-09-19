@@ -33,6 +33,7 @@ class PlotextPlot(Widget):
     ) -> None:
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
+        self.watch(self.app, "dark", self._dark_mode, init=False)
 
     @property
     def plot(self) -> Plot:
@@ -58,4 +59,9 @@ class PlotextPlot(Widget):
     def _watch_dark_mode_theme(self) -> None:
         """React to changes to the dark mode theme."""
         if self.auto_theme and self.app.dark:
+            self.refresh()
+
+    def _dark_mode(self) -> None:
+        """React to dark mode being toggled."""
+        if self.auto_theme:
             self.refresh()
