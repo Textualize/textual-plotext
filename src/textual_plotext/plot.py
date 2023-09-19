@@ -16,7 +16,14 @@ class Plot(Figure):
     """A class that provides a Textual-friendly interface to Plotext."""
 
     @staticmethod
-    def sin(periods=2, length=200, amplitude=1, phase=0, decay=0) -> list[float]:
+    def sin(
+        periods: int = 2,
+        length: int = 200,
+        amplitude: int = 1,
+        phase: float = 0,
+        decay: int = 0,
+    ) -> list[float]:
+        # TODO: The types here are guesswork as Plotext isn't typed.
         return plotext.sin(
             periods=periods,
             length=length,
