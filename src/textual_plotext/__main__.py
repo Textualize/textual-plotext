@@ -24,8 +24,11 @@ class RefreshingPlot(PlotextPlot):
         x = range(1, l + 1)
         y = plt.sin(periods=2, length=l, phase=2 * self.phase / frames)
         plt.scatter(x, y, marker="fhd")
-        plt.scatter(y)
-        plt.title("Scatter Plot")
+        plt.xaxes(1, 0)
+        plt.yaxes(1, 0)
+        plt.title("Updating plot!")
+        plt.theme("dark")
+        plt.ylim(-1, 1)
         self.phase += 1
         self.refresh()
 
