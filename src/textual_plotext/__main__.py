@@ -18,7 +18,7 @@ from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
 from textual.widgets import Header, Label, Rule, TabbedContent, TabPane
 
-from textual_plotext import Plot, PlotextPlot
+from textual_plotext import PlotextPlot
 
 
 class ExamplesPane(VerticalScroll):
