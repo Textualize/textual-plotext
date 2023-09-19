@@ -13,6 +13,8 @@ from plotext._figure import _figure_class as Figure
 
 
 class Plot(Figure):
+    """A class that provides a Textual-friendly interface to Plotext."""
+
     @staticmethod
     def sin(periods=2, length=200, amplitude=1, phase=0, decay=0) -> list[float]:
         return plotext.sin(
