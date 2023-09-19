@@ -35,7 +35,7 @@ class ExamplesPane(VerticalScroll):
         return plot
 
 
-class BasicPane(ExamplesPane):
+class BasicPlots(ExamplesPane):
     """Examples from the basic section of the Plotext documentation."""
 
     def scatter_plot(self, plt: Plot) -> None:
@@ -119,7 +119,7 @@ class DemoApp(App[None]):
         yield Header()
         with TabbedContent():
             with TabPane("Basic Plots"):
-                yield BasicPane()
+                yield BasicPlots()
 
 
 if __name__ == "__main__":
