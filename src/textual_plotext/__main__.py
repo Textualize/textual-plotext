@@ -23,9 +23,7 @@ class RefreshingPlot(PlotextPlot):
         l, frames = 1000, 30
         x = range(1, l + 1)
         y = plt.sin(periods=2, length=l, phase=2 * self.phase / frames)
-        plt.scatter(x, y, marker="fhd")
-        plt.xaxes(1, 0)
-        plt.yaxes(1, 0)
+        plt.scatter(x, y, marker="braille")
         plt.title("Updating plot!")
         plt.theme("dark")
         plt.ylim(-1, 1)
