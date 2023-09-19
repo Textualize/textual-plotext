@@ -9,6 +9,7 @@ $ python -m textual_plotext
 it will show a demonstration of the library in action.
 """
 
+import random
 from typing import Callable
 
 from textual.app import App, ComposeResult
@@ -103,6 +104,89 @@ class BasicPlots(ExamplesPane):
         yield Rule()
 
 
+class BarPlots(ExamplesPane):
+    """Examples from the bar plots section of the Plotext documentation."""
+
+    def vertical_bar_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#vertical-bar-plot"""
+        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+        percentages = [14, 36, 11, 8, 7, 4]
+        plt.bar(pizzas, percentages)
+        plt.title("Most Favored Pizzas in the World")
+
+    def horizontal_bar_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#horizontal-bar-plot"""
+        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+        percentages = [14, 36, 11, 8, 7, 4]
+        plt.bar(
+            pizzas, percentages, orientation="horizontal", width=3 / 5
+        )  # or in short orientation = 'h'
+        plt.title("Most Favoured Pizzas in the World")
+
+    def multiple_bar_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#multiple-bar-plot"""
+        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+        male_percentages = [14, 36, 11, 8, 7, 4]
+        female_percentages = [12, 20, 35, 15, 2, 1]
+        plt.multiple_bar(
+            pizzas, [male_percentages, female_percentages]
+        )  # , labels = ["men", "women"])
+        plt.title("Most Favored Pizzas in the World by Gender")
+
+    def stacked_bar_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#stacked-bar-plot"""
+        pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+        male_percentages = [14, 36, 11, 8, 7, 4]
+        female_percentages = [12, 20, 35, 15, 2, 1]
+        plt.stacked_bar(
+            pizzas, [male_percentages, female_percentages]
+        )  # , labels = ["men", "women"])
+        plt.title("Most Favored Pizzas in the World by Gender")
+
+    # def box_plot(self, plt: Plot) -> None:
+    #     """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#box-plot"""
+    #     labels = ["apple", "orange", "pear", "banana"]
+    #     datas = [
+    #         [1,2,3,5,10,8],
+    #         [4,9,6,12,20,13],
+    #         [1,2,3,4,5,6],
+    #         [3,9,12,16,9,8,3,7,2]
+    #     ]
+
+    #     plt.box(labels, datas, width=0.3)
+    #     plt.title("The weight of the fruit")
+
+    def histogram_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#histogram-plot"""
+        l = 7 * 10**4
+        data1 = [random.gauss(0, 1) for _ in range(10 * l)]
+        data2 = [random.gauss(3, 1) for _ in range(6 * l)]
+        data3 = [random.gauss(6, 1) for _ in range(4 * l)]
+        bins = 60
+        plt.hist(data1, bins, label="mean 0")
+        plt.hist(data2, bins, label="mean 3")
+        plt.hist(data3, bins, label="mean 6")
+        plt.title("Histogram Plot")
+
+    def compose(self) -> ComposeResult:
+        """Compose the child widgets."""
+        yield Label(
+            "Examples from https://github.com/piccolomo/plotext/blob/master/readme/bar.md"
+        )
+        yield self.make_a(self.vertical_bar_plot)
+        yield Rule()
+        yield self.make_a(self.horizontal_bar_plot)
+        yield Rule()
+        yield self.make_a(self.multiple_bar_plot)
+        yield Rule()
+        yield self.make_a(self.stacked_bar_plot)
+        yield Rule()
+        # yield self.make_a(self.box_plot)
+        # yield Rule()
+        yield self.make_a(self.histogram_plot)
+        yield Rule()
+
+
 class DemoApp(App[None]):
     """Demonstration application for the library."""
 
@@ -120,6 +204,8 @@ class DemoApp(App[None]):
         with TabbedContent():
             with TabPane("Basic Plots"):
                 yield BasicPlots()
+            with TabPane("Bar Plots"):
+                yield BarPlots()
 
 
 if __name__ == "__main__":
