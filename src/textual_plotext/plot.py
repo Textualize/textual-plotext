@@ -76,7 +76,7 @@ class Plot:
         try:
             self._calls.append(PlotCall(getattr(plotext, attr)))
         except AttributeError:
-            raise NameError from None
+            raise NameError(f"Plotext.{attr} does not exist") from None
         return self._calls[-1]
 
     def clear_figure(self) -> None:
