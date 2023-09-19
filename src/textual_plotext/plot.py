@@ -54,7 +54,6 @@ class PlotCall:
         self._function(*self._args, **self._kwargs)
 
     def __repr__(self) -> str:
-        # TODO: Just for debugging now; tidy up so it looks correct.
         args = [repr(argument) for argument in self._args]
         kwargs = [f"{keyword}={repr(value)}" for keyword, value in self._kwargs.items()]
         return f"{self._function.__name__}({', '.join([*args, *kwargs])})"
