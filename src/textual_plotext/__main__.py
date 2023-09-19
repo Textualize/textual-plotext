@@ -12,6 +12,7 @@ it will show a demonstration of the library in action.
 from __future__ import annotations
 
 import random
+from datetime import datetime
 from typing import Callable
 
 from textual.app import App, ComposeResult
@@ -191,6 +192,44 @@ class BarPlots(ExamplesPane):
         )
 
 
+class SpecialPlots(ExamplesPane):
+    """Examples from the special plots section of the Plotext documentation."""
+
+    def error_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/special.md#error-plot"""
+        l = 20
+        n = 1
+        ye = [random.random() * n for _ in range(l)]
+        xe = [random.random() * n for _ in range(l)]
+        y = plt.sin(length=l)
+        plt.error(y, xerr=xe, yerr=ye)
+        plt.title("Error Plot")
+
+    def event_plot(self, plt: Plot) -> None:
+        """https://github.com/piccolomo/plotext/blob/master/readme/special.md#event-plot"""
+        plt.date_form("H:M")  # also just "H" looks ok
+        times = [
+            datetime(
+                2022,
+                3,
+                27,
+                random.randint(0, 23),
+                random.randint(0, 59),
+                random.randint(0, 59),
+            )
+            for _ in range(100)
+        ]  # A random list of times during the day
+        times = plt.datetimes_to_string(times)
+        plt.event_plot(times)
+
+    def compose(self) -> ComposeResult:
+        """Compose the child widgets."""
+        return self.examples(
+            "special",
+            [self.error_plot, self.event_plot],
+        )
+
+
 class DemoApp(App[None]):
     """Demonstration application for the library."""
 
@@ -210,6 +249,8 @@ class DemoApp(App[None]):
                 yield BasicPlots()
             with TabPane("Bar Plots"):
                 yield BarPlots()
+            with TabPane("Special Plots"):
+                yield SpecialPlots()
 
 
 if __name__ == "__main__":

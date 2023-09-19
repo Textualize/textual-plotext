@@ -14,7 +14,7 @@ from typing_extensions import Final, Self
 
 import plotext
 
-SAFE: Final[set[str]] = {"sin"}
+SAFE: Final[set[str]] = {"datetimes_to_string", "sin", "date_form"}
 """The set of functions that are safe to call without holding back.
 
 Some Plotext functions are simple helpers that return values that are needed
