@@ -14,6 +14,13 @@ from .plot import Plot
 class PlotextPlot(Widget):
     """A Plotext plot display widget."""
 
+    DEFAULT_CSS = """
+    PlotextPlot {
+        width: 1fr;
+        height: 1fr;
+    }
+    """
+
     auto_theme: var[bool] = var(True)
     """Should the plot automatically adjust the theme depending on light and dark mode?"""
 
