@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import random
 from datetime import datetime
+from itertools import chain, cycle
 
 from textual.app import App, ComposeResult
 from textual.containers import VerticalScroll
@@ -290,12 +291,78 @@ class SpecialPlots(ExamplesPane):
         )
 
 
+class DecoratorPlots(ExamplesPane):
+    """Examples from the decorator plots section of the Plotext documentation."""
+
+    class LinePlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#line-plot"""
+
+        def plot(self) -> None:
+            y = self.plt.sin()
+            self.plt.scatter(y)
+            self.plt.title("Extra Lines")
+            self.plt.vline(100, "magenta")
+            self.plt.hline(0.5, "blue+")
+            self.plt.plotsize(100, 30)
+
+    class TextPlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#text-plot"""
+
+        def plot(self) -> None:
+            pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
+            percentages = [14, 36, 11, 8, 7, 4]
+            self.plt.bar(pizzas, percentages)
+            self.plt.title("Labelled Bar Plot using Text()")
+            [
+                self.plt.text(
+                    pizzas[i],
+                    x=i + 1,
+                    y=percentages[i] + 1.5,
+                    alignment="center",
+                    color="red",
+                )
+                for i in range(len(pizzas))
+            ]
+            self.plt.ylim(0, 38)
+
+    class ShapePlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#shape-plot"""
+
+        def plot(self) -> None:
+            self.plt.title("Shapes")
+            self.plt.polygon()
+            self.plt.rectangle()
+            self.plt.polygon(sides=100)  # to simulate a circle
+            self.plt.show()
+
+    class PulsePlot(PlotextPlot):
+        """I made this one up myself."""
+
+        def on_mount(self) -> None:
+            self.steps = cycle(chain(range(3, 21), range(20, 2, -1)))
+            self.auto_refresh = 0.5
+
+        def plot(self) -> None:
+            self.plt.title("Pulse")
+            self.plt.polygon(sides=next(self.steps))
+
+    def compose(self) -> ComposeResult:
+        return self.examples(
+            "decorator",
+            [self.LinePlot(), self.TextPlot(), self.ShapePlot(), self.PulsePlot()],
+        )
+
+
 class DemoApp(App[None]):
     """Demonstration application for the library."""
 
     CSS = """
     PlotextPlot {
         height: 40%
+    }
+
+    ShapePlot, PulsePlot {
+        height: 100%;
     }
     """
 
@@ -311,6 +378,8 @@ class DemoApp(App[None]):
                 yield BarPlots()
             with TabPane("Special Plots"):
                 yield SpecialPlots()
+            with TabPane("Decorator Plots"):
+                yield DecoratorPlots()
 
 
 if __name__ == "__main__":
