@@ -9,6 +9,8 @@ $ python -m textual_plotext
 it will show a demonstration of the library in action.
 """
 
+from __future__ import annotations
+
 import random
 from typing import Callable
 
@@ -34,6 +36,16 @@ class ExamplesPane(VerticalScroll):
         plot = PlotextPlot()
         example(plot.plot)
         return plot
+
+    def examples(
+        self, source: str, examples: list[Callable[[Plot], None]]
+    ) -> ComposeResult:
+        yield Label(
+            f"Examples taken from https://github.com/piccolomo/plotext/blob/master/readme/{source}.md"
+        )
+        for example in examples:
+            yield self.make_a(example)
+            yield Rule()
 
 
 class BasicPlots(ExamplesPane):
@@ -87,21 +99,17 @@ class BasicPlots(ExamplesPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield Label(
-            "Examples from https://github.com/piccolomo/plotext/blob/master/readme/basic.md"
+        return self.examples(
+            "basic",
+            [
+                self.scatter_plot,
+                self.line_plot,
+                self.log_plot,
+                self.stem_plot,
+                self.multiple_data_sets,
+                self.multiple_axes_plot,
+            ],
         )
-        yield self.make_a(self.scatter_plot)
-        yield Rule()
-        yield self.make_a(self.line_plot)
-        yield Rule()
-        yield self.make_a(self.log_plot)
-        yield Rule()
-        yield self.make_a(self.stem_plot)
-        yield Rule()
-        yield self.make_a(self.multiple_data_sets)
-        yield Rule()
-        yield self.make_a(self.multiple_axes_plot)
-        yield Rule()
 
 
 class BarPlots(ExamplesPane):
@@ -170,21 +178,17 @@ class BarPlots(ExamplesPane):
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
-        yield Label(
-            "Examples from https://github.com/piccolomo/plotext/blob/master/readme/bar.md"
+        return self.examples(
+            "bar",
+            [
+                self.vertical_bar_plot,
+                self.horizontal_bar_plot,
+                self.multiple_bar_plot,
+                self.stacked_bar_plot,
+                # self.box_plot,
+                self.histogram_plot,
+            ],
         )
-        yield self.make_a(self.vertical_bar_plot)
-        yield Rule()
-        yield self.make_a(self.horizontal_bar_plot)
-        yield Rule()
-        yield self.make_a(self.multiple_bar_plot)
-        yield Rule()
-        yield self.make_a(self.stacked_bar_plot)
-        yield Rule()
-        # yield self.make_a(self.box_plot)
-        # yield Rule()
-        yield self.make_a(self.histogram_plot)
-        yield Rule()
 
 
 class DemoApp(App[None]):
