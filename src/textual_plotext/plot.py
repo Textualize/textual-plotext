@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Callable
 
-from typing_extensions import Final
+from typing_extensions import Final, Self
 
 import plotext
 
@@ -35,15 +35,19 @@ class PlotCall:
         self._args: tuple[Any, ...] = tuple()
         self._kwargs: dict[str, Any] = {}
 
-    def __call__(self, *args: Any, **kwargs: Any) -> None:
+    def __call__(self, *args: Any, **kwargs: Any) -> Self:
         """Capture the arguments for the call.
 
         Args:
             args: The positional arguments for the call.
             kwargs: The keyword arguments for the call.
+
+        Returns:
+            Self.
         """
         self._args = args
         self._kwargs = kwargs
+        return self
 
     def execute(self) -> None:
         """Execute the call to Plotext."""
@@ -51,13 +55,9 @@ class PlotCall:
 
     def __repr__(self) -> str:
         # TODO: Just for debugging now; tidy up so it looks correct.
-        return (
-            f"{self._function.__name__}("
-            # TODO: Don't have the stray , between args and kwargs.
-            f"{', '.join([repr(arg) for arg in self._args])}"
-            f", {self._kwargs}"
-            ")"
-        )
+        args = [repr(argument) for argument in self._args]
+        kwargs = [f"{keyword}={repr(value)}" for keyword, value in self._kwargs.items()]
+        return f"{self._function.__name__}({', '.join([*args, *kwargs])})"
 
 
 class Plot:
