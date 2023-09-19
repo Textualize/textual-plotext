@@ -238,11 +238,55 @@ class SpecialPlots(ExamplesPane):
             times = self.plt.datetimes_to_string(times)
             self.plt.event_plot(times)
 
+    class StreamingDataPlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/special.md#streaming-data"""
+
+        def on_mount(self) -> None:
+            self.frame = 0
+            self.auto_refresh = 0.25
+
+        def plot(self) -> None:
+            self.plt.title("Streaming Data")
+            self.plt.scatter(
+                self.plt.sin(periods=2, length=1_000, phase=(2 * self.frame) / 50)
+            )
+            self.frame += 1
+
+    class MatrixPlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/special.md#matrix-plot"""
+
+        def plot(self) -> None:
+            cols, rows = 200, 45
+            p = 1
+            matrix = [
+                [(abs(r - rows / 2) + abs(c - cols / 2)) ** p for c in range(cols)]
+                for r in range(rows)
+            ]
+            self.plt.matrix_plot(matrix)
+            self.plt.plotsize(cols, rows)
+            self.plt.title("Matrix Plot")
+
+    class ConfusionMatrix(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/special.md#confusion-matrix"""
+
+        def plot(self) -> None:
+            l = 300
+            actual = [random.randrange(0, 4) for _ in range(l)]
+            predicted = [random.randrange(0, 4) for _ in range(l)]
+            labels = ["Autumn", "Spring", "Summer", "Winter"]
+            self.plt.cmatrix(actual, predicted, labels)
+
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
         return self.examples(
             "special",
-            [self.ErrorPlot(), self.EventPlot()],
+            [
+                self.ErrorPlot(),
+                self.EventPlot(),
+                self.StreamingDataPlot(),
+                self.MatrixPlot(),
+                self.ConfusionMatrix(),
+            ],
         )
 
 
