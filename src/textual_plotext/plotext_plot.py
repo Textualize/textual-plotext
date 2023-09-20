@@ -100,7 +100,7 @@ class PlotextPlot(Widget):
 
                 def plot(self) -> None:
                     self.plt.scatter(self.plt.sin())
-                    plt.title("Scatter Plot")
+                    self.plt.title("Scatter Plot")
             ```
         """
 
