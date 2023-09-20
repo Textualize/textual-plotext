@@ -8,7 +8,7 @@ from textual.widget import Widget
 
 from rich.text import Text
 
-from .plot import Plot
+from .plot import Plot, ThemeName
 
 
 class PlotextPlot(Widget):
@@ -24,10 +24,10 @@ class PlotextPlot(Widget):
     auto_theme: var[bool] = var(True)
     """Should the plot automatically adjust the theme depending on light and dark mode?"""
 
-    light_mode_theme: var[str] = var("default")
+    light_mode_theme: var[ThemeName] = var("default")
     """The Plotext theme to use for light mode."""
 
-    dark_mode_theme: var[str] = var("dark")
+    dark_mode_theme: var[ThemeName] = var("dark")
     """The Plotext theme to use for dark mode."""
 
     def __init__(
