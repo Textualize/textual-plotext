@@ -48,27 +48,23 @@ class BasicPlots(ExamplesPane):
     class ScatterPlot(PlotextPlot):
         def plot(self) -> None:
             """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot"""
-            y = self.plt.sin()
-            self.plt.scatter(y)
+            self.plt.scatter(self.plt.sin())
             self.plt.title("Scatter Plot")
 
     class LinePlot(PlotextPlot):
         def plot(self) -> None:
             """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#line-plot"""
-            y = self.plt.sin()
-            self.plt.plot(y)
+            self.plt.plot(self.plt.sin())
             self.plt.title("Line Plot")
 
     class LogPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#log-plot"""
 
         def plot(self) -> None:
-            l = 10**4
-            y = self.plt.sin(periods=2, length=l)
-            self.plt.plot(y)
-            self.plt.xscale("log")  # for logarithmic x scale
-            self.plt.yscale("linear")  # for linear y scale
-            self.plt.grid(0, 1)  # to add vertical grid lines
+            self.plt.plot(self.plt.sin(periods=2, length=10**4))
+            self.plt.xscale("log")
+            self.plt.yscale("linear")
+            self.plt.grid(0, 1)
             self.plt.title("Logarithmic Plot")
             self.plt.xlabel("logarithmic scale")
             self.plt.ylabel("linear scale")
@@ -77,28 +73,30 @@ class BasicPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#stem-plot"""
 
         def plot(self) -> None:
-            y = self.plt.sin()
-            self.plt.plot(y, fillx=True)
+            self.plt.plot(self.plt.sin(), fillx=True)
             self.plt.title("Stem Plot")
 
     class MultipleDataSets(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#multiple-data-sets"""
 
         def plot(self) -> None:
-            y1 = self.plt.sin()
-            y2 = self.plt.sin(phase=-1)
-            self.plt.plot(y1, label="plot")
-            self.plt.scatter(y2, label="scatter")
+            self.plt.plot(self.plt.sin(), label="plot")
+            self.plt.scatter(self.plt.sin(phase=-1), label="scatter")
             self.plt.title("Multiple Data Set")
 
     class MultipleAxesPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#multiple-axes-plot"""
 
         def plot(self) -> None:
-            y1 = self.plt.sin()
-            y2 = self.plt.sin(2, phase=-1)
-            self.plt.plot(y1, xside="lower", yside="left", label="lower left")
-            self.plt.plot(y2, xside="upper", yside="right", label="upper right")
+            self.plt.plot(
+                self.plt.sin(), xside="lower", yside="left", label="lower left"
+            )
+            self.plt.plot(
+                self.plt.sin(2, phase=-1),
+                xside="upper",
+                yside="right",
+                label="upper right",
+            )
             self.plt.title("Multiple Axes Plot")
 
     def compose(self) -> ComposeResult:
@@ -298,8 +296,7 @@ class DecoratorPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#line-plot"""
 
         def plot(self) -> None:
-            y = self.plt.sin()
-            self.plt.scatter(y)
+            self.plt.scatter(self.plt.sin())
             self.plt.title("Extra Lines")
             self.plt.vline(100, "magenta")
             self.plt.hline(0.5, "blue+")
