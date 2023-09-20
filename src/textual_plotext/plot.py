@@ -8,8 +8,39 @@ care of adding in some of the utility methods that will bee needed.
 
 from __future__ import annotations
 
+from typing import Literal
+
 import plotext
 from plotext._figure import _figure_class as Figure
+
+ThemeName = Literal[
+    "clear",
+    "dark",
+    "default",
+    "dreamland",
+    "elegant",
+    "girly",
+    "grandpa",
+    "matrix",
+    "mature",
+    "pro",
+    "retro",
+    "sahara",
+    "salad",
+    "scream",
+    "serious",
+    "windows",
+]
+"""Literal that is the list of theme names defined in Plotext.
+
+Note:
+
+    This is a copy of the theme names and will need to be updated if Plotext
+    ever adds more. The main reasons for taking this approach are:
+
+    1. There is no public interface to access this information.
+    2. Turning runtime information into type-checking data isn't simple.
+"""
 
 
 class Plot(Figure):
