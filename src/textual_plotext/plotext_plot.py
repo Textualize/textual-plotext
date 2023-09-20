@@ -22,13 +22,28 @@ class PlotextPlot(Widget):
     """
 
     auto_theme: var[bool] = var(True)
-    """Should the plot automatically adjust the theme depending on light and dark mode?"""
+    """Should the plot automatically adjust the theme depending on light and dark mode?
+
+    If set to `True` the theme of the plot will be adjusted to either
+    [`light_mode_theme`][PlotextPlot.light_mode_theme] or
+    [`dark_mode_theme`][PlotextPlot.dark_mode_theme] when
+    [`App.dark`](https://textual.textualize.io/api/app/#textual.app.App.dark)
+    is changed.
+    """
 
     light_mode_theme: var[ThemeName] = var("default")
-    """The Plotext theme to use for light mode."""
+    """The Plotext theme to use for light mode.
+
+    Note:
+        This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
+    """
 
     dark_mode_theme: var[ThemeName] = var("dark")
-    """The Plotext theme to use for dark mode."""
+    """The Plotext theme to use for dark mode.
+
+    Note:
+        This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
+    """
 
     def __init__(
         self,
