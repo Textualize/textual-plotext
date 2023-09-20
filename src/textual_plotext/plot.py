@@ -100,3 +100,12 @@ class Plot(Figure):
 # Hoist the docstrings for the wrapper functions we've added above.
 Plot.sin.__doc__ = plotext.sin.__doc__
 Plot.square.__doc__ = plotext.square.__doc__
+
+
+def themes() -> tuple[str, ...]:
+    """Get the list of available theme names.
+
+    Returns:
+        A tuple of the names of the themes defined in Plotext.
+    """
+    return get_args(ThemeName)
