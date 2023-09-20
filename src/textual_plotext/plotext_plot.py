@@ -38,6 +38,14 @@ class PlotextPlot(Widget):
         classes: str | None = None,
         disabled: bool = False,
     ) -> None:
+        """Initialise the Plotext plot widget.
+
+        Args:
+            name: The name of the Plotext plot widget.
+            id: The ID of the Plotext plot widget in the DOM.
+            classes: The CSS classes of the Plotext plot widget.
+            disabled: Whether the Plotext plot widget is disabled or not.
+        """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
         self.watch(self.app, "dark", self._dark_mode, init=False)
