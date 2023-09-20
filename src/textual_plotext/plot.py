@@ -13,7 +13,32 @@ from plotext._figure import _figure_class as Figure
 
 
 class Plot(Figure):
-    """A class that provides a Textual-friendly interface to Plotext."""
+    """A class that provides a Textual-friendly interface to Plotext.
+
+    This class inherits from Plotext's `_figure_class` and then adds access
+    to some global functions, making it appear like the top-level `plotext`
+    module.
+
+    The aim of the class is to make this:
+
+    ```python
+    import plotext as plt
+
+    plt.title("Scatter Plot")
+    plt.scatter(plt.sin())
+    ```
+
+    and this:
+
+    ```python
+    plt = Plot()
+    plt.title("Scatter Plot")
+    plt.scatter(plt.sin())
+    ```
+
+    functionally equivalent, but with the advantage that the latter has no
+    global state and is free of external side-effects.
+    """
 
     @staticmethod
     def sin(
@@ -23,7 +48,7 @@ class Plot(Figure):
         phase: float = 0,
         decay: int = 0,
     ) -> list[float]:
-        # TODO: The types here are guesswork as Plotext isn't typed.
+        """A wrapper around `Plotext.sin`."""
         return plotext.sin(
             periods=periods,
             length=length,
@@ -34,8 +59,13 @@ class Plot(Figure):
 
     @staticmethod
     def square(periods: int = 2, length: int = 200, amplitude: float = 1) -> list[int]:
-        # TODO: The types here are guesswork as Plotext isn't typed.
+        """A wrapper around `Plotext.square`."""
         return plotext.square(periods=periods, length=length, amplitude=amplitude)
 
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
+
+
+# Hoist the docstrings for the wrapper functions we've added above.
+Plot.sin.__doc__ = plotext.sin.__doc__
+Plot.square.__doc__ = plotext.square.__doc__
