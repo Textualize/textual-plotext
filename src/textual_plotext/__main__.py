@@ -9,6 +9,15 @@ $ python -m textual_plotext
 it will show a demonstration of the library in action.
 """
 
+# The following code borrows heavily from the Plotext readme files, and as
+# such has some variables names and the like that would generally annoy
+# pylint; so here we ask pylint to ease up for this particular file.
+#
+# Also, because it's common with Textual to introduce a property in
+# `on_mount`, we ask pylint to ease up on that too.
+#
+# pylint:disable=invalid-name, attribute-defined-outside-init
+
 from __future__ import annotations
 
 import random
@@ -34,8 +43,15 @@ class ExamplesPane(VerticalScroll):
     """
 
     def examples(self, source: str, examples: list[PlotextPlot]) -> ComposeResult:
+        """Provide the composed examples.
+
+        Args:
+            source: The source for the examples within the Plotext readme files.
+            examples: A list of the example widgets.
+        """
         yield Label(
-            f"Examples taken from https://github.com/piccolomo/plotext/blob/master/readme/{source}.md"
+            "Examples taken from https://github.com/piccolomo/"
+            f"plotext/blob/master/readme/{source}.md"
         )
         for example in examples:
             yield example
@@ -46,14 +62,16 @@ class BasicPlots(ExamplesPane):
     """Examples from the basic section of the Plotext documentation."""
 
     class ScatterPlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot"""
+
         def plot(self) -> None:
-            """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot"""
             self.plt.scatter(self.plt.sin())
             self.plt.title("Scatter Plot")
 
     class LinePlot(PlotextPlot):
+        """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#line-plot"""
+
         def plot(self) -> None:
-            """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#line-plot"""
             self.plt.plot(self.plt.sin())
             self.plt.title("Line Plot")
 
@@ -241,6 +259,7 @@ class SpecialPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#streaming-data"""
 
         def on_mount(self) -> None:
+            """Set up the initial conditions for the 'streaming' data."""
             self.frame = 0
             self.auto_refresh = 0.25
 
@@ -310,7 +329,7 @@ class DecoratorPlots(ExamplesPane):
             percentages = [14, 36, 11, 8, 7, 4]
             self.plt.bar(pizzas, percentages)
             self.plt.title("Labelled Bar Plot using Text()")
-            [
+            _ = [
                 self.plt.text(
                     pizzas[i],
                     x=i + 1,
@@ -336,10 +355,12 @@ class DecoratorPlots(ExamplesPane):
         """I made this one up myself."""
 
         def on_mount(self) -> None:
+            """Set up the pulsing polygon example."""
             self.steps = cycle(chain(range(3, 21), range(20, 2, -1)))
             self.auto_refresh = 0.5
 
         def plot(self) -> None:
+            """Plot a polygon with a changing number of sides."""
             self.plt.title("Pulse")
             self.plt.polygon(sides=next(self.steps))
 
