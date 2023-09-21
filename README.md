@@ -49,6 +49,12 @@ themselves to being used in a Textual application:
 - `plt.styles`
 - `plt.themes`
 
+Also, currently, there is no support for [image
+plots](https://github.com/piccolomo/plotext/blob/master/readme/image.md) or
+[playing
+videos](https://github.com/piccolomo/plotext/blob/master/readme/video.md);
+one or both could follow at some point in the future.
+
 ## What functions are no-ops?
 
 Some functions are supported as calls but are redefined to be
