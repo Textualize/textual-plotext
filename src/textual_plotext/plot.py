@@ -7,9 +7,9 @@ care of adding in some of the utility methods that will bee needed.
 """
 
 from __future__ import annotations
-from typing import TypeAlias
+from typing import Any
 
-from typing_extensions import Literal, get_args
+from typing_extensions import Literal, TypeAlias, Union, Tuple, get_args
 
 import plotext
 from plotext._figure import _figure_class as Figure
@@ -42,7 +42,7 @@ Note:
     2. Turning runtime information into type-checking data isn't simple.
 """
 
-Color: TypeAlias = str | int | tuple[int, int, int]
+Color: TypeAlias = Union[str, int, Tuple[int, int, int]]
 """Type of a Plotext colour."""
 
 
