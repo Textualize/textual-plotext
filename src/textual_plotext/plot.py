@@ -7,9 +7,9 @@ care of adding in some of the utility methods that will bee needed.
 """
 
 from __future__ import annotations
-from typing import Any
+from typing import Any, Tuple, Union
 
-from typing_extensions import Literal, TypeAlias, Union, Tuple, get_args
+from typing_extensions import Literal, TypeAlias, get_args
 
 import plotext
 from plotext._figure import _figure_class as Figure
