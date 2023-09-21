@@ -7,6 +7,7 @@ care of adding in some of the utility methods that will bee needed.
 """
 
 from __future__ import annotations
+from typing import TypeAlias
 
 from typing_extensions import Literal, get_args
 
@@ -40,6 +41,9 @@ Note:
     1. There is no public interface to access this information.
     2. Turning runtime information into type-checking data isn't simple.
 """
+
+Color: TypeAlias = str | int | tuple[int, int, int]
+"""Type of a Plotext colour."""
 
 
 class Plot(Figure):
@@ -95,9 +99,9 @@ class Plot(Figure):
     @staticmethod
     def colorize(
         string: str,
-        fullground: str | None = None,
+        fullground: Color | None = None,
         style: str | None = None,
-        background: str | None = None,
+        background: Color | None = None,
         show: bool = False,
     ):
         """A wrapper around `Plotet.colorize`."""
