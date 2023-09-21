@@ -113,6 +113,11 @@ class Plot(Figure):
             show=show,
         )
 
+    @staticmethod
+    def uncolorize(string: str) -> str:
+        """A wrapper around `Plotext.uncolorize`."""
+        return plotext.uncolorize(string)
+
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
 
@@ -121,6 +126,7 @@ class Plot(Figure):
 Plot.sin.__doc__ = plotext.sin.__doc__
 Plot.square.__doc__ = plotext.square.__doc__
 Plot.colorize.__doc__ = plotext.colorize.__doc__
+Plot.uncolorize.__doc__ = plotext.uncolorize.__doc__
 
 
 def themes() -> tuple[str, ...]:
