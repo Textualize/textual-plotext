@@ -123,6 +123,12 @@ class Plot(Figure):
         """A wrapper around `Plotext.transpose`."""
         return plotext.transpose(data)
 
+    platform = plotext.platform
+    """The platform, as recognised by Plotext.
+
+    One of either `unix` or `windows`.
+    """
+
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
 
