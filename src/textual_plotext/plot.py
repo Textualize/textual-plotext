@@ -118,6 +118,11 @@ class Plot(Figure):
         """A wrapper around `Plotext.uncolorize`."""
         return plotext.uncolorize(string)
 
+    @staticmethod
+    def transpose(data: list[list[Any]]) -> list[list[Any]]:
+        """A wrapper around `Plotext.transpose`."""
+        return plotext.transpose(data)
+
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
 
@@ -127,6 +132,7 @@ Plot.sin.__doc__ = plotext.sin.__doc__
 Plot.square.__doc__ = plotext.square.__doc__
 Plot.colorize.__doc__ = plotext.colorize.__doc__
 Plot.uncolorize.__doc__ = plotext.uncolorize.__doc__
+Plot.transpose.__doc__ = plotext.transpose.__doc__
 
 
 def themes() -> tuple[str, ...]:
