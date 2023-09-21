@@ -31,10 +31,9 @@ ThemeName = Literal[
     "serious",
     "windows",
 ]
-"""Literal that is the list of theme names defined in Plotext.
+"""Literal type that is the list of theme names defined in Plotext.
 
 Note:
-
     This is a copy of the theme names and will need to be updated if Plotext
     ever adds more. The main reasons for taking this approach are:
 
