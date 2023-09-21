@@ -92,6 +92,23 @@ class Plot(Figure):
         """A wrapper around `Plotext.square`."""
         return plotext.square(periods=periods, length=length, amplitude=amplitude)
 
+    @staticmethod
+    def colorize(
+        string: str,
+        fullground: str | None = None,
+        style: str | None = None,
+        background: str | None = None,
+        show: bool = False,
+    ):
+        """A wrapper around `Plotet.colorize`."""
+        return plotext.colorize(
+            string,
+            fullground=fullground,
+            style=style,
+            background=background,
+            show=show,
+        )
+
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
 
@@ -99,6 +116,7 @@ class Plot(Figure):
 # Hoist the docstrings for the wrapper functions we've added above.
 Plot.sin.__doc__ = plotext.sin.__doc__
 Plot.square.__doc__ = plotext.square.__doc__
+Plot.colorize.__doc__ = plotext.colorize.__doc__
 
 
 def themes() -> tuple[str, ...]:
