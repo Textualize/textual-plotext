@@ -103,7 +103,7 @@ class Plot(Figure):
         style: str | None = None,
         background: Color | None = None,
         show: bool = False,
-    ):
+    ) -> str:
         """A wrapper around `Plotet.colorize`."""
         return plotext.colorize(
             string,
