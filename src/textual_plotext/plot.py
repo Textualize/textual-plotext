@@ -132,6 +132,12 @@ class Plot(Figure):
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
 
+    def save_fig(self, **_: Any):
+        """Stub function. This should not be called within Textual."""
+        # Actually... it might make sense to support this at some point and
+        # might not be too tricky to handle. But for now this is about
+        # allowing plotting within the application.
+
 
 # Hoist the docstrings for the wrapper functions we've added above.
 Plot.sin.__doc__ = plotext.sin.__doc__
