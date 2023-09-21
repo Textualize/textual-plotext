@@ -132,7 +132,7 @@ class Plot(Figure):
     def show(self) -> None:
         """Stub function. This should never be called within Textual."""
 
-    def save_fig(self, **_: Any):
+    def save_fig(self, **_: Any) -> None:
         """Stub function. This should not be called within Textual."""
         # Actually... it might make sense to support this at some point and
         # might not be too tricky to handle. But for now this is about
