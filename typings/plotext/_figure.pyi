@@ -91,7 +91,7 @@ class _figure_class:
     def scatter(
         self,
         *args,
-        marker=None,
+        marker: str | None = None,
         color=None,
         style=None,
         fillx=None,
@@ -103,7 +103,7 @@ class _figure_class:
     def plot(
         self,
         *args,
-        marker=None,
+        marker: str | None = None,
         color=None,
         style=None,
         fillx=None,
@@ -115,7 +115,7 @@ class _figure_class:
     def bar(
         self,
         *args,
-        marker=None,
+        marker: str | None = None,
         color=None,
         fill=None,
         width=None,
@@ -129,7 +129,7 @@ class _figure_class:
     def multiple_bar(
         self,
         *args,
-        marker=None,
+        marker: str | None = None,
         color=None,
         fill=None,
         width=None,
@@ -143,7 +143,7 @@ class _figure_class:
     def stacked_bar(
         self,
         *args,
-        marker=None,
+        marker: str | None = None,
         color=None,
         fill=None,
         width=None,
@@ -158,7 +158,7 @@ class _figure_class:
         self,
         data,
         bins=None,
-        marker=None,
+        marker: str | None = None,
         color=None,
         fill=None,
         norm=None,
@@ -207,10 +207,10 @@ class _figure_class:
         label=None,
     ) -> None: ...
     def event_plot(
-        self, data, marker=None, color=None, orientation=None, side=None
+        self, data, marker: str | None = None, color=None, orientation=None, side=None
     ) -> None: ...
     def eventplot(
-        self, data, marker=None, color=None, orientation=None, side=None
+        self, data, marker: str | None = None, color=None, orientation=None, side=None
     ) -> None: ...
     def vertical_line(self, coordinate, color=None, xside=None) -> None: ...
     def vline(self, coordinate, color=None, xside=None) -> None: ...
@@ -233,7 +233,7 @@ class _figure_class:
         self,
         x=None,
         y=None,
-        marker=None,
+        marker: str | None = None,
         color=None,
         lines=None,
         fill=None,
@@ -247,7 +247,7 @@ class _figure_class:
         y=None,
         radius=None,
         sides=None,
-        marker=None,
+        marker: str | None = None,
         color=None,
         lines=None,
         fill=None,
@@ -265,9 +265,11 @@ class _figure_class:
 
     ############################################################################
     # 2D Plots
-    def matrix_plot(self, matrix, marker=None, style=None, fast=False) -> None: ...
+    def matrix_plot(
+        self, matrix, marker: str | None = None, style=None, fast=False
+    ) -> None: ...
     def image_plot(
-        self, path, marker=None, style=None, fast=False, grayscale=False
+        self, path, marker: str | None = None, style=None, fast=False, grayscale=False
     ) -> None: ...
 
     ############################################################################
