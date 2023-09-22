@@ -252,8 +252,8 @@ class SpecialPlots(ExamplesPane):
                 )
                 for _ in range(100)
             ]  # A random list of times during the day
-            times = self.plt.datetimes_to_string(times)
-            self.plt.event_plot(times)
+            str_times = self.plt.datetimes_to_string(times)
+            self.plt.event_plot(str_times)
 
     class StreamingDataPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#streaming-data"""
