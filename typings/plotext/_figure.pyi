@@ -1,8 +1,18 @@
+"""Type hints for the methods of the Plotext _figure_class class.
+
+NOTE: Some of the work in here is guesswork. There are no type hints inside
+Plotext's code (hence this stub file), and it's not always clear from the
+Plotext code what the type of any given parameter on any given method is.
+
+Corrections are most welcome!
+"""
+
 from __future__ import annotations
 
 from datetime import datetime
 
 class _figure_class:
+    ############################################################################
     # External Set Functions
     def title(self, title: str | None = None) -> None: ...
     def xlabel(self, label: str | None = None, xside: str | None = None) -> None: ...
@@ -57,6 +67,7 @@ class _figure_class:
     def clear_terminal(self, lines: int | None) -> None: ...
     def clr(self, lines: int) -> None: ...
 
+    ############################################################################
     # Plot Functions
     def scatter(
         self,
@@ -164,6 +175,7 @@ class _figure_class:
         label=None,
     ) -> None: ...
 
+    ############################################################################
     # Plotting Tools
     def error(
         self,
@@ -232,12 +244,14 @@ class _figure_class:
     ) -> None: ...
     def indicator(self, value, label=None, color=None, style=None) -> None: ...
 
+    ############################################################################
     # 2D Plots
     def matrix_plot(self, matrix, marker=None, style=None, fast=False) -> None: ...
     def image_plot(
         self, path, marker=None, style=None, fast=False, grayscale=False
     ) -> None: ...
 
+    ############################################################################
     # Date Functions
     def date_form(self, input_form=None, output_form=None) -> None: ...
     def set_time0(self, string, input_form=None) -> None: ...
@@ -249,9 +263,11 @@ class _figure_class:
     def string_to_time(self, string, input_form=None) -> datetime: ...  # TODO
     def strings_to_time(self, string, input_form=None) -> datetime: ...  # TODO
 
+    ############################################################################
     # Build Functions
     def build(self) -> str: ...
 
+    ############################################################################
     # Externally Called Utility
     def plot_size(
         self, width: int | None = None, height: int | None = None
