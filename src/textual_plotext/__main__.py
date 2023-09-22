@@ -329,16 +329,14 @@ class DecoratorPlots(ExamplesPane):
             percentages = [14, 36, 11, 8, 7, 4]
             self.plt.bar(pizzas, percentages)
             self.plt.title("Labelled Bar Plot using Text()")
-            _ = [
+            for i, pizza in enumerate(pizzas):
                 self.plt.text(
-                    pizzas[i],
+                    pizza,
                     x=i + 1,
                     y=percentages[i] + 1.5,
                     alignment="center",
                     color="red",
                 )
-                for i in range(len(pizzas))
-            ]
             self.plt.ylim(0, 38)
 
     class ShapePlot(PlotextPlot):
