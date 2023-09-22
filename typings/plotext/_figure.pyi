@@ -92,7 +92,7 @@ class _figure_class:
         self,
         *args,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         style=None,
         fillx=None,
         filly=None,
@@ -104,7 +104,7 @@ class _figure_class:
         self,
         *args,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         style=None,
         fillx=None,
         filly=None,
@@ -116,7 +116,7 @@ class _figure_class:
         self,
         *args,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         fill=None,
         width=None,
         orientation=None,
@@ -130,7 +130,7 @@ class _figure_class:
         self,
         *args,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         fill=None,
         width=None,
         orientation=None,
@@ -144,7 +144,7 @@ class _figure_class:
         self,
         *args,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         fill=None,
         width=None,
         orientation=None,
@@ -159,7 +159,7 @@ class _figure_class:
         data,
         bins=None,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         fill=None,
         norm=None,
         width=None,
@@ -201,27 +201,41 @@ class _figure_class:
         *args,
         xerr=None,
         yerr=None,
-        color=None,
+        color: Color | None = None,
         xside=None,
         yside=None,
         label=None,
     ) -> None: ...
     def event_plot(
-        self, data, marker: str | None = None, color=None, orientation=None, side=None
+        self,
+        data,
+        marker: str | None = None,
+        color: Color | None = None,
+        orientation=None,
+        side=None,
     ) -> None: ...
     def eventplot(
-        self, data, marker: str | None = None, color=None, orientation=None, side=None
+        self,
+        data,
+        marker: str | None = None,
+        color: Color | None = None,
+        orientation=None,
+        side=None,
     ) -> None: ...
-    def vertical_line(self, coordinate, color=None, xside=None) -> None: ...
-    def vline(self, coordinate, color=None, xside=None) -> None: ...
-    def horizontal_line(self, coordinate, color=None, yside=None) -> None: ...
-    def hline(self, coordinate, color=None, yside=None) -> None: ...
+    def vertical_line(
+        self, coordinate, color: Color | None = None, xside=None
+    ) -> None: ...
+    def vline(self, coordinate, color: Color | None = None, xside=None) -> None: ...
+    def horizontal_line(
+        self, coordinate, color: Color | None = None, yside=None
+    ) -> None: ...
+    def hline(self, coordinate, color: Color | None = None, yside=None) -> None: ...
     def text(
         self,
         label,
         x,
         y,
-        color=None,
+        color: Color | None = None,
         background=None,
         style=None,
         orientation=None,
@@ -234,7 +248,7 @@ class _figure_class:
         x=None,
         y=None,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         lines=None,
         fill=None,
         xside=None,
@@ -248,7 +262,7 @@ class _figure_class:
         radius=None,
         sides=None,
         marker: str | None = None,
-        color=None,
+        color: Color | None = None,
         lines=None,
         fill=None,
         xside=None,
@@ -256,12 +270,14 @@ class _figure_class:
         label=None,
     ) -> None: ...
     def confusion_matrix(
-        self, actual, predicted, color=None, style=None, labels=None
+        self, actual, predicted, color: Color | None = None, style=None, labels=None
     ) -> None: ...
     def cmatrix(
-        self, actual, predicted, color=None, style=None, labels=None
+        self, actual, predicted, color: Color | None = None, style=None, labels=None
     ) -> None: ...
-    def indicator(self, value, label=None, color=None, style=None) -> None: ...
+    def indicator(
+        self, value, label=None, color: Color | None = None, style=None
+    ) -> None: ...
 
     ############################################################################
     # 2D Plots

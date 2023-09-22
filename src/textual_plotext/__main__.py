@@ -292,7 +292,7 @@ class SpecialPlots(ExamplesPane):
             actual = [random.randrange(0, 4) for _ in range(l)]
             predicted = [random.randrange(0, 4) for _ in range(l)]
             labels = ["Autumn", "Spring", "Summer", "Winter"]
-            self.plt.cmatrix(actual, predicted, labels)
+            self.plt.cmatrix(actual, predicted, labels=labels)
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
