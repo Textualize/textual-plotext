@@ -10,11 +10,12 @@ Corrections are most welcome!
 from __future__ import annotations
 
 from typing import Tuple, Union
-from typing_extensions import TypeAlias
+from typing_extensions import Literal, TypeAlias
 
 from datetime import datetime
 
 Color: TypeAlias = Union[str, int, Tuple[int, int, int]]
+Orientation: TypeAlias = Literal["h", "v"]
 
 class _figure_class:
     ############################################################################
@@ -119,7 +120,7 @@ class _figure_class:
         color: Color | None = None,
         fill=None,
         width=None,
-        orientation=None,
+        orientation: Orientation | None = None,
         minimum=None,
         reset_ticks=None,
         xside: str | None = None,
@@ -133,7 +134,7 @@ class _figure_class:
         color: Color | None = None,
         fill=None,
         width=None,
-        orientation=None,
+        orientation: Orientation | None = None,
         minimum=None,
         reset_ticks=None,
         xside: str | None = None,
@@ -147,7 +148,7 @@ class _figure_class:
         color: Color | None = None,
         fill=None,
         width=None,
-        orientation=None,
+        orientation: Orientation | None = None,
         minimum=None,
         reset_ticks=None,
         xside: str | None = None,
@@ -163,7 +164,7 @@ class _figure_class:
         fill=None,
         norm=None,
         width=None,
-        orientation=None,
+        orientation: Orientation | None = None,
         minimum=None,
         xside: str | None = None,
         yside: str | None = None,
@@ -174,7 +175,7 @@ class _figure_class:
         dates,
         data,
         colors=None,
-        orientation=None,
+        orientation: Orientation | None = None,
         xside: str | None = None,
         yside: str | None = None,
         label=None,
@@ -186,7 +187,7 @@ class _figure_class:
         colors=None,
         fill=None,
         width=None,
-        orientation=None,
+        orientation: Orientation | None = None,
         minimum=None,
         reset_ticks=None,
         xside: str | None = None,
@@ -211,7 +212,7 @@ class _figure_class:
         data,
         marker: str | None = None,
         color: Color | None = None,
-        orientation=None,
+        orientation: Orientation | None = None,
         side=None,
     ) -> None: ...
     def eventplot(
@@ -219,7 +220,7 @@ class _figure_class:
         data,
         marker: str | None = None,
         color: Color | None = None,
-        orientation=None,
+        orientation: Orientation | None = None,
         side=None,
     ) -> None: ...
     def vertical_line(
@@ -242,7 +243,7 @@ class _figure_class:
         color: Color | None = None,
         background=None,
         style: str | None = None,
-        orientation=None,
+        orientation: Orientation | None = None,
         alignment=None,
         xside: str | None = None,
         yside: str | None = None,
