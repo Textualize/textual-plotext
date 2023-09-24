@@ -14,6 +14,7 @@ from typing_extensions import Literal, TypeAlias
 
 from datetime import datetime
 
+Alignment: TypeAlias = Literal["left", "center", "right", "top", "bottom", "dynamic"]
 Color: TypeAlias = Union[str, int, Tuple[int, int, int]]
 Orientation: TypeAlias = Literal["horizontal", "vertical"]
 
@@ -244,7 +245,7 @@ class _figure_class:
         background=None,
         style: str | None = None,
         orientation: Orientation | None = None,
-        alignment=None,
+        alignment: Alignment | None = None,
         xside: str | None = None,
         yside: str | None = None,
     ) -> None: ...
