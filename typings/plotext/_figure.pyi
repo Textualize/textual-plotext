@@ -96,8 +96,8 @@ class _figure_class:
         style: str | None = None,
         fillx: float | bool | str | None = None,
         filly: float | bool | str | None = None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def plot(
@@ -108,8 +108,8 @@ class _figure_class:
         style: str | None = None,
         fillx: float | bool | str | None = None,
         filly: float | bool | str | None = None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def bar(
@@ -122,8 +122,8 @@ class _figure_class:
         orientation=None,
         minimum=None,
         reset_ticks=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def multiple_bar(
@@ -136,8 +136,8 @@ class _figure_class:
         orientation=None,
         minimum=None,
         reset_ticks=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         labels=None,
     ) -> None: ...
     def stacked_bar(
@@ -150,8 +150,8 @@ class _figure_class:
         orientation=None,
         minimum=None,
         reset_ticks=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         labels=None,
     ) -> None: ...
     def hist(
@@ -165,8 +165,8 @@ class _figure_class:
         width=None,
         orientation=None,
         minimum=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def candlestick(
@@ -175,8 +175,8 @@ class _figure_class:
         data,
         colors=None,
         orientation=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def box(
@@ -189,8 +189,8 @@ class _figure_class:
         orientation=None,
         minimum=None,
         reset_ticks=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
 
@@ -202,8 +202,8 @@ class _figure_class:
         xerr=None,
         yerr=None,
         color: Color | None = None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def event_plot(
@@ -223,13 +223,17 @@ class _figure_class:
         side=None,
     ) -> None: ...
     def vertical_line(
-        self, coordinate, color: Color | None = None, xside=None
+        self, coordinate, color: Color | None = None, xside: str | None = None
     ) -> None: ...
-    def vline(self, coordinate, color: Color | None = None, xside=None) -> None: ...
+    def vline(
+        self, coordinate, color: Color | None = None, xside: str | None = None
+    ) -> None: ...
     def horizontal_line(
-        self, coordinate, color: Color | None = None, yside=None
+        self, coordinate, color: Color | None = None, yside: str | None = None
     ) -> None: ...
-    def hline(self, coordinate, color: Color | None = None, yside=None) -> None: ...
+    def hline(
+        self, coordinate, color: Color | None = None, yside: str | None = None
+    ) -> None: ...
     def text(
         self,
         label,
@@ -240,8 +244,8 @@ class _figure_class:
         style: str | None = None,
         orientation=None,
         alignment=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
     ) -> None: ...
     def rectangle(
         self,
@@ -251,8 +255,8 @@ class _figure_class:
         color: Color | None = None,
         lines=None,
         fill=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def polygon(
@@ -265,8 +269,8 @@ class _figure_class:
         color: Color | None = None,
         lines=None,
         fill=None,
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         label=None,
     ) -> None: ...
     def confusion_matrix(
