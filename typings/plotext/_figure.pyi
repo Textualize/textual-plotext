@@ -100,7 +100,7 @@ class _figure_class:
         filly: float | bool | str | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def plot(
         self,
@@ -112,7 +112,7 @@ class _figure_class:
         filly: float | bool | str | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def bar(
         self,
@@ -126,7 +126,7 @@ class _figure_class:
         reset_ticks: bool | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def multiple_bar(
         self,
@@ -169,7 +169,7 @@ class _figure_class:
         minimum: float | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def candlestick(
         self,
@@ -179,7 +179,7 @@ class _figure_class:
         orientation: Orientation | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def box(
         self,
@@ -193,7 +193,7 @@ class _figure_class:
         reset_ticks: bool | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
 
     ############################################################################
@@ -206,7 +206,7 @@ class _figure_class:
         color: Color | None = None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def event_plot(
         self,
@@ -259,7 +259,7 @@ class _figure_class:
         fill=None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def polygon(
         self,
@@ -273,7 +273,7 @@ class _figure_class:
         fill=None,
         xside: str | None = None,
         yside: str | None = None,
-        label=None,
+        label: str | None = None,
     ) -> None: ...
     def confusion_matrix(
         self,
@@ -292,7 +292,11 @@ class _figure_class:
         labels=None,
     ) -> None: ...
     def indicator(
-        self, value, label=None, color: Color | None = None, style: str | None = None
+        self,
+        value,
+        label: str | None = None,
+        color: Color | None = None,
+        style: str | None = None,
     ) -> None: ...
 
     ############################################################################
