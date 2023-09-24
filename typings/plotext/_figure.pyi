@@ -93,7 +93,7 @@ class _figure_class:
         *args,
         marker: str | None = None,
         color: Color | None = None,
-        style=None,
+        style: str | None = None,
         fillx=None,
         filly=None,
         xside=None,
@@ -105,7 +105,7 @@ class _figure_class:
         *args,
         marker: str | None = None,
         color: Color | None = None,
-        style=None,
+        style: str | None = None,
         fillx=None,
         filly=None,
         xside=None,
@@ -237,7 +237,7 @@ class _figure_class:
         y,
         color: Color | None = None,
         background=None,
-        style=None,
+        style: str | None = None,
         orientation=None,
         alignment=None,
         xside=None,
@@ -270,22 +270,37 @@ class _figure_class:
         label=None,
     ) -> None: ...
     def confusion_matrix(
-        self, actual, predicted, color: Color | None = None, style=None, labels=None
+        self,
+        actual,
+        predicted,
+        color: Color | None = None,
+        style: str | None = None,
+        labels=None,
     ) -> None: ...
     def cmatrix(
-        self, actual, predicted, color: Color | None = None, style=None, labels=None
+        self,
+        actual,
+        predicted,
+        color: Color | None = None,
+        style: str | None = None,
+        labels=None,
     ) -> None: ...
     def indicator(
-        self, value, label=None, color: Color | None = None, style=None
+        self, value, label=None, color: Color | None = None, style: str | None = None
     ) -> None: ...
 
     ############################################################################
     # 2D Plots
     def matrix_plot(
-        self, matrix, marker: str | None = None, style=None, fast=False
+        self, matrix, marker: str | None = None, style: str | None = None, fast=False
     ) -> None: ...
     def image_plot(
-        self, path, marker: str | None = None, style=None, fast=False, grayscale=False
+        self,
+        path,
+        marker: str | None = None,
+        style: str | None = None,
+        fast=False,
+        grayscale=False,
     ) -> None: ...
 
     ############################################################################
