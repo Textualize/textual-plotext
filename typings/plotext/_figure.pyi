@@ -15,7 +15,7 @@ from typing_extensions import Literal, TypeAlias
 from datetime import datetime
 
 Color: TypeAlias = Union[str, int, Tuple[int, int, int]]
-Orientation: TypeAlias = Literal["h", "v"]
+Orientation: TypeAlias = Literal["horizontal", "vertical"]
 
 class _figure_class:
     ############################################################################
