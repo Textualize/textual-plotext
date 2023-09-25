@@ -27,6 +27,7 @@ class Weather(PlotextPlot):
     """A widget for plotting weather data."""
 
     marker: reactive[str] = reactive("sd")
+    """The type of marker to use for the plot."""
 
     def __init__(
         self,
