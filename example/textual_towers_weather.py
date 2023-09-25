@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from itertools import cycle
 from json import loads
 from typing import Any
 from typing_extensions import Final
@@ -13,6 +14,7 @@ from textual import on, work
 from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.message import Message
+from textual.reactive import reactive
 from textual.widgets import Header, Footer
 
 from textual_plotext import PlotextPlot
@@ -23,6 +25,8 @@ TEXTUAL_ICBM: Final[tuple[float, float]] = (55.9533, -3.1883)
 
 class Weather(PlotextPlot):
     """A widget for plotting weather data."""
+
+    marker: reactive[str] = reactive("sd")
 
     def __init__(
         self,
@@ -65,7 +69,7 @@ class Weather(PlotextPlot):
         self.plt.title(self._title)
         self.plt.ylabel(self._unit)
         self.plt.xlabel("Time")
-        self.plt.plot(self._time, self._data)
+        self.plt.plot(self._time, self._data, marker=self.marker)
 
 
 class TextualTowersWeatherApp(App[None]):
@@ -85,6 +89,7 @@ class TextualTowersWeatherApp(App[None]):
 
     BINDINGS = [
         ("d", "app.toggle_dark", "Toggle light/dark mode"),
+        ("m", "marker", "Cycle example markers"),
         ("q", "app.quit", "Quit the example"),
     ]
 
@@ -100,6 +105,7 @@ class TextualTowersWeatherApp(App[None]):
 
     def on_mount(self) -> None:
         """Start the process of gathering the weather data."""
+        self._markers = cycle(("dot", "hd", "fhd", "braille", "sd"))
         self.gather_weather()
 
     @dataclass
@@ -145,6 +151,12 @@ class TextualTowersWeatherApp(App[None]):
         self.query_one("#windspeed", Weather).update(event.history, "windspeed_10m")
         self.query_one("#precipitation", Weather).update(event.history, "precipitation")
         self.query_one("#pressure", Weather).update(event.history, "surface_pressure")
+
+    def action_marker(self) -> None:
+        """Cycle to the next marker type."""
+        marker = next(self._markers)
+        for plot in self.query(Weather):
+            plot.marker = marker
 
 
 if __name__ == "__main__":
