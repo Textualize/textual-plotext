@@ -50,7 +50,7 @@ The main differences to note are:
 
 - We're not directly importing `plotext`.
 - We use `self.plt` rather than `plt`.
-- We don't call Plotext's `show` method, Textual takes care of this.
+- We don't call Plotext's `show` method, `PlotextPlot` takes care of this.
 
 ## What is supported?
 
