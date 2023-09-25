@@ -200,6 +200,7 @@ class BarPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#histogram-plot"""
 
         def on_mount(self) -> None:
+            """Set up the data for the example."""
             l = 7 * 10**4
             self.data1 = [random.gauss(0, 1) for _ in range(10 * l)]
             self.data2 = [random.gauss(3, 1) for _ in range(6 * l)]
@@ -234,6 +235,7 @@ class SpecialPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#error-plot"""
 
         def on_mount(self) -> None:
+            """Set up the data for the example."""
             l = 20
             self.ye = [random.random() for _ in range(l)]
             self.xe = [random.random() for _ in range(l)]
@@ -247,6 +249,7 @@ class SpecialPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#event-plot"""
 
         def on_mount(self) -> None:
+            """Set up the data for the example."""
             self.plt.date_form("H:M")
             self.times = self.plt.datetimes_to_string(
                 [
@@ -300,6 +303,7 @@ class SpecialPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#confusion-matrix"""
 
         def on_mount(self) -> None:
+            """Set up the data for the example."""
             l = 300
             self.actual = [random.randrange(0, 4) for _ in range(l)]
             self.predicted = [random.randrange(0, 4) for _ in range(l)]
