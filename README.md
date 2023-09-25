@@ -52,6 +52,14 @@ The main differences to note are:
 - We use `self.plt` rather than `plt`.
 - We don't call Plotext's `show` method, `PlotextPlot` takes care of this.
 
+## Installation
+
+The library can be installed from PyPi:
+
+```sh
+$ pip install textual-plotext
+```
+
 ## Performance considerations
 
 Because your `plot` method will be called each time the plot needs to be
