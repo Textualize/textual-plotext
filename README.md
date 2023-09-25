@@ -5,7 +5,52 @@ library](https://github.com/piccolomo/plotext).
 
 ## Introduction
 
-TODO.
+The library makes one widget available: `PlotextPlot`. The intended use of
+`PlotextPlot` is that you create a plot widget by inheriting from it, and
+then implement the `plot` method. Within the `plot` method you can reference
+the `plt` property (`self.plt`) and, with some caveats (see below), make all
+the sorts of calls you'd normally make when using Plotext.
+
+Let's take [the first
+example](https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot)
+from [the Plotext README](https://github.com/piccolomo/plotext#readme):
+
+```python
+import plotext as plt
+y = plt.sin() # sinusoidal test signal
+plt.scatter(y)
+plt.title("Scatter Plot") # to apply a title
+plt.show() # to finally plot
+```
+
+The Textual equivalent of this (including everything needed to make this a
+working Textual application) is:
+
+```python
+from textual.app import App, ComposeResult
+from textual_plotext import PlotextPlot
+
+class ScatterPlot(PlotextPlot):
+
+    def plot(self) -> None:
+        y = self.plt.sin() # sinusoidal test signal
+        self.plt.scatter(y)
+        self.plt.title("Scatter Plot") # to apply a title
+
+class ScatterApp(App[None]):
+
+    def compose(self) -> ComposeResult:
+        yield ScatterPlot()
+
+if __name__ == "__main__":
+    ScatterApp().run()
+```
+
+The main differences to note are:
+
+- We're not directly importing `plotext`.
+- We use `self.plt` rather than `plt`.
+- We don't call Plotext's `show` method, Textual takes care of this.
 
 ## What is supported?
 
