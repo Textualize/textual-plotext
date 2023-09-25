@@ -68,6 +68,20 @@ $ python -m textual_plotext
 
 The demo app includes many of the examples shown in the Plotext README.
 
+## Performance considerations
+
+Because your `plot` method will be called each time the plot needs to be
+rendered (if the widget's size changes, for example), it's best to do as
+little processing as possible in the method. If you want to create your
+plotting widget so that it gathers up and processes the data it wants to
+show do *not* do this inside `plot`; instead consider doing it inside the
+widget's `on_mount` method (perhaps making use of the [Textual worker
+API](https://textual.textualize.io/guide/workers/) to gather the data in the
+background).
+
+In other words: only use the `plot` method to configure and declare the
+plot, don't do any other work in there.
+
 ## Longer example
 
 For a longer example of how to use the `PlotextPlot` widget, take a look at
@@ -82,20 +96,6 @@ As a bonus it also shows an example of using Textual's [worker
 API](https://textual.textualize.io/guide/workers/) to create a [threaded
 worker](https://textual.textualize.io/guide/workers/#thread-workers) to pull
 the data from the backend.
-
-## Performance considerations
-
-Because your `plot` method will be called each time the plot needs to be
-rendered (if the widget's size changes, for example), it's best to do as
-little processing as possible in the method. If you want to create your
-plotting widget so that it gathers up and processes the data it wants to
-show do *not* do this inside `plot`; instead consider doing it inside the
-widget's `on_mount` method (perhaps making use of the [Textual worker
-API](https://textual.textualize.io/guide/workers/) to gather the data in the
-background).
-
-In other words: only use the `plot` method to configure and declare the
-plot, don't do any other work in there.
 
 ## What is supported?
 
