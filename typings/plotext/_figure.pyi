@@ -5,6 +5,10 @@ Plotext's code (hence this stub file), and it's not always clear from the
 Plotext code what the type of any given parameter on any given method is.
 
 Corrections are most welcome!
+
+ALSO NOTE: For the moment this is simply for support while developing
+textual-plotext; but this could turn into something that provides more
+general support for the type-hinting of Plotext.
 """
 
 from __future__ import annotations
