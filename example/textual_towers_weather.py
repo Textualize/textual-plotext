@@ -89,8 +89,8 @@ class TextualTowersWeatherApp(App[None]):
 
     @work(thread=True, exclusive=True)
     def gather_weather(self) -> None:
-        end_date = datetime.now() - timedelta(
-            days=365
+        end_date = (
+            datetime.now() - timedelta(days=365) + timedelta(weeks=1)
         )  # Yes, yes, I know. It's just an example.
         start_date = end_date - timedelta(weeks=2)
         self.post_message(
