@@ -54,7 +54,7 @@ The main differences to note are:
 
 ## What is supported?
 
-The following utility functions are provided:
+The following utility functions are provided (via `self.plt`):
 
 - `plt.sin`
 - `plt.square`
