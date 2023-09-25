@@ -52,6 +52,20 @@ The main differences to note are:
 - We use `self.plt` rather than `plt`.
 - We don't call Plotext's `show` method, `PlotextPlot` takes care of this.
 
+## Performance considerations
+
+Because your `plot` method will be called each time the plot needs to be
+rendered (if the widget's size changes, for example), it's best to do as
+little processing as possible in the method. If you want to create your
+plotting widget so that it gathers up and processes the data it wants to
+show do *not* do this inside `plot`; instead consider doing it inside the
+widget's `on_mount` method (perhaps making use of the [Textual worker
+API](https://textual.textualize.io/guide/workers/) to gather the data in the
+background).
+
+In other words: only use the `plot` method to configure and declare the
+plot, don't do any other work in there.
+
 ## What is supported?
 
 The following utility functions are provided (via `self.plt`):
