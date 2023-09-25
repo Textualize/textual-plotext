@@ -185,20 +185,20 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def box(
-        self,
-        *args,
-        quintuples=None,
-        colors=None,
-        fill=None,
-        width=None,
-        orientation: Orientation | None = None,
-        minimum: float | None = None,
-        reset_ticks: bool | None = None,
-        xside: str | None = None,
-        yside: str | None = None,
-        label: str | None = None,
-    ) -> None: ...
+    # def box(
+    #     self,
+    #     *args,
+    #     quintuples=None,
+    #     colors=None,
+    #     fill=None,
+    #     width=None,
+    #     orientation: Orientation | None = None,
+    #     minimum: float | None = None,
+    #     reset_ticks: bool | None = None,
+    #     xside: str | None = None,
+    #     yside: str | None = None,
+    #     label: str | None = None,
+    # ) -> None: ...
 
     ############################################################################
     # Plotting Tools
