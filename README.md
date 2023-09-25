@@ -5,11 +5,11 @@ library](https://github.com/piccolomo/plotext).
 
 ## Introduction
 
-The library makes one widget available: `PlotextPlot`. The intended use of
-`PlotextPlot` is that you create a plot widget by inheriting from it, and
-then implement the `plot` method. Within the `plot` method you can reference
-the `plt` property (`self.plt`) and, with some caveats (see below), make all
-the sorts of calls you'd normally make when using Plotext.
+The library makes one widget available: `PlotextPlot`. Your plots are made
+inheriting from `PlotextPlot` and implementing the `plot` method. Within the
+`plot` method you can reference the `plt` property (`self.plt`) and, with
+some caveats (see below), write plotting code just as you would when using
+Plotext.
 
 Let's take [the first
 example](https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot)
@@ -24,7 +24,7 @@ plt.show() # to finally plot
 ```
 
 The Textual equivalent of this (including everything needed to make this a
-working Textual application) is:
+fully-working Textual application) is:
 
 ```python
 from textual.app import App, ComposeResult
