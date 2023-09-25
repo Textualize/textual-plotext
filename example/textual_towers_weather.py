@@ -148,10 +148,17 @@ class TextualTowersWeatherApp(App[None]):
         Args:
             event: The weather data reception event.
         """
-        self.query_one("#temperature", Weather).update(event.history, "temperature_2m")
-        self.query_one("#windspeed", Weather).update(event.history, "windspeed_10m")
-        self.query_one("#precipitation", Weather).update(event.history, "precipitation")
-        self.query_one("#pressure", Weather).update(event.history, "surface_pressure")
+        with self.batch_update():
+            self.query_one("#temperature", Weather).update(
+                event.history, "temperature_2m"
+            )
+            self.query_one("#windspeed", Weather).update(event.history, "windspeed_10m")
+            self.query_one("#precipitation", Weather).update(
+                event.history, "precipitation"
+            )
+            self.query_one("#pressure", Weather).update(
+                event.history, "surface_pressure"
+            )
 
     def action_marker(self) -> None:
         """Cycle to the next marker type."""
