@@ -58,9 +58,18 @@ class TextualTowersWeatherApp(App[None]):
     Grid {
         grid-size: 2;
     }
+
+    Weather {
+        padding: 1 2;
+    }
     """
 
     TITLE = "Weather at Textual Towers Around a Year Ago"
+
+    BINDINGS = [
+        ("d", "app.toggle_dark", "Toggle light/dark mode"),
+        ("q", "app.quit", "Quit the example"),
+    ]
 
     def compose(self) -> ComposeResult:
         yield Header()
