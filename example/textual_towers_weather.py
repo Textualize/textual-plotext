@@ -57,11 +57,10 @@ class TextualTowersWeatherApp(App[None]):
     CSS = """
     Grid {
         grid-size: 2;
-        grid-gutter: 1;
     }
     """
 
-    TITLE = "Recent Weather at Textual Towers"
+    TITLE = "Weather at Textual Towers Around a Year Ago"
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -81,7 +80,9 @@ class TextualTowersWeatherApp(App[None]):
 
     @work(thread=True, exclusive=True)
     def gather_weather(self) -> None:
-        end_date = datetime.now() - timedelta(days=1)
+        end_date = datetime.now() - timedelta(
+            days=365
+        )  # Yes, yes, I know. It's just an example.
         start_date = end_date - timedelta(weeks=2)
         self.post_message(
             self.WeatherData(
