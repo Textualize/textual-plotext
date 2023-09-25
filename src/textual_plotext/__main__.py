@@ -35,6 +35,10 @@ class ExamplesPane(VerticalScroll):
     """Base class for a pane of examples."""
 
     DEFAULT_CSS = """
+    ExamplesPane {
+        scrollbar-gutter: stable;
+    }
+
     ExamplesPane Label {
         margin: 2;
         width: 1fr;
