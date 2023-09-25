@@ -96,7 +96,7 @@ class _figure_class:
     # Plot Functions
     def scatter(
         self,
-        *args,
+        *args: list[float],
         marker: str | None = None,
         color: Color | None = None,
         style: str | None = None,
@@ -108,7 +108,7 @@ class _figure_class:
     ) -> None: ...
     def plot(
         self,
-        *args,
+        *args: list[float],
         marker: str | None = None,
         color: Color | None = None,
         style: str | None = None,
@@ -120,7 +120,7 @@ class _figure_class:
     ) -> None: ...
     def bar(
         self,
-        *args,
+        *args: list[float],
         marker: str | None = None,
         color: Color | None = None,
         fill=None,
@@ -134,7 +134,7 @@ class _figure_class:
     ) -> None: ...
     def multiple_bar(
         self,
-        *args,
+        *args: list[float],
         marker: str | None = None,
         color: Color | None = None,
         fill=None,
@@ -148,7 +148,7 @@ class _figure_class:
     ) -> None: ...
     def stacked_bar(
         self,
-        *args,
+        *args: list[float],
         marker: str | None = None,
         color: Color | None = None,
         fill=None,
@@ -162,7 +162,7 @@ class _figure_class:
     ) -> None: ...
     def hist(
         self,
-        data,
+        data: list[float],
         bins=None,
         marker: str | None = None,
         color: Color | None = None,
@@ -204,7 +204,7 @@ class _figure_class:
     # Plotting Tools
     def error(
         self,
-        *args,
+        *args: list[float],
         xerr=None,
         yerr=None,
         color: Color | None = None,
