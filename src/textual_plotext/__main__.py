@@ -285,14 +285,15 @@ class SpecialPlots(ExamplesPane):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#matrix-plot"""
 
         def plot(self) -> None:
-            cols, rows = 200, 45
             p = 1
             matrix = [
-                [(abs(r - rows / 2) + abs(c - cols / 2)) ** p for c in range(cols)]
-                for r in range(rows)
+                [
+                    (abs(r - self.size.height / 2) + abs(c - self.size.width / 2)) ** p
+                    for c in range(self.size.width)
+                ]
+                for r in range(self.size.height)
             ]
             self.plt.matrix_plot(matrix)
-            self.plt.plotsize(cols, rows)
             self.plt.title("Matrix Plot")
 
     class ConfusionMatrix(PlotextPlot):
