@@ -60,6 +60,14 @@ The library can be installed from PyPi:
 $ pip install textual-plotext
 ```
 
+Once installed you can quickly test the library by running the demo:
+
+```sh
+$ python -m textual_plotext
+```
+
+The demo app includes many of the examples shown in the Plotext README.
+
 ## Performance considerations
 
 Because your `plot` method will be called each time the plot needs to be
