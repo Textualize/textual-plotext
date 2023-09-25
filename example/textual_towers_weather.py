@@ -48,7 +48,7 @@ class Weather(PlotextPlot):
         """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._title = title
-        self._unit = "?"
+        self._unit = "Loading..."
         self._data: list[float] = []
         self._time: list[str] = []
 
