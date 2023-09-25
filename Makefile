@@ -17,6 +17,10 @@ isort         := $(run) isort
 demo:
 	$(python) -m $(package)
 
+.PHONY: example
+example:
+	$(python) example/textual_towers_weather.py
+
 ##############################################################################
 # Setup/update packages the system requires.
 .PHONY: setup
