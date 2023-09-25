@@ -163,7 +163,7 @@ class _figure_class:
     def hist(
         self,
         data: list[float],
-        bins=None,
+        bins: int | None = None,
         marker: str | None = None,
         color: Color | None = None,
         fill=None,
