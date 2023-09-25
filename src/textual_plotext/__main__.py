@@ -199,15 +199,17 @@ class BarPlots(ExamplesPane):
     class HistogramPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#histogram-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             l = 7 * 10**4
-            data1 = [random.gauss(0, 1) for _ in range(10 * l)]
-            data2 = [random.gauss(3, 1) for _ in range(6 * l)]
-            data3 = [random.gauss(6, 1) for _ in range(4 * l)]
-            bins = 60
-            self.plt.hist(data1, bins, label="mean 0")
-            self.plt.hist(data2, bins, label="mean 3")
-            self.plt.hist(data3, bins, label="mean 6")
+            self.data1 = [random.gauss(0, 1) for _ in range(10 * l)]
+            self.data2 = [random.gauss(3, 1) for _ in range(6 * l)]
+            self.data3 = [random.gauss(6, 1) for _ in range(4 * l)]
+            self.bins = 60
+
+        def plot(self) -> None:
+            self.plt.hist(self.data1, self.bins, label="mean 0")
+            self.plt.hist(self.data2, self.bins, label="mean 3")
+            self.plt.hist(self.data3, self.bins, label="mean 6")
             self.plt.title("Histogram Plot")
 
     def compose(self) -> ComposeResult:
@@ -231,33 +233,38 @@ class SpecialPlots(ExamplesPane):
     class ErrorPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#error-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             l = 20
-            n = 1
-            ye = [random.random() * n for _ in range(l)]
-            xe = [random.random() * n for _ in range(l)]
-            y = self.plt.sin(length=l)
-            self.plt.error(y, xerr=xe, yerr=ye)
+            self.ye = [random.random() for _ in range(l)]
+            self.xe = [random.random() for _ in range(l)]
+            self.data = self.plt.sin(length=l)
+
+        def plot(self) -> None:
+            self.plt.error(self.data, xerr=self.xe, yerr=self.ye)
             self.plt.title("Error Plot")
 
     class EventPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#event-plot"""
 
+        def on_mount(self) -> None:
+            self.plt.date_form("H:M")
+            self.times = self.plt.datetimes_to_string(
+                [
+                    datetime(
+                        2022,
+                        3,
+                        27,
+                        random.randint(0, 23),
+                        random.randint(0, 59),
+                        random.randint(0, 59),
+                    )
+                    for _ in range(100)
+                ]
+            )
+
         def plot(self) -> None:
-            self.plt.date_form("H:M")  # also just "H" looks ok
-            times = [
-                datetime(
-                    2022,
-                    3,
-                    27,
-                    random.randint(0, 23),
-                    random.randint(0, 59),
-                    random.randint(0, 59),
-                )
-                for _ in range(100)
-            ]  # A random list of times during the day
-            str_times = self.plt.datetimes_to_string(times)
-            self.plt.event_plot(str_times)
+            self.plt.date_form("H:M")
+            self.plt.event_plot(self.times)
 
     class StreamingDataPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#streaming-data"""
@@ -291,12 +298,14 @@ class SpecialPlots(ExamplesPane):
     class ConfusionMatrix(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#confusion-matrix"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             l = 300
-            actual = [random.randrange(0, 4) for _ in range(l)]
-            predicted = [random.randrange(0, 4) for _ in range(l)]
+            self.actual = [random.randrange(0, 4) for _ in range(l)]
+            self.predicted = [random.randrange(0, 4) for _ in range(l)]
+
+        def plot(self) -> None:
             labels = ["Autumn", "Spring", "Summer", "Winter"]
-            self.plt.cmatrix(actual, predicted, labels=labels)
+            self.plt.cmatrix(self.actual, self.predicted, labels=labels)
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
