@@ -98,13 +98,11 @@ class TextualTowersWeatherApp(App[None]):
                 loads(
                     urlopen(
                         Request(
-                            (
-                                "https://archive-api.open-meteo.com/v1/archive?"
-                                f"latitude={TEXTUAL_ICBM[0]}&longitude={TEXTUAL_ICBM[1]}"
-                                f"&start_date={start_date.strftime('%Y-%m-%d')}"
-                                f"&end_date={end_date.strftime('%Y-%m-%d')}"
-                                "&hourly=temperature_2m,precipitation,surface_pressure,windspeed_10m"
-                            )
+                            "https://archive-api.open-meteo.com/v1/archive?"
+                            f"latitude={TEXTUAL_ICBM[0]}&longitude={TEXTUAL_ICBM[1]}"
+                            f"&start_date={start_date.strftime('%Y-%m-%d')}"
+                            f"&end_date={end_date.strftime('%Y-%m-%d')}"
+                            "&hourly=temperature_2m,precipitation,surface_pressure,windspeed_10m"
                         )
                     )
                     .read()
