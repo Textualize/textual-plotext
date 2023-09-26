@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 from itertools import cycle
 from json import loads
 from typing import Any
-from typing_extensions import Final
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
@@ -16,7 +15,8 @@ from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.message import Message
 from textual.reactive import reactive, var
-from textual.widgets import Header, Footer
+from textual.widgets import Footer, Header
+from typing_extensions import Final
 
 from textual_plotext import PlotextPlot
 

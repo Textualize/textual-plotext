@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
+from rich.text import Text
 from textual.app import RenderResult
 from textual.reactive import var
 from textual.widget import Widget
-
-from rich.text import Text
 
 from .plot import Plot, ThemeName
 

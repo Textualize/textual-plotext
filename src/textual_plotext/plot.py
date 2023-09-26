@@ -7,12 +7,12 @@ care of adding in some of the utility methods that will bee needed.
 """
 
 from __future__ import annotations
-from typing import Any, Tuple, Union
 
-from typing_extensions import Literal, TypeAlias, get_args
+from typing import Any, Tuple, Union
 
 import plotext
 from plotext._figure import _figure_class as Figure
+from typing_extensions import Literal, TypeAlias, get_args
 
 ThemeName = Literal[
     "clear",
