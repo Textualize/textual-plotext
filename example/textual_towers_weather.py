@@ -183,7 +183,7 @@ class TextualTowersWeatherApp(App[None]):
     def watch_marker(self) -> None:
         """React to the marker type being changed."""
         self.sub_title = self.MARKERS[self.marker]
-        for plot in self.query(Weather):
+        for plot in self.query(Weather).results(Weather):
             plot.marker = self.marker
 
     def action_marker(self) -> None:
