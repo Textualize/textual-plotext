@@ -8,6 +8,7 @@ from itertools import cycle
 from json import loads
 from typing import Any
 from typing_extensions import Final
+from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 from textual import on, work
@@ -134,23 +135,31 @@ class TextualTowersWeatherApp(App[None]):
             datetime.now() - timedelta(days=365) + timedelta(weeks=1)
         )  # Yes, yes, I know. It's just an example.
         start_date = end_date - timedelta(weeks=2)  # Two! Weeks!
-        self.post_message(
-            self.WeatherData(
-                loads(
-                    urlopen(
-                        Request(
-                            "https://archive-api.open-meteo.com/v1/archive?"
-                            f"latitude={TEXTUAL_ICBM[0]}&longitude={TEXTUAL_ICBM[1]}"
-                            f"&start_date={start_date.strftime('%Y-%m-%d')}"
-                            f"&end_date={end_date.strftime('%Y-%m-%d')}"
-                            "&hourly=temperature_2m,precipitation,surface_pressure,windspeed_10m"
+        try:
+            self.post_message(
+                self.WeatherData(
+                    loads(
+                        urlopen(
+                            Request(
+                                "https://archive-api.open-meteo.com/v1/archive?"
+                                f"latitude={TEXTUAL_ICBM[0]}&longitude={TEXTUAL_ICBM[1]}"
+                                f"&start_date={start_date.strftime('%Y-%m-%d')}"
+                                f"&end_date={end_date.strftime('%Y-%m-%d')}"
+                                "&hourly=temperature_2m,precipitation,surface_pressure,windspeed_10m"
+                            )
                         )
+                        .read()
+                        .decode("utf-8")
                     )
-                    .read()
-                    .decode("utf-8")
                 )
             )
-        )
+        except URLError as error:
+            self.notify(
+                str(error),
+                title="Error loading weather data",
+                severity="error",
+                timeout=6,
+            )
 
     @on(WeatherData)
     def populate_plots(self, event: WeatherData) -> None:
