@@ -1,6 +1,6 @@
 # textual-plotext
 
-![//](./textual-plotext-example.svg)
+![//](./textual-plotext-example.png)
 
 A Textual widget wrapper for the [Plotext plotting
 library](https://github.com/piccolomo/plotext).
