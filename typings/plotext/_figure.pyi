@@ -270,7 +270,7 @@ class _figure_class:
         x=None,
         y=None,
         radius=None,
-        sides=None,
+        sides: int | None = None,
         marker: str | None = None,
         color: Color | None = None,
         lines=None,
