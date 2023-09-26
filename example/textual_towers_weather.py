@@ -35,7 +35,7 @@ class Weather(PlotextPlot):
         title: str,
         *,
         name: str | None = None,
-        id: str | None = None,
+        id: str | None = None,  # pylint:disable=redefined-builtin
         classes: str | None = None,
         disabled: bool = False,
     ) -> None:
@@ -140,23 +140,18 @@ class TextualTowersWeatherApp(App[None]):
         )  # Yes, yes, I know. It's just an example.
         start_date = end_date - timedelta(weeks=2)  # Two! Weeks!
         try:
-            self.post_message(
-                self.WeatherData(
-                    loads(
-                        urlopen(
-                            Request(
-                                "https://archive-api.open-meteo.com/v1/archive?"
-                                f"latitude={TEXTUAL_ICBM[0]}&longitude={TEXTUAL_ICBM[1]}"
-                                f"&start_date={start_date.strftime('%Y-%m-%d')}"
-                                f"&end_date={end_date.strftime('%Y-%m-%d')}"
-                                "&hourly=temperature_2m,precipitation,surface_pressure,windspeed_10m"
-                            )
-                        )
-                        .read()
-                        .decode("utf-8")
-                    )
+            with urlopen(
+                Request(
+                    "https://archive-api.open-meteo.com/v1/archive?"
+                    f"latitude={TEXTUAL_ICBM[0]}&longitude={TEXTUAL_ICBM[1]}"
+                    f"&start_date={start_date.strftime('%Y-%m-%d')}"
+                    f"&end_date={end_date.strftime('%Y-%m-%d')}"
+                    "&hourly=temperature_2m,precipitation,surface_pressure,windspeed_10m"
                 )
-            )
+            ) as result:
+                self.post_message(
+                    self.WeatherData(loads(result.read().decode("utf-8")))
+                )
         except URLError as error:
             self.notify(
                 str(error),
