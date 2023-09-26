@@ -124,7 +124,7 @@ class _figure_class:
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
-        width=None,
+        width: float | None = None,
         orientation: Orientation | None = None,
         minimum: float | None = None,
         reset_ticks: bool | None = None,
