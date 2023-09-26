@@ -3,6 +3,8 @@
 .DEFAULT_GOAL := help
 package       := textual_plotext
 code          := src/$(package)
+types         := typings/
+examples      := example/
 run           := poetry run
 python        := $(run) python
 textual       := $(run) textual
@@ -36,11 +38,11 @@ update:			# Update the development environment
 # Reformatting tools.
 .PHONY: black
 black:				# Run black over the code
-	$(black) $(code)
+	$(black) $(code) $(examples)
 
 .PHONY: isort
 isort:				# Run isort over the code
-	$(isort) --profile black $(code)
+	$(isort) --profile black $(code) $(examples)
 
 .PHONY: reformat
 reformat: isort black		# Run all the formatting tools over the code
@@ -49,15 +51,15 @@ reformat: isort black		# Run all the formatting tools over the code
 # Checking/testing/linting/etc.
 .PHONY: lint
 lint:				# Run Pylint over the library
-	$(lint) $(code)
+	$(lint) $(code) $(examples)
 
 .PHONY: typecheck
 typecheck:			# Perform static type checks with mypy
-	$(mypy) --scripts-are-modules $(code) typings
+	$(mypy) --scripts-are-modules $(code) $(examples) $(types)
 
 .PHONY: stricttypecheck
 stricttypecheck:	        # Perform strict static type checks with mypy
-	$(mypy) --scripts-are-modules --strict $(code) typings
+	$(mypy) --scripts-are-modules --strict $(code) $(examples) $(types)
 
 .PHONY: checkall
 checkall: lint stricttypecheck	# Check all the things
