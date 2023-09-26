@@ -121,44 +121,44 @@ class _figure_class:
     def bar(
         self,
         *args: Sequence[Any],
+        xside=None,
+        yside=None,
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
         width: float | None = None,
         orientation: Orientation | None = None,
+        label=None,
         minimum: float | None = None,
         reset_ticks: bool | None = None,
-        xside: str | None = None,
-        yside: str | None = None,
-        label: str | None = None,
     ) -> None: ...
     def multiple_bar(
         self,
         *args: Sequence[Any],
+        xside=None,
+        yside=None,
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
         width: float | None = None,
         orientation: Orientation | None = None,
+        label: str | None = None,
         minimum: float | None = None,
         reset_ticks: bool | None = None,
-        xside: str | None = None,
-        yside: str | None = None,
-        labels=None,
     ) -> None: ...
     def stacked_bar(
         self,
         *args: Sequence[Any],
+        xside=None,
+        yside=None,
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
         width: float | None = None,
         orientation: Orientation | None = None,
+        label: str | None = None,
         minimum: float | None = None,
         reset_ticks: bool | None = None,
-        xside: str | None = None,
-        yside: str | None = None,
-        labels=None,
     ) -> None: ...
     def hist(
         self,
@@ -185,20 +185,6 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    # def box(
-    #     self,
-    #     *args,
-    #     quintuples=None,
-    #     colors=None,
-    #     fill: bool | None = None,
-    #     width=None,
-    #     orientation: Orientation | None = None,
-    #     minimum: float | None = None,
-    #     reset_ticks: bool | None = None,
-    #     xside: str | None = None,
-    #     yside: str | None = None,
-    #     label: str | None = None,
-    # ) -> None: ...
 
     ############################################################################
     # Plotting Tools
