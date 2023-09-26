@@ -3,7 +3,6 @@
 .DEFAULT_GOAL := help
 package       := textual_plotext
 code          := src/$(package)
-types         := typings/
 examples      := example/
 run           := poetry run
 python        := $(run) python
@@ -55,11 +54,11 @@ lint:				# Run Pylint over the library
 
 .PHONY: typecheck
 typecheck:			# Perform static type checks with mypy
-	$(mypy) --scripts-are-modules $(code) $(examples) $(types)
+	$(mypy) --scripts-are-modules $(code) $(examples)
 
 .PHONY: stricttypecheck
 stricttypecheck:	        # Perform strict static type checks with mypy
-	$(mypy) --scripts-are-modules --strict $(code) $(examples) $(types)
+	$(mypy) --scripts-are-modules --strict $(code) $(examples)
 
 .PHONY: checkall
 checkall: lint stricttypecheck	# Check all the things

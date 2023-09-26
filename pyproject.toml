@@ -23,6 +23,7 @@ classifiers = [
 ]
 include = [
     "src/textual_plotext/py.typed",
+    "src/textual_plotext/**/*.pyi",
 ]
 
 [tool.poetry.dependencies]
