@@ -106,6 +106,11 @@ class TextualTowersWeatherApp(App[None]):
     marker: var[str] = var("sd")
     """The marker used for each of the plots."""
 
+    def __init__(self) -> None:
+        """Initialise the application."""
+        super().__init__()
+        self._markers = cycle(self.MARKERS.keys())
+
     def compose(self) -> ComposeResult:
         """Compose the display of the example app."""
         yield Header()
@@ -118,7 +123,6 @@ class TextualTowersWeatherApp(App[None]):
 
     def on_mount(self) -> None:
         """Start the process of gathering the weather data."""
-        self._markers = cycle(self.MARKERS.keys())
         self.gather_weather()
 
     @dataclass
