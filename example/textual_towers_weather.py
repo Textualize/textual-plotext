@@ -14,7 +14,7 @@ from textual import on, work
 from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.message import Message
-from textual.reactive import reactive
+from textual.reactive import reactive, var
 from textual.widgets import Header, Footer
 
 from textual_plotext import PlotextPlot
@@ -94,6 +94,17 @@ class TextualTowersWeatherApp(App[None]):
         ("q", "app.quit", "Quit the example"),
     ]
 
+    MARKERS = {
+        "dot": "Dot",
+        "hd": "High Definition",
+        "fhd": "Higher Definition",
+        "braille": "Braille",
+        "sd": "Standard Definition",
+    }
+
+    marker: var[str] = var("sd")
+    """The marker used for each of the plots."""
+
     def compose(self) -> ComposeResult:
         """Compose the display of the example app."""
         yield Header()
@@ -106,7 +117,7 @@ class TextualTowersWeatherApp(App[None]):
 
     def on_mount(self) -> None:
         """Start the process of gathering the weather data."""
-        self._markers = cycle(("dot", "hd", "fhd", "braille", "sd"))
+        self._markers = cycle(self.MARKERS.keys())
         self.gather_weather()
 
     @dataclass
@@ -160,11 +171,15 @@ class TextualTowersWeatherApp(App[None]):
                 event.history, "surface_pressure"
             )
 
+    def watch_marker(self) -> None:
+        """React to the marker type being changed."""
+        self.sub_title = self.MARKERS[self.marker]
+        for plot in self.query(Weather):
+            plot.marker = self.marker
+
     def action_marker(self) -> None:
         """Cycle to the next marker type."""
-        marker = next(self._markers)
-        for plot in self.query(Weather):
-            plot.marker = marker
+        self.marker = next(self._markers)
 
 
 if __name__ == "__main__":
