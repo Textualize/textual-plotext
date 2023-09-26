@@ -242,7 +242,7 @@ class _figure_class:
     ) -> None: ...
     def text(
         self,
-        label,
+        label: str,
         x: float | None = None,
         y: float | None = None,
         color: Color | None = None,
