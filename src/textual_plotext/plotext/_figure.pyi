@@ -13,10 +13,10 @@ general support for the type-hinting of Plotext.
 
 from __future__ import annotations
 
-from typing import Any, Sequence, Tuple, Union
-from typing_extensions import Literal, TypeAlias
-
 from datetime import datetime
+from typing import Any, Sequence, Tuple, Union
+
+from typing_extensions import Literal, TypeAlias
 
 Alignment: TypeAlias = Literal["left", "center", "right", "top", "bottom", "dynamic"]
 Color: TypeAlias = Union[str, int, Tuple[int, int, int]]
