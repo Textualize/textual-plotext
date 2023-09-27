@@ -226,13 +226,13 @@ class _figure_class:
     def hline(
         self, coordinate: float, color: Color | None = None, yside: str | None = None
     ) -> None: ...
-    def text(  # TODO
+    def text(
         self,
-        label: str,
+        text: str,
         x: float | None = None,
         y: float | None = None,
         color: Color | None = None,
-        background=None,
+        background: Color | None = None,
         style: str | None = None,
         orientation: Orientation | None = None,
         alignment: Alignment | None = None,
