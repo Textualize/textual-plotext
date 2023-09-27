@@ -239,7 +239,7 @@ class _figure_class:
         xside: str | None = None,
         yside: str | None = None,
     ) -> None: ...
-    def rectangle(  # TODO
+    def rectangle(
         self,
         x: float | None = None,
         y: float | None = None,
