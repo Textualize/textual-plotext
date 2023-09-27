@@ -121,8 +121,8 @@ class _figure_class:
     def bar(
         self,
         *args: Sequence[Any],
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
@@ -135,8 +135,8 @@ class _figure_class:
     def multiple_bar(
         self,
         *args: Sequence[Any],
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
@@ -149,8 +149,8 @@ class _figure_class:
     def stacked_bar(
         self,
         *args: Sequence[Any],
-        xside=None,
-        yside=None,
+        xside: str | None = None,
+        yside: str | None = None,
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
