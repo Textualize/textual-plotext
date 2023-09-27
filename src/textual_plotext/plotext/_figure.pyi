@@ -188,7 +188,7 @@ class _figure_class:
 
     ############################################################################
     # Plotting Tools
-    def error(
+    def error(  # TODO
         self,
         *args: Sequence[Any],
         xerr=None,
@@ -198,7 +198,7 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def event_plot(
+    def event_plot(  # TODO
         self,
         data,
         marker: str | None = None,
@@ -206,7 +206,7 @@ class _figure_class:
         orientation: Orientation | None = None,
         side=None,
     ) -> None: ...
-    def eventplot(
+    def eventplot(  # TODO
         self,
         data,
         marker: str | None = None,
@@ -214,19 +214,19 @@ class _figure_class:
         orientation: Orientation | None = None,
         side=None,
     ) -> None: ...
-    def vertical_line(
+    def vertical_line(  # TODO
         self, coordinate, color: Color | None = None, xside: str | None = None
     ) -> None: ...
-    def vline(
+    def vline(  # TODO
         self, coordinate, color: Color | None = None, xside: str | None = None
     ) -> None: ...
-    def horizontal_line(
+    def horizontal_line(  # TODO
         self, coordinate, color: Color | None = None, yside: str | None = None
     ) -> None: ...
-    def hline(
+    def hline(  # TODO
         self, coordinate, color: Color | None = None, yside: str | None = None
     ) -> None: ...
-    def text(
+    def text(  # TODO
         self,
         label: str,
         x: float | None = None,
@@ -239,7 +239,7 @@ class _figure_class:
         xside: str | None = None,
         yside: str | None = None,
     ) -> None: ...
-    def rectangle(
+    def rectangle(  # TODO
         self,
         x: float | None = None,
         y: float | None = None,
@@ -251,7 +251,7 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def polygon(
+    def polygon(  # TODO
         self,
         x: float | None = None,
         y: float | None = None,
@@ -265,7 +265,7 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def confusion_matrix(
+    def confusion_matrix(  # TODO
         self,
         actual,
         predicted,
@@ -273,7 +273,7 @@ class _figure_class:
         style: str | None = None,
         labels=None,
     ) -> None: ...
-    def cmatrix(
+    def cmatrix(  # TODO
         self,
         actual,
         predicted,
@@ -281,7 +281,7 @@ class _figure_class:
         style: str | None = None,
         labels=None,
     ) -> None: ...
-    def indicator(
+    def indicator(  # TODO
         self,
         value,
         label: str | None = None,
@@ -291,10 +291,10 @@ class _figure_class:
 
     ############################################################################
     # 2D Plots
-    def matrix_plot(
+    def matrix_plot(  # TODO
         self, matrix, marker: str | None = None, style: str | None = None, fast=False
     ) -> None: ...
-    def image_plot(
+    def image_plot(  # TODO
         self,
         path,
         marker: str | None = None,
@@ -305,25 +305,25 @@ class _figure_class:
 
     ############################################################################
     # Date Functions
-    def date_form(
+    def date_form(  # TODO
         self, input_form: str | None = None, output_form: str | None = None
     ) -> None: ...
-    def set_time0(self, string: str, input_form: str | None = None) -> None: ...
-    def today_datetime(self) -> datetime: ...
-    def today_string(self, output_form: str | None = None) -> str: ...
-    def datetime_to_string(
+    def set_time0(self, string: str, input_form: str | None = None) -> None: ...  # TODO
+    def today_datetime(self) -> datetime: ...  # TODO
+    def today_string(self, output_form: str | None = None) -> str: ...  # TODO
+    def datetime_to_string(  # TODO
         self, datetime: datetime, output_form: str | None = None
     ) -> str: ...
-    def datetimes_to_string(
+    def datetimes_to_string(  # TODO
         self, datetimes: Sequence[datetime], output_form: str | None = None
     ) -> list[str]: ...
-    def string_to_datetime(
+    def string_to_datetime(  # TODO
         self, string: str, input_form: str | None = None
     ) -> datetime: ...
-    def string_to_time(
+    def string_to_time(  # TODO
         self, string: str, input_form: str | None = None
     ) -> datetime: ...
-    def strings_to_time(
+    def strings_to_time(  # TODO
         self, string: Sequence[str], input_form: str | None = None
     ) -> datetime: ...
 
@@ -333,7 +333,9 @@ class _figure_class:
 
     ############################################################################
     # Externally Called Utility
-    def plot_size(
+    def plot_size(  # TODO
         self, width: int | None = None, height: int | None = None
     ) -> None: ...
-    def plotsize(self, width: int | None = None, height: int | None = None) -> None: ...
+    def plotsize(
+        self, width: int | None = None, height: int | None = None
+    ) -> None: ...  # TODO
