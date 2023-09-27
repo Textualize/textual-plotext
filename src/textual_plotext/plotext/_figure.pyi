@@ -291,8 +291,12 @@ class _figure_class:
 
     ############################################################################
     # 2D Plots
-    def matrix_plot(  # TODO
-        self, matrix, marker: str | None = None, style: str | None = None, fast=False
+    def matrix_plot(
+        self,
+        matrix: Sequence[Sequence[float | tuple[int, int, int]]],
+        marker: str | None = None,
+        style: str | None = None,
+        fast: bool = False,
     ) -> None: ...
     def image_plot(  # TODO
         self,
