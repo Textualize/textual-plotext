@@ -309,25 +309,25 @@ class _figure_class:
 
     ############################################################################
     # Date Functions
-    def date_form(  # TODO
+    def date_form(
         self, input_form: str | None = None, output_form: str | None = None
     ) -> None: ...
-    def set_time0(self, string: str, input_form: str | None = None) -> None: ...  # TODO
-    def today_datetime(self) -> datetime: ...  # TODO
-    def today_string(self, output_form: str | None = None) -> str: ...  # TODO
-    def datetime_to_string(  # TODO
+    def set_time0(self, string: str, input_form: str | None = None) -> None: ...
+    def today_datetime(self) -> datetime: ...
+    def today_string(self, output_form: str | None = None) -> str: ...
+    def datetime_to_string(
         self, datetime: datetime, output_form: str | None = None
     ) -> str: ...
-    def datetimes_to_string(  # TODO
+    def datetimes_to_string(
         self, datetimes: Sequence[datetime], output_form: str | None = None
     ) -> list[str]: ...
-    def string_to_datetime(  # TODO
+    def string_to_datetime(
         self, string: str, input_form: str | None = None
     ) -> datetime: ...
-    def string_to_time(  # TODO
+    def string_to_time(
         self, string: str, input_form: str | None = None
     ) -> datetime: ...
-    def strings_to_time(  # TODO
+    def strings_to_time(
         self, string: Sequence[str], input_form: str | None = None
     ) -> datetime: ...
 
@@ -337,9 +337,7 @@ class _figure_class:
 
     ############################################################################
     # Externally Called Utility
-    def plot_size(  # TODO
+    def plot_size(
         self, width: int | None = None, height: int | None = None
     ) -> None: ...
-    def plotsize(
-        self, width: int | None = None, height: int | None = None
-    ) -> None: ...  # TODO
+    def plotsize(self, width: int | None = None, height: int | None = None) -> None: ...
