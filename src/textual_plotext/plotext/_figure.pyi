@@ -167,7 +167,7 @@ class _figure_class:
         marker: str | None = None,
         color: Color | None = None,
         fill: bool | None = None,
-        norm=None,
+        norm: bool = False,
         width: float | None = None,
         orientation: Orientation | None = None,
         minimum: float | None = None,
