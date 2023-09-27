@@ -251,7 +251,7 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def polygon(  # TODO
+    def polygon(
         self,
         x: float | None = None,
         y: float | None = None,
