@@ -128,7 +128,7 @@ class _figure_class:
         fill: bool | None = None,
         width: float | None = None,
         orientation: Orientation | None = None,
-        label=None,
+        label: str | None = None,
         minimum: float | None = None,
         reset_ticks: bool | None = None,
     ) -> None: ...
