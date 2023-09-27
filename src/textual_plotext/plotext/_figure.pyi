@@ -177,9 +177,9 @@ class _figure_class:
     ) -> None: ...
     def candlestick(
         self,
-        dates,
-        data,
-        colors=None,
+        dates: Sequence[str],
+        data: dict[str, Any],
+        colors: list[Color] | None = None,
         orientation: Orientation | None = None,
         xside: str | None = None,
         yside: str | None = None,
