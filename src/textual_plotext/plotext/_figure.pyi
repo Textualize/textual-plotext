@@ -298,13 +298,13 @@ class _figure_class:
         style: str | None = None,
         fast: bool = False,
     ) -> None: ...
-    def image_plot(  # TODO
+    def image_plot(
         self,
-        path,
+        path: str,
         marker: str | None = None,
         style: str | None = None,
-        fast=False,
-        grayscale=False,
+        fast: bool = False,
+        grayscale: bool = False,
     ) -> None: ...
 
     ############################################################################
