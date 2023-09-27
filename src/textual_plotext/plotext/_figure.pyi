@@ -281,9 +281,9 @@ class _figure_class:
         style: str | None = None,
         labels: Sequence[str] | None = None,
     ) -> None: ...
-    def indicator(  # TODO
+    def indicator(
         self,
-        value,
+        value: float | str,
         label: str | None = None,
         color: Color | None = None,
         style: str | None = None,
