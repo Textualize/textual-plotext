@@ -265,21 +265,21 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def confusion_matrix(  # TODO
+    def confusion_matrix(
         self,
-        actual,
-        predicted,
+        actual: Sequence[float],
+        predicted: Sequence[float],
         color: Color | None = None,
         style: str | None = None,
-        labels=None,
+        labels: Sequence[str] | None = None,
     ) -> None: ...
-    def cmatrix(  # TODO
+    def cmatrix(
         self,
-        actual,
-        predicted,
+        actual: Sequence[float],
+        predicted: Sequence[float],
         color: Color | None = None,
         style: str | None = None,
-        labels=None,
+        labels: Sequence[str] | None = None,
     ) -> None: ...
     def indicator(  # TODO
         self,
