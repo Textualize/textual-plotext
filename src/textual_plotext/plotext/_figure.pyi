@@ -188,11 +188,11 @@ class _figure_class:
 
     ############################################################################
     # Plotting Tools
-    def error(  # TODO
+    def error(
         self,
         *args: Sequence[Any],
-        xerr=None,
-        yerr=None,
+        xerr: Sequence[float] | None = None,
+        yerr: Sequence[float] | None = None,
         color: Color | None = None,
         xside: str | None = None,
         yside: str | None = None,
