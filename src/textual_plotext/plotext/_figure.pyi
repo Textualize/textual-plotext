@@ -198,21 +198,21 @@ class _figure_class:
         yside: str | None = None,
         label: str | None = None,
     ) -> None: ...
-    def event_plot(  # TODO
+    def event_plot(
         self,
-        data,
+        data: Sequence[str],
         marker: str | None = None,
         color: Color | None = None,
         orientation: Orientation | None = None,
-        side=None,
+        side: str | None = None,
     ) -> None: ...
-    def eventplot(  # TODO
+    def eventplot(
         self,
-        data,
+        data: Sequence[str],
         marker: str | None = None,
         color: Color | None = None,
         orientation: Orientation | None = None,
-        side=None,
+        side: str | None = None,
     ) -> None: ...
     def vertical_line(  # TODO
         self, coordinate, color: Color | None = None, xside: str | None = None
