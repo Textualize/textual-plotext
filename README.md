@@ -1,6 +1,6 @@
 # textual-plotext
 
-*NOTE: This repository is still a work-in-progress; right not PyPi-install will
+*NOTE: This repository is still a work-in-progress; right now PyPi-install will
 not work*
 
 ![//](./textual-plotext-example.png)
