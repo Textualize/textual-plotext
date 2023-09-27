@@ -214,17 +214,17 @@ class _figure_class:
         orientation: Orientation | None = None,
         side: str | None = None,
     ) -> None: ...
-    def vertical_line(  # TODO
-        self, coordinate, color: Color | None = None, xside: str | None = None
+    def vertical_line(
+        self, coordinate: float, color: Color | None = None, xside: str | None = None
     ) -> None: ...
-    def vline(  # TODO
-        self, coordinate, color: Color | None = None, xside: str | None = None
+    def vline(
+        self, coordinate: float, color: Color | None = None, xside: str | None = None
     ) -> None: ...
-    def horizontal_line(  # TODO
-        self, coordinate, color: Color | None = None, yside: str | None = None
+    def horizontal_line(
+        self, coordinate: float, color: Color | None = None, yside: str | None = None
     ) -> None: ...
-    def hline(  # TODO
-        self, coordinate, color: Color | None = None, yside: str | None = None
+    def hline(
+        self, coordinate: float, color: Color | None = None, yside: str | None = None
     ) -> None: ...
     def text(  # TODO
         self,
