@@ -3,7 +3,7 @@
 *NOTE: This repository is still a work-in-progress; right now PyPi-install will
 not work*
 
-![//](./textual-plotext-example.png)
+![PlotextPlot in action](https://raw.githubusercontent.com/Textualize/textual-plotext/main/textual-plotext-example.png)
 
 A Textual widget wrapper for the [Plotext plotting
 library](https://github.com/piccolomo/plotext).
