@@ -16,13 +16,20 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Sequence, Tuple, Union
 
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal, Self, TypeAlias
 
 Alignment: TypeAlias = Literal["left", "center", "right", "top", "bottom", "dynamic"]
 Color: TypeAlias = Union[str, int, Tuple[int, int, int]]
 Orientation: TypeAlias = Literal["horizontal", "vertical"]
 
 class _figure_class:
+    ############################################################################
+    # Subplots Functions
+    def subplot(
+        self, row: int | None = None, col: int | None = None
+    ) -> _figure_class: ...
+    def subplots(self, rows: int | None = None, cols: int | None = None) -> Self: ...
+
     ############################################################################
     # External Set Functions
     def title(self, title: str | None = None) -> None: ...
