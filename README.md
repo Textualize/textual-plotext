@@ -144,8 +144,8 @@ themselves to being used in a Textual application:
 - `plt.styles`
 - `plt.themes`
 
-Also, currently, there is no support for [image
-plots](https://github.com/piccolomo/plotext/blob/master/readme/image.md) or
+Also, currently, there is no support for [GIF
+plots](https://github.com/piccolomo/plotext/blob/master/readme/image.md#gif-plot) or
 [playing
 videos](https://github.com/piccolomo/plotext/blob/master/readme/video.md);
 one or both could follow at some point in the future.
