@@ -160,3 +160,11 @@ These include:
 - `plt.clear_terminal`
 - `plt.show`
 - `plt.save_fig`
+
+## Need more help?
+
+If you need help with this library, or with anything relating to Textual,
+feel free to come join the [Textualize](https://www.textualize.io/)
+[devs](https://www.textualize.io/about-us/) [on
+Discord](https://discord.gg/Enf6Z3qhVr) or [the other places where we
+provide support](https://textual.textualize.io/help/).
