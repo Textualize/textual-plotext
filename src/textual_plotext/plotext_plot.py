@@ -104,7 +104,11 @@ class PlotextPlot(Widget):
         """
 
     def render(self) -> RenderResult:
-        """Render the plot."""
+        """Render the plot.
+
+        Returns:
+            The renderable for displaying the plot.
+        """
         self._plot.clear_figure()
         self.plot()
         self._plot.plotsize(self.size.width, self.size.height)
