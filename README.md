@@ -12,7 +12,7 @@ library](https://github.com/piccolomo/plotext).
 
 The library makes one widget available: `PlotextPlot`. This widget provides
 a `plt` property, which should be used where you would normally use `plt` as
-seen in the Plotext documentatino.
+seen in the Plotext documentation.
 
 Let's take [the first
 example](https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot)
