@@ -168,7 +168,7 @@ should above would become:
 >>> plt.plot(plt.sin(periods=2, length=10**4))
 >>> plt.show()
 <plot is drawn in the terminal here>
->>> plt.xscale("linear")
+>>> plt.xscale("linear")     # Note this here!
 >>> plt.show()
 <plot is drawn in the terminal here>
 >>> plt.show()
