@@ -142,7 +142,7 @@ These include:
 ## Known issues
 
 At the moment, due to what appears to be a bug in Plotext when it comes to
-repeated calls to `show` or `build` for a plot with a x or y scale set to
+repeated calls to `show` or `build` for a plot with x or y scales set to
 `log`, it isn't possible to easily build such a plot. In other words, even
 in the REPL with Plotext itself, a session such as this:
 
