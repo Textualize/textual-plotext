@@ -22,6 +22,10 @@ demo:
 weather:			# Run the weather example.
 	$(python) $(examples)/textual_towers_weather.py
 
+.PHONY: scatter
+scatter:			# Run the scatter plot example.
+	$(python) $(examples)/scatter.py
+
 .PHONY: example
 example: weather		# Run the main example.
 
