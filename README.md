@@ -10,11 +10,9 @@ library](https://github.com/piccolomo/plotext).
 
 ## Introduction
 
-The library makes one widget available: `PlotextPlot`. Your plots are made
-inheriting from `PlotextPlot` and implementing the `plot` method. Within the
-`plot` method you can reference the `plt` property (`self.plt`) and, with
-some caveats (see below), write plotting code just as you would when using
-Plotext.
+The library makes one widget available: `PlotextPlot`. This widget provides
+a `plt` property, which should be used where you would normally use `plt` as
+seen in the Plotext documentatino.
 
 Let's take [the first
 example](https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot)
@@ -33,19 +31,19 @@ fully-working Textual application) is:
 
 ```python
 from textual.app import App, ComposeResult
+
 from textual_plotext import PlotextPlot
-
-class ScatterPlot(PlotextPlot):
-
-    def plot(self) -> None:
-        y = self.plt.sin() # sinusoidal test signal
-        self.plt.scatter(y)
-        self.plt.title("Scatter Plot") # to apply a title
 
 class ScatterApp(App[None]):
 
     def compose(self) -> ComposeResult:
-        yield ScatterPlot()
+        yield PlotextPlot()
+
+    def on_mount(self) -> None:
+        plt = self.query_one(PlotextPlot).plt
+        y = plt.sin() # sinusoidal test signal
+        plt.scatter(y)
+        plt.title("Scatter Plot") # to apply a title
 
 if __name__ == "__main__":
     ScatterApp().run()
@@ -54,7 +52,7 @@ if __name__ == "__main__":
 The main differences to note are:
 
 - We're not directly importing `plotext`.
-- We use `self.plt` rather than `plt`.
+- We use `PlotextPlot.plt` rather than `plt`.
 - We don't call Plotext's `show` method, `PlotextPlot` takes care of this.
 
 ## Installation
@@ -73,20 +71,6 @@ $ python -m textual_plotext
 
 The demo app includes many of the examples shown in the Plotext README.
 
-## Performance considerations
-
-Because your `plot` method will be called each time the plot needs to be
-rendered (if the widget's size changes, for example), it's best to do as
-little processing as possible in the method. If you want to create your
-plotting widget so that it gathers up and processes the data it wants to
-show do *not* do this inside `plot`; instead consider doing it inside the
-widget's `on_mount` method (perhaps making use of the [Textual worker
-API](https://textual.textualize.io/guide/workers/) to gather the data in the
-background).
-
-In other words: only use the `plot` method to configure and declare the
-plot, don't do any other work in there.
-
 ## Longer example
 
 For a longer example of how to use the `PlotextPlot` widget, take a look at
@@ -104,7 +88,7 @@ the data from the backend.
 
 ## What is supported?
 
-The following utility functions are provided (via `self.plt`):
+The following utility functions are provided (via `PlotextPlot.plt`):
 
 - `plt.sin`
 - `plt.square`
@@ -160,6 +144,24 @@ These include:
 - `plt.clear_terminal`
 - `plt.show`
 - `plt.save_fig`
+
+## Known issues
+
+At the moment, due to what appears to be a bug in Plotext when it comes to
+repeated calls to `show` or `build` for a plot with a x or y scale set to
+`log`, it isn't possible to easily build such a plot. In other words, even
+in the REPL with Plotext itself, a session such as this:
+
+```python
+>>> import plotext as plt
+>>> plt.xscale("log")
+>>> plt.plot(plt.sin(periods=2, length=10**4))
+>>> plt.show()
+<plot is drawn in the terminal here>
+>>> plt.show()
+```
+
+results in a `ValueError: math domain error`.
 
 ## Need more help?
 
