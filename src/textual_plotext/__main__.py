@@ -233,7 +233,7 @@ class SpecialPlots(ExamplesPane):
         def on_mount(self) -> None:
             """Set up the data for the example."""
             self.plt.date_form("H:M")
-            self.times = self.plt.datetimes_to_string(
+            times = self.plt.datetimes_to_string(
                 [
                     datetime(
                         2022,
@@ -246,8 +246,7 @@ class SpecialPlots(ExamplesPane):
                     for _ in range(100)
                 ]
             )
-            self.plt.date_form("H:M")
-            self.plt.event_plot(self.times)
+            self.plt.event_plot(times)
 
     class StreamingDataPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#streaming-data"""
