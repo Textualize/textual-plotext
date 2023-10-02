@@ -1,8 +1,5 @@
 # textual-plotext
 
-*NOTE: This repository is still a work-in-progress; right now PyPi-install will
-not work*
-
 ![PlotextPlot in action](https://raw.githubusercontent.com/Textualize/textual-plotext/main/textual-plotext-example.png)
 
 A Textual widget wrapper for the [Plotext plotting
