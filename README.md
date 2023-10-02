@@ -113,8 +113,8 @@ sense inside a Textual application. These include:
 - `plt.test_youtube_url`
 
 The following properties and sub-modules also aren't exposed because they
-also are intended more for REPL-based interactive use and so don't lend
-themselves to being used in a Textual application:
+too are designed for REPL-based interactive use and don't lend themselves to
+being used in a Textual application:
 
 - `plt.doc`
 - `plt.markers`
