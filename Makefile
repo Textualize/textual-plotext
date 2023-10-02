@@ -3,7 +3,7 @@
 .DEFAULT_GOAL := help
 package       := textual_plotext
 code          := src/$(package)
-examples      := example/
+examples      := examples/
 run           := poetry run
 python        := $(run) python
 textual       := $(run) textual
