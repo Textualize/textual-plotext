@@ -83,34 +83,12 @@ class PlotextPlot(Widget):
         """
         return self._plot
 
-    def plot(self) -> None:
-        """The code for creating the plot.
-
-        Subclass `PlotextPlot` and implement this method, placing all the
-        code needed to produce the plot within.
-
-        Note:
-            Do **NOT** use the Plotext `show` method in here, this widget
-            takes care of the work of showing the plot.
-
-        Example:
-            ```python
-            class ExamplePlot(PlotextPlot):
-
-                def plot(self) -> None:
-                    self.plt.scatter(self.plt.sin())
-                    self.plt.title("Scatter Plot")
-            ```
-        """
-
     def render(self) -> RenderResult:
         """Render the plot.
 
         Returns:
             The renderable for displaying the plot.
         """
-        self._plot.clear_figure()
-        self.plot()
         self._plot.plotsize(self.size.width, self.size.height)
         if self.auto_theme:
             self._plot.theme(

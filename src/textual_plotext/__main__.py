@@ -68,21 +68,21 @@ class BasicPlots(ExamplesPane):
     class ScatterPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#scatter-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.scatter(self.plt.sin())
             self.plt.title("Scatter Plot")
 
     class LinePlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#line-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.plot(self.plt.sin())
             self.plt.title("Line Plot")
 
     class LogPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#log-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.plot(self.plt.sin(periods=2, length=10**4))
             self.plt.xscale("log")
             self.plt.yscale("linear")
@@ -94,14 +94,14 @@ class BasicPlots(ExamplesPane):
     class StemPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#stem-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.plot(self.plt.sin(), fillx=True)
             self.plt.title("Stem Plot")
 
     class MultipleDataSets(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#multiple-data-sets"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.plot(self.plt.sin(), label="plot")
             self.plt.scatter(self.plt.sin(phase=-1), label="scatter")
             self.plt.title("Multiple Data Set")
@@ -109,7 +109,7 @@ class BasicPlots(ExamplesPane):
     class MultipleAxesPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#multiple-axes-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.plot(
                 self.plt.sin(), xside="lower", yside="left", label="lower left"
             )
@@ -128,7 +128,7 @@ class BasicPlots(ExamplesPane):
             [
                 self.ScatterPlot(),
                 self.LinePlot(),
-                self.LogPlot(),
+                # self.LogPlot(),
                 self.StemPlot(),
                 self.MultipleDataSets(),
                 self.MultipleAxesPlot(),
@@ -142,7 +142,7 @@ class BarPlots(ExamplesPane):
     class VerticalBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#vertical-bar-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
             percentages = [14, 36, 11, 8, 7, 4]
             self.plt.bar(pizzas, percentages)
@@ -151,7 +151,7 @@ class BarPlots(ExamplesPane):
     class HorizontalBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#horizontal-bar-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
             percentages = [14, 36, 11, 8, 7, 4]
             self.plt.bar(
@@ -162,7 +162,7 @@ class BarPlots(ExamplesPane):
     class MultipleBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#multiple-bar-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
             male_percentages = [14, 36, 11, 8, 7, 4]
             female_percentages = [12, 20, 35, 15, 2, 1]
@@ -174,7 +174,7 @@ class BarPlots(ExamplesPane):
     class StackedBarPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#stacked-bar-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
             male_percentages = [14, 36, 11, 8, 7, 4]
             female_percentages = [12, 20, 35, 15, 2, 1]
@@ -183,34 +183,19 @@ class BarPlots(ExamplesPane):
             )  # , labels = ["men", "women"])
             self.plt.title("Most Favored Pizzas in the World by Gender")
 
-    # def box_plot(self, plt: Plot) -> None:
-    #     """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#box-plot"""
-    #     labels = ["apple", "orange", "pear", "banana"]
-    #     datas = [
-    #         [1,2,3,5,10,8],
-    #         [4,9,6,12,20,13],
-    #         [1,2,3,4,5,6],
-    #         [3,9,12,16,9,8,3,7,2]
-    #     ]
-
-    #     plt.box(labels, datas, width=0.3)
-    #     plt.title("The weight of the fruit")
-
     class HistogramPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/bar.md#histogram-plot"""
 
         def on_mount(self) -> None:
             """Set up the data for the example."""
             l = 7 * 10**4
-            self.data1 = [random.gauss(0, 1) for _ in range(10 * l)]
-            self.data2 = [random.gauss(3, 1) for _ in range(6 * l)]
-            self.data3 = [random.gauss(6, 1) for _ in range(4 * l)]
-            self.bins = 60
-
-        def plot(self) -> None:
-            self.plt.hist(self.data1, self.bins, label="mean 0")
-            self.plt.hist(self.data2, self.bins, label="mean 3")
-            self.plt.hist(self.data3, self.bins, label="mean 6")
+            data1 = [random.gauss(0, 1) for _ in range(10 * l)]
+            data2 = [random.gauss(3, 1) for _ in range(6 * l)]
+            data3 = [random.gauss(6, 1) for _ in range(4 * l)]
+            bins = 60
+            self.plt.hist(data1, bins, label="mean 0")
+            self.plt.hist(data2, bins, label="mean 3")
+            self.plt.hist(data3, bins, label="mean 6")
             self.plt.title("Histogram Plot")
 
     def compose(self) -> ComposeResult:
@@ -222,7 +207,6 @@ class BarPlots(ExamplesPane):
                 self.HorizontalBarPlot(),
                 self.MultipleBarPlot(),
                 self.StackedBarPlot(),
-                # self.boxplot(),
                 self.HistogramPlot(),
             ],
         )
@@ -237,12 +221,10 @@ class SpecialPlots(ExamplesPane):
         def on_mount(self) -> None:
             """Set up the data for the example."""
             l = 20
-            self.ye = [random.random() for _ in range(l)]
-            self.xe = [random.random() for _ in range(l)]
-            self.data = self.plt.sin(length=l)
-
-        def plot(self) -> None:
-            self.plt.error(self.data, xerr=self.xe, yerr=self.ye)
+            ye = [random.random() for _ in range(l)]
+            xe = [random.random() for _ in range(l)]
+            data = self.plt.sin(length=l)
+            self.plt.error(data, xerr=xe, yerr=ye)
             self.plt.title("Error Plot")
 
     class EventPlot(PlotextPlot):
@@ -264,8 +246,6 @@ class SpecialPlots(ExamplesPane):
                     for _ in range(100)
                 ]
             )
-
-        def plot(self) -> None:
             self.plt.date_form("H:M")
             self.plt.event_plot(self.times)
 
@@ -275,19 +255,24 @@ class SpecialPlots(ExamplesPane):
         def on_mount(self) -> None:
             """Set up the initial conditions for the 'streaming' data."""
             self.frame = 0
-            self.auto_refresh = 0.25
+            self.plt.title("Streaming Data")
+            self.set_interval(0.25, self.plot)
 
         def plot(self) -> None:
-            self.plt.title("Streaming Data")
+            self.plt.clear_data()
             self.plt.scatter(
                 self.plt.sin(periods=2, length=1_000, phase=(2 * self.frame) / 50)
             )
+            self.refresh()
             self.frame += 1
 
     class MatrixPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#matrix-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
+            self.plt.title("Matrix Plot")
+
+        def on_resize(self) -> None:
             p = 1
             matrix = [
                 [
@@ -296,8 +281,8 @@ class SpecialPlots(ExamplesPane):
                 ]
                 for r in range(self.size.height)
             ]
+            self.plt.clear_data()
             self.plt.matrix_plot(matrix)
-            self.plt.title("Matrix Plot")
 
     class ConfusionMatrix(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/special.md#confusion-matrix"""
@@ -305,12 +290,10 @@ class SpecialPlots(ExamplesPane):
         def on_mount(self) -> None:
             """Set up the data for the example."""
             l = 300
-            self.actual = [random.randrange(0, 4) for _ in range(l)]
-            self.predicted = [random.randrange(0, 4) for _ in range(l)]
-
-        def plot(self) -> None:
+            actual = [random.randrange(0, 4) for _ in range(l)]
+            predicted = [random.randrange(0, 4) for _ in range(l)]
             labels = ["Autumn", "Spring", "Summer", "Winter"]
-            self.plt.cmatrix(self.actual, self.predicted, labels=labels)
+            self.plt.cmatrix(actual, predicted, labels=labels)
 
     def compose(self) -> ComposeResult:
         """Compose the child widgets."""
@@ -332,7 +315,7 @@ class DecoratorPlots(ExamplesPane):
     class LinePlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#line-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.scatter(self.plt.sin())
             self.plt.title("Extra Lines")
             self.plt.vline(100, "magenta")
@@ -342,7 +325,7 @@ class DecoratorPlots(ExamplesPane):
     class TextPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#text-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             pizzas = ["Sausage", "Pepperoni", "Mushrooms", "Cheese", "Chicken", "Beef"]
             percentages = [14, 36, 11, 8, 7, 4]
             self.plt.bar(pizzas, percentages)
@@ -360,7 +343,7 @@ class DecoratorPlots(ExamplesPane):
     class ShapePlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/decorator.md#shape-plot"""
 
-        def plot(self) -> None:
+        def on_mount(self) -> None:
             self.plt.title("Shapes")
             self.plt.polygon()
             self.plt.rectangle()
@@ -372,13 +355,15 @@ class DecoratorPlots(ExamplesPane):
 
         def on_mount(self) -> None:
             """Set up the pulsing polygon example."""
+            self.plt.title("Pulse")
             self.steps = cycle(chain(range(3, 21), range(20, 2, -1)))
-            self.auto_refresh = 0.5
+            self.set_interval(0.5, self.plot)
 
         def plot(self) -> None:
             """Plot a polygon with a changing number of sides."""
-            self.plt.title("Pulse")
+            self.plt.clear_data()
             self.plt.polygon(sides=next(self.steps))
+            self.refresh()
 
     def compose(self) -> ComposeResult:
         return self.examples(

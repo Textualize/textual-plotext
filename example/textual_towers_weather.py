@@ -53,6 +53,19 @@ class Weather(PlotextPlot):
         self._data: list[float] = []
         self._time: list[str] = []
 
+    def on_mount(self) -> None:
+        """Plot the data using Plotext."""
+        self.plt.date_form("Y-m-d H:M")
+        self.plt.title(self._title)
+        self.plt.xlabel("Time")
+
+    def replot(self) -> None:
+        """Redraw the plot."""
+        self.plt.clear_data()
+        self.plt.ylabel(self._unit)
+        self.plt.plot(self._time, self._data, marker=self.marker)
+        self.refresh()
+
     def update(self, data: dict[str, Any], values: str) -> None:
         """Update the data for the weather plot.
 
@@ -63,15 +76,11 @@ class Weather(PlotextPlot):
         self._data = data["hourly"][values]
         self._time = [moment.replace("T", " ") for moment in data["hourly"]["time"]]
         self._unit = data["hourly_units"][values]
-        self.refresh()
+        self.replot()
 
-    def plot(self) -> None:
-        """Plot the data using Plotext."""
-        self.plt.date_form("Y-m-d H:M")
-        self.plt.title(self._title)
-        self.plt.ylabel(self._unit)
-        self.plt.xlabel("Time")
-        self.plt.plot(self._time, self._data, marker=self.marker)
+    def _watch_marker(self) -> None:
+        """React to the marker being changed."""
+        self.replot()
 
 
 class TextualTowersWeatherApp(App[None]):
