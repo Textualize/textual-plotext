@@ -79,6 +79,9 @@ class BasicPlots(ExamplesPane):
             self.plt.plot(self.plt.sin())
             self.plt.title("Line Plot")
 
+    # This is left out for the moment due to what appears to be a bug in
+    # plotext (either that or I don't understand how a log scale is supposed
+    # to work.)
     class LogPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#log-plot"""
 
