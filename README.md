@@ -74,13 +74,7 @@ The demo app includes many of the examples shown in the Plotext README.
 ## Longer example
 
 For a longer example of how to use the `PlotextPlot` widget, take a look at
-[`example/textual_towers_weather.py`](./example/textual_towers_weather.py);
-this provides examples of key points such as:
-
-- Inheriting from `PlotextPlot` to make your plotting widget.
-- Using the `plot` method to create the plot.
-- Loading up the data outside of the `plot` method.
-
+[`example/textual_towers_weather.py`](./example/textual_towers_weather.py).
 As a bonus it also shows an example of using Textual's [worker
 API](https://textual.textualize.io/guide/workers/) to create a [threaded
 worker](https://textual.textualize.io/guide/workers/#thread-workers) to pull
