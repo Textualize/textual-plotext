@@ -105,11 +105,11 @@ class PlotextPlot(Widget):
 
     def render(self) -> RenderResult:
         """Render the plot."""
-        self.plt.clear_figure()
+        self._plot.clear_figure()
         self.plot()
-        self.plt.plotsize(self.size.width, self.size.height)
+        self._plot.plotsize(self.size.width, self.size.height)
         if self.auto_theme:
-            self.plt.theme(
+            self._plot.theme(
                 self.dark_mode_theme if self.app.dark else self.light_mode_theme
             )
         return Text.from_ansi(self._plot.build())
