@@ -68,7 +68,7 @@ class PlotextPlot(Widget):
     def plt(self) -> Plot:
         """The Plotext plotting object.
 
-        Whereas normally Plotext-using could would so something like this:
+        Whereas normally Plotext-using code would so something like this:
 
         ```python
         import plotext as plt
