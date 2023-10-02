@@ -142,8 +142,8 @@ These include:
 ## Known issues
 
 At the moment, due to what appears to be a bug in Plotext when it comes to
-repeated calls to `show` or `build` for a plot with x or y scales set to
-`log`, it isn't possible to easily build such a plot. In other words, even
+repeated calls to `show` or `build`[^1] for a plot with x or y scales set to
+`"log"`, it isn't possible to easily build such a plot. In other words, even
 in the REPL with Plotext itself, a session such as this:
 
 ```python
@@ -157,6 +157,33 @@ in the REPL with Plotext itself, a session such as this:
 
 results in a `ValueError: math domain error`.
 
+There is a workaround for this, which will work for Plotext use in general
+and would also work nicely in a Textual app. After the first `show` or
+`build`, set the problematic scale back to `"linear"`. So the REPL session
+should above would become:
+
+```python
+>>> import plotext as plt
+>>> plt.xscale("log")
+>>> plt.plot(plt.sin(periods=2, length=10**4))
+>>> plt.show()
+<plot is drawn in the terminal here>
+>>> plt.xscale("linear")
+>>> plt.show()
+<plot is drawn in the terminal here>
+>>> plt.show()
+<plot is drawn in the terminal here>
+etc...
+```
+
+In a Textual app, this would mean adding (assuming the `xscale` was the
+problem here) this at the end of the code to create the plot:
+
+```python
+_ = self.plt.build()
+self.plt.xscale("linear")
+```
+
 ## Need more help?
 
 If you need help with this library, or with anything relating to Textual,
@@ -164,3 +191,6 @@ feel free to come join the [Textualize](https://www.textualize.io/)
 [devs](https://www.textualize.io/about-us/) [on
 Discord](https://discord.gg/Enf6Z3qhVr) or [the other places where we
 provide support](https://textual.textualize.io/help/).
+
+[^1]: Repeated calls to `build` will happen when the `PlottextPlot` widget
+    needs to `render` the plot again, on resize for example.

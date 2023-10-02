@@ -81,9 +81,6 @@ class BasicPlots(ExamplesPane):
             self.plt.plot(self.plt.sin())
             self.plt.title("Line Plot")
 
-    # This is left out for the moment due to what appears to be a bug in
-    # plotext (either that or I don't understand how a log scale is supposed
-    # to work.)
     class LogPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#log-plot"""
 
@@ -96,6 +93,13 @@ class BasicPlots(ExamplesPane):
             self.plt.title("Logarithmic Plot")
             self.plt.xlabel("logarithmic scale")
             self.plt.ylabel("linear scale")
+            # A slightly hacky workaround for what seems to be a bug in
+            # Plotext itself when it comes to log scales. We force a build
+            # of the data...
+            _ = self.plt.build()
+            # ...then put the scale back to linear so it doesn't try and
+            # apply log again and again on each render.
+            self.plt.xscale("linear")
 
     class StemPlot(PlotextPlot):
         """https://github.com/piccolomo/plotext/blob/master/readme/basic.md#stem-plot"""
@@ -137,7 +141,7 @@ class BasicPlots(ExamplesPane):
             [
                 self.ScatterPlot(),
                 self.LinePlot(),
-                # self.LogPlot(),
+                self.LogPlot(),
                 self.StemPlot(),
                 self.MultipleDataSets(),
                 self.MultipleAxesPlot(),
