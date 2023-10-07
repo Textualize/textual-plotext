@@ -2,6 +2,7 @@
 name = "textual-plotext"
 version = "0.1.0"
 description = "A Textual widget wrapper for the Plotext plotting library"
+homepage = "https://github.com/Textualize/textual-plotext"
 authors = ["Dave Pearson <dave@textualize.io>"]
 license = "MIT"
 readme = "README.md"
