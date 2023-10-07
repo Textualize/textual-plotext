@@ -28,6 +28,9 @@ include = [
     "src/textual_plotext/**/*.pyi",
 ]
 
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/Textualize/textual-plotext/issues"
+
 [tool.poetry.dependencies]
 python = ">=3.7.2,<4.0"
 plotext = "^5.2.8"
