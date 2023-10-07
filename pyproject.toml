@@ -1,7 +1,9 @@
 [tool.poetry]
 name = "textual-plotext"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Textual widget wrapper for the Plotext plotting library"
+homepage = "https://github.com/Textualize/textual-plotext"
+repository = "https://github.com/Textualize/textual-plotext"
 authors = ["Dave Pearson <dave@textualize.io>"]
 license = "MIT"
 readme = "README.md"
@@ -25,6 +27,9 @@ include = [
     "src/textual_plotext/py.typed",
     "src/textual_plotext/**/*.pyi",
 ]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/Textualize/textual-plotext/issues"
 
 [tool.poetry.dependencies]
 python = ">=3.7.2,<4.0"
