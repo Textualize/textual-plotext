@@ -175,28 +175,40 @@ def themes() -> tuple[str, ...]:
 # are added (that is, if you plot 3 types of data and don't specify colours,
 # this sequence will be used).
 
-from plotext._dict import themes as _theme_bag, color_sequence as _color_sequence
-from textual.color import Color as TextualColor
+from plotext._dict import (
+    themes as _theme_bag,
+    color_sequence as _color_sequence,
+    type1_to_type2_codes,
+)
+from plotext._utility import get_color_code
 
-_color_translations = {
-    "blue+": "ansi_bright_blue",
-    "green+": "ansi_bright_green",
-    "red+": "ansi_bright_red",
-    "cyan+": "ansi_bright_cyan",
-    "magenta+": "ansi_bright_magenta",
-    "gray+": "white",
-    "orange+": "orange",
-}
-"""Mappings of Plotext-color-sequence colours into colours that Textual can parse.
 
-This is also a good place to map a particular colour into something nicer.
-"""
+def _rgbify(color: Color) -> tuple[int, int, int]:
+    """Force any Plotext colour into an RGB value.
+
+    Args:
+        color: The colour to convert.
+
+    Returns:
+        An RGB tuple for the colour.
+    """
+    if isinstance(color, str):
+        # For some reason Plotext uses yellow and gold but never defines
+        # them.
+        #
+        # TODO: Figure out a good version of those colours.
+        return _rgbify(
+            get_color_code({"yellow": "orange", "gold": "orange+"}.get(color, color))
+        )
+    if isinstance(color, int):
+        # A single integer; convert that into an RGB.
+        return type1_to_type2_codes[color]
+    # Must be an RGB already.
+    return color
+
 
 _textual_color_sequence = [
-    TextualColor.parse(_color_translations.get(color, color)).rgb
-    if color != "default"
-    else color
-    for color in _color_sequence
+    _rgbify(color) if color != "default" else color for color in _color_sequence
 ]
 """The default Plotext colour sequence, turned into RGB tuples."""
 
