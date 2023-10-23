@@ -37,6 +37,7 @@ ThemeName = Literal[
     "textual-clear",
     "textual-dark",
     "textual-default",
+    "textual-dreamland",
     "textual-pro",
 ]
 """Literal type that is the list of theme names defined in Plotext.
@@ -255,4 +256,5 @@ _themes["textual-clear"] = list(
     )
 )
 _themes["textual-dark"] = _rgbify_theme(*_themes["dark"])
+_themes["textual-dreamland"] = _rgbify_theme(*_themes["dreamland"])
 _themes["textual-pro"] = _themes["textual-default"]
