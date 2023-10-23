@@ -16,6 +16,7 @@ from . import plotext
 from .plotext._figure import _figure_class as Figure
 
 ThemeName = Literal[
+    # The standard Plotext themes.
     "clear",
     "dark",
     "default",
@@ -32,6 +33,8 @@ ThemeName = Literal[
     "scream",
     "serious",
     "windows",
+    # The additional Textual themes.
+    "textual-clear",
 ]
 """Literal type that is the list of theme names defined in Plotext.
 
@@ -158,3 +161,24 @@ def themes() -> tuple[str, ...]:
         A tuple of the names of the themes defined in Plotext.
     """
     return get_args(ThemeName)
+
+
+##############################################################################
+# Here we patch in some textual-friendly themes. A Plotext theme is of the
+# style:
+#
+# [canvas_color, axes_color, ticks_color, ticks_style, color_sequence]
+#
+# where color_sequence is a sequence of colours that will be used as plots
+# are added (that is, if you plot 3 types of data and don't specify colours,
+# this sequence will be used).
+
+from plotext._dict import themes as _theme_bag, color_sequence as _color_sequence
+
+_theme_bag["textual-clear"] = [
+    "default",
+    "default",
+    "default",
+    "default",
+    _color_sequence,
+]
