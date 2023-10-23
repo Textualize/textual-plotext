@@ -37,16 +37,17 @@ class ThemeSample(Vertical):
         )
 
     def on_mount(self) -> None:
-        plot = self.query_one(PlotextPlot)
-        plot.auto_theme = False
-        plot.plt.title("This is the title")
-        plot.plt.scatter(plot.plt.sin())
+        self.replot()
 
     @on(Select.Changed)
-    def change_theme(self, event: Select.Changed) -> None:
-        if isinstance(event.value, str):
-            self.query_one(PlotextPlot).plt.theme(event.value)
-            self.query_one(PlotextPlot).refresh()
+    def replot(self) -> None:
+        plot = self.query_one(PlotextPlot)
+        plot.auto_theme = False
+        plot.plt.clear_figure()
+        plot.plt.theme(self.query_one(Select).value)
+        plot.plt.title("This is the title")
+        plot.plt.scatter(plot.plt.sin())
+        plot.refresh()
 
 
 class ThemeApp(App[None]):
