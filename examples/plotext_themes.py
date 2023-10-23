@@ -6,9 +6,7 @@ from textual.binding import Binding
 from textual.containers import Vertical
 from textual.widgets import Header, Footer, Select
 
-from textual_plotext import PlotextPlot
-
-from plotext._dict import themes
+from textual_plotext import PlotextPlot, themes
 
 
 class ThemeSample(Vertical):
