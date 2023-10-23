@@ -36,6 +36,7 @@ ThemeName = Literal[
     # The additional Textual themes.
     "textual-clear",
     "textual-default",
+    "textual-dark",
     "textual-pro",
 ]
 """Literal type that is the list of theme names defined in Plotext.
@@ -176,14 +177,13 @@ def themes() -> tuple[str, ...]:
 # this sequence will be used).
 
 from plotext._dict import (
-    themes as _theme_bag,
-    color_sequence as _color_sequence,
+    themes as _themes,
     type1_to_type2_codes,
 )
 from plotext._utility import get_color_code
 
 
-def _rgbify(color: Color) -> tuple[int, int, int]:
+def _rgbify(color: Color) -> tuple[int, int, int] | str:
     """Force any Plotext colour into an RGB value.
 
     Args:
@@ -197,8 +197,14 @@ def _rgbify(color: Color) -> tuple[int, int, int]:
         # them.
         #
         # TODO: Figure out a good version of those colours.
-        return _rgbify(
-            get_color_code({"yellow": "orange", "gold": "orange+"}.get(color, color))
+        return (
+            color
+            if color == "default"
+            else _rgbify(
+                get_color_code(
+                    {"yellow": "orange", "gold": "orange+"}.get(color, color)
+                )
+            )
         )
     if isinstance(color, int):
         # A single integer; convert that into an RGB.
@@ -207,14 +213,46 @@ def _rgbify(color: Color) -> tuple[int, int, int]:
     return color
 
 
-_textual_color_sequence = [
-    _rgbify(color) if color != "default" else color for color in _color_sequence
-]
-"""The default Plotext colour sequence, turned into RGB tuples."""
+def _rgbify_theme(
+    canvas_color: Color,
+    axes_color: Color,
+    ticks_color: Color,
+    ticks_style: str,
+    data_colors: list[Color],
+) -> tuple[Color, Color, Color, str, list[Color]]:
+    """Turn the given theme into a fully-RGB theme.
+
+    Args:
+        canvas_color: The canvas color.
+        axes_color: The axes color.
+        ticks_color: The ticks color.
+        ticks_style: The styling for the ticks.
+        data_colors: The sequence of colors for the various plots.
+
+    Returns:
+        The theme, made RGB-friendly.
+    """
+    return (
+        _rgbify(canvas_color),
+        _rgbify(axes_color),
+        _rgbify(ticks_color),
+        ticks_style,
+        [_rgbify(data_color) for data_color in data_colors],
+    )
+
 
 # Patch in some Textual-friendly colour sequences.
-_theme_bag["textual-default"] = _theme_bag["pro"][:-1] + [_textual_color_sequence]
-_theme_bag["textual-clear"] = _theme_bag["textual-default"][:-1] + [
-    ["default"] * len(_textual_color_sequence)
-]
-_theme_bag["textual-pro"] = _theme_bag["textual-default"]
+_themes["textual-default"] = list(
+    _rgbify_theme("default", "default", "default", "default", _themes["default"][-1])
+)
+_themes["textual-clear"] = list(
+    _rgbify_theme(
+        "default",
+        "default",
+        "default",
+        "default",
+        ["default"] * len(_themes["clear"][-1]),
+    )
+)
+_themes["textual-dark"] = _rgbify_theme(*_themes["dark"])
+_themes["textual-pro"] = _themes["textual-default"]
