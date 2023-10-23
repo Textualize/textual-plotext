@@ -36,6 +36,7 @@ ThemeName = Literal[
     # The additional Textual themes.
     "textual-default",
     "textual-clear",
+    "textual-pro",
 ]
 """Literal type that is the list of theme names defined in Plotext.
 
@@ -204,3 +205,4 @@ _theme_bag["textual-default"] = _theme_bag["pro"][:-1] + [_textual_color_sequenc
 _theme_bag["textual-clear"] = _theme_bag["textual-default"][:-1] + [
     ["default"] * len(_textual_color_sequence)
 ]
+_theme_bag["textual-pro"] = _theme_bag["textual-default"]
