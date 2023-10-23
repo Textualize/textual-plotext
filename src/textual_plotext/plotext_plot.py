@@ -34,14 +34,14 @@ class PlotextPlot(Widget):
     colours appropriate to the current mode.
     """
 
-    light_mode_theme: var[ThemeName] = var("textual-clear")
+    light_mode_theme: var[ThemeName] = var("textual-default")
     """The Plotext theme to use for light mode.
 
     Note:
         This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
     """
 
-    dark_mode_theme: var[ThemeName] = var("textual-clear")
+    dark_mode_theme: var[ThemeName] = var("textual-default")
     """The Plotext theme to use for dark mode.
 
     Note:
@@ -66,9 +66,9 @@ class PlotextPlot(Widget):
         """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
-        # We use textual-clear as the default theme, as that's going to work
-        # well no matter if we're in light or dark mode.
-        self._plot.theme("textual-clear")
+        # We use textual-default as the default theme, as that's going to
+        # work well no matter if we're in light or dark mode.
+        self._plot.theme("textual-default")
         # Watch the application's dark mode switch so that we can react to
         # any request to auto-change between light and dark themes.
         self.watch(self.app, "dark", self._dark_mode, init=False)

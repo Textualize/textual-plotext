@@ -34,6 +34,7 @@ ThemeName = Literal[
     "serious",
     "windows",
     # The additional Textual themes.
+    "textual-default",
     "textual-clear",
 ]
 """Literal type that is the list of theme names defined in Plotext.
@@ -199,4 +200,7 @@ _textual_color_sequence = [
 """The default Plotext colour sequence, turned into RGB tuples."""
 
 # Patch in some Textual-friendly colour sequences.
-_theme_bag["textual-clear"] = _theme_bag["pro"][:-1] + [_textual_color_sequence]
+_theme_bag["textual-default"] = _theme_bag["pro"][:-1] + [_textual_color_sequence]
+_theme_bag["textual-clear"] = _theme_bag["textual-default"][:-1] + [
+    ["default"] * len(_textual_color_sequence)
+]
