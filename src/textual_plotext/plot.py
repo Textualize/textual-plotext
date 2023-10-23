@@ -34,8 +34,8 @@ ThemeName = Literal[
     "serious",
     "windows",
     # The additional Textual themes.
-    "textual-default",
     "textual-clear",
+    "textual-default",
     "textual-pro",
 ]
 """Literal type that is the list of theme names defined in Plotext.
