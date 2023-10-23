@@ -269,4 +269,4 @@ _themes["textual-grandpa"] = _rgbify_theme(*_themes["grandpa"])
 _themes["textual-matrix"] = _rgbify_theme(*_themes["matrix"])
 _themes["textual-mature"] = _rgbify_theme(*_themes["mature"])
 _themes["textual-pro"] = _themes["textual-default"]
-_themes["textual-retro"] = _themes["retro"]
+_themes["textual-retro"] = _rgbify_theme(*_themes["retro"])
