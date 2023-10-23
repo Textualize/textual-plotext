@@ -174,5 +174,29 @@ def themes() -> tuple[str, ...]:
 # this sequence will be used).
 
 from plotext._dict import themes as _theme_bag, color_sequence as _color_sequence
+from textual.color import Color as TextualColor
 
-_theme_bag["textual-clear"] = _theme_bag["pro"]
+_color_translations = {
+    "blue+": "ansi_bright_blue",
+    "green+": "ansi_bright_green",
+    "red+": "ansi_bright_red",
+    "cyan+": "ansi_bright_cyan",
+    "magenta+": "ansi_bright_magenta",
+    "gray+": "white",
+    "orange+": "orange",
+}
+"""Mappings of Plotext-color-sequence colours into colours that Textual can parse.
+
+This is also a good place to map a particular colour into something nicer.
+"""
+
+_textual_color_sequence = [
+    TextualColor.parse(_color_translations.get(color, color)).rgb
+    if color != "default"
+    else color
+    for color in _color_sequence
+]
+"""The default Plotext colour sequence, turned into RGB tuples."""
+
+# Patch in some Textual-friendly colour sequences.
+_theme_bag["textual-clear"] = _theme_bag["pro"][:-1] + [_textual_color_sequence]
