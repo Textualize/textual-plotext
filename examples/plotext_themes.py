@@ -29,7 +29,7 @@ class ThemeSample(Vertical):
     def compose(self) -> ComposeResult:
         yield PlotextPlot()
         yield Select[str](
-            [(theme, theme) for theme in themes.keys()],
+            [(theme, theme) for theme in themes()],
             value="default",
             allow_blank=False,
         )
