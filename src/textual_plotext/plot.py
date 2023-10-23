@@ -49,6 +49,7 @@ ThemeName = Literal[
     "textual-salad",
     "textual-scream",
     "textual-serious",
+    "textual-windows",
 ]
 """Literal type that is the list of theme names defined in Plotext.
 
@@ -278,3 +279,4 @@ _themes["textual-sahara"] = _rgbify_theme(*_themes["sahara"])
 _themes["textual-salad"] = _rgbify_theme(*_themes["salad"])
 _themes["textual-scream"] = _rgbify_theme(*_themes["scream"])
 _themes["textual-serious"] = _rgbify_theme(*_themes["serious"])
+_themes["textual-windows"] = _rgbify_theme(*_themes["windows"])
