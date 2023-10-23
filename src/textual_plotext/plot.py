@@ -175,10 +175,4 @@ def themes() -> tuple[str, ...]:
 
 from plotext._dict import themes as _theme_bag, color_sequence as _color_sequence
 
-_theme_bag["textual-clear"] = [
-    "default",
-    "default",
-    "default",
-    "default",
-    _color_sequence,
-]
+_theme_bag["textual-clear"] = _theme_bag["pro"]
