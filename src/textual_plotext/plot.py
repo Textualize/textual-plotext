@@ -42,6 +42,7 @@ ThemeName = Literal[
     "textual-girly",
     "textual-grandpa",
     "textual-matrix",
+    "textual-mature",
     "textual-pro",
 ]
 """Literal type that is the list of theme names defined in Plotext.
@@ -265,4 +266,5 @@ _themes["textual-elegant"] = _rgbify_theme(*_themes["elegant"])
 _themes["textual-girly"] = _rgbify_theme(*_themes["girly"])
 _themes["textual-grandpa"] = _rgbify_theme(*_themes["grandpa"])
 _themes["textual-matrix"] = _rgbify_theme(*_themes["matrix"])
+_themes["textual-mature"] = _rgbify_theme(*_themes["mature"])
 _themes["textual-pro"] = _themes["textual-default"]
