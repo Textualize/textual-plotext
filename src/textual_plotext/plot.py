@@ -45,6 +45,7 @@ ThemeName = Literal[
     "textual-mature",
     "textual-pro",
     "textual-retro",
+    "textual-sahara",
 ]
 """Literal type that is the list of theme names defined in Plotext.
 
@@ -270,3 +271,4 @@ _themes["textual-matrix"] = _rgbify_theme(*_themes["matrix"])
 _themes["textual-mature"] = _rgbify_theme(*_themes["mature"])
 _themes["textual-pro"] = _themes["textual-default"]
 _themes["textual-retro"] = _rgbify_theme(*_themes["retro"])
+_themes["textual-sahara"] = _rgbify_theme(*_themes["sahara"])
