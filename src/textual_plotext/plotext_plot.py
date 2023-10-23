@@ -30,14 +30,14 @@ class PlotextPlot(Widget):
     is changed.
     """
 
-    light_mode_theme: var[ThemeName] = var("default")
+    light_mode_theme: var[ThemeName] = var("pro")
     """The Plotext theme to use for light mode.
 
     Note:
         This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
     """
 
-    dark_mode_theme: var[ThemeName] = var("dark")
+    dark_mode_theme: var[ThemeName] = var("pro")
     """The Plotext theme to use for dark mode.
 
     Note:
