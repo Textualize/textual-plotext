@@ -24,14 +24,22 @@ class ThemeSample(PlotextPlot):
     """
 
     theme: var[str] = var("clear")
+    """The theme to show."""
 
     def __init__(self, title: str, id: str) -> None:
+        """Initialise the theme sample.
+
+        Args:
+            title: The title for the widget.
+            id: The ID for the widget.
+        """
         super().__init__(id=id)
         self.border_title = title
         self._data = [self.plt.sin(phase=n / 4) for n in range(16)]
 
     @on(Mount)
     def replot(self) -> None:
+        """Replot the sample."""
         self.plt.clear_figure()
         self.plt.theme(self.theme)
         self.plt.title("This is the title")
@@ -40,6 +48,7 @@ class ThemeSample(PlotextPlot):
         self.refresh()
 
     def _watch_theme(self) -> None:
+        """React to a change of theme."""
         self.border_subtitle = self.theme
         self.replot()
 
@@ -66,6 +75,7 @@ class ThemeApp(App[None]):
     ]
 
     def compose(self) -> ComposeResult:
+        """Compose the main screen."""
         yield Header()
         with Horizontal():
             yield OptionList(
@@ -83,6 +93,11 @@ class ThemeApp(App[None]):
 
     @on(OptionList.OptionHighlighted)
     def update_samples(self, event: OptionList.OptionHighlighted) -> None:
+        """Update each of the samples when the selected theme changes.
+
+        Args:
+            event: The selection highlight event.
+        """
         if event.option_id is not None:
             self.query_one("#plotext", ThemeSample).theme = event.option_id
             self.query_one("#textual", ThemeSample).theme = f"textual-{event.option_id}"
