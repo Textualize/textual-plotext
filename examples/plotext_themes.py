@@ -3,53 +3,60 @@
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.containers import Vertical
-from textual.widgets import Header, Footer, Select
+from textual.containers import Horizontal, Vertical
+from textual.events import Mount
+from textual.reactive import var
+from textual.widgets import Header, Footer, OptionList
+from textual.widgets.option_list import Option
 
 from textual_plotext import PlotextPlot, themes
 
 
-class ThemeSample(Vertical):
-    """Widget for showing a theme sample."""
+class ThemeSample(PlotextPlot):
+    """A plot for showing off a theme."""
 
     DEFAULT_CSS = """
     ThemeSample {
-        padding: 1 2;
-    }
-
-    Select SelectCurrent, Select:focus SelectCurrent {
-        border: none !important;
-    }
-
-    Select:focus {
-        background: $primary;
+        border-top: panel $accent;
+        border-bottom: blank $accent;
+        padding: 2 4;
     }
     """
 
-    def compose(self) -> ComposeResult:
-        yield PlotextPlot()
-        yield Select[str](
-            [(theme, theme) for theme in themes()],
-            value="default",
-            allow_blank=False,
-        )
+    theme: var[str] = var("clear")
 
-    def on_mount(self) -> None:
-        self.replot()
+    def __init__(self, title: str, id: str) -> None:
+        super().__init__(id=id)
+        self.border_title = title
+        self._data = [self.plt.sin(phase=n / 4) for n in range(16)]
 
-    @on(Select.Changed)
+    @on(Mount)
     def replot(self) -> None:
-        plot = self.query_one(PlotextPlot)
-        plot.auto_theme = False
-        plot.plt.clear_figure()
-        plot.plt.theme(self.query_one(Select).value)
-        plot.plt.title("This is the title")
-        plot.plt.scatter(plot.plt.sin())
-        plot.refresh()
+        self.plt.clear_figure()
+        self.plt.theme(self.theme)
+        self.plt.title("This is the title")
+        for data in self._data:
+            self.plt.scatter(data)
+        self.refresh()
+
+    def _watch_theme(self) -> None:
+        self.border_subtitle = self.theme
+        self.replot()
 
 
 class ThemeApp(App[None]):
     """A Textual application for exploring the different Plotext themes."""
+
+    CSS = """
+    #themes {
+        height: 1fr;
+        border: none;
+    }
+
+    #samples {
+        width: 4fr;
+    }
+    """
 
     TITLE = "Plotext theme explorer"
 
@@ -58,18 +65,27 @@ class ThemeApp(App[None]):
         Binding("q", "quit", "Quit"),
     ]
 
-    CSS = """
-    Screen {
-        layout: grid;
-        grid-size: 2;
-    }
-    """
-
     def compose(self) -> ComposeResult:
         yield Header()
-        for _ in range(4):
-            yield ThemeSample()
+        with Horizontal():
+            yield OptionList(
+                *[
+                    Option(theme.capitalize(), id=theme.lower())
+                    for theme in themes()
+                    if not theme.startswith("textual-")
+                ],
+                id="themes",
+            )
+            with Vertical(id="samples"):
+                yield ThemeSample("Plotext Theme", id="plotext")
+                yield ThemeSample("Textual Equivalent Theme", id="textual")
         yield Footer()
+
+    @on(OptionList.OptionHighlighted)
+    def update_samples(self, event: OptionList.OptionHighlighted) -> None:
+        if event.option_id is not None:
+            self.query_one("#plotext", ThemeSample).theme = event.option_id
+            self.query_one("#textual", ThemeSample).theme = f"textual-{event.option_id}"
 
 
 if __name__ == "__main__":
