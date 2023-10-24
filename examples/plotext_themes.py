@@ -17,7 +17,7 @@ class ThemeSample(Vertical):
         padding: 1 2;
     }
 
-    Select * {
+    Select SelectCurrent, Select:focus SelectCurrent {
         border: none !important;
     }
 
