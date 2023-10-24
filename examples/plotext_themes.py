@@ -147,7 +147,7 @@ class ThemeApp(App[None]):
 
     def _watch_marker(self) -> None:
         """React to a change of marker."""
-        for sample in self.query(ThemeSample):
+        for sample in self.query(ThemeSample).results():
             sample.marker = self.marker
 
     def action_marker(self) -> None:
