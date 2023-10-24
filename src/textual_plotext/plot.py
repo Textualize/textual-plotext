@@ -12,6 +12,12 @@ from typing import Any, Tuple, Union
 
 from typing_extensions import Literal, TypeAlias, get_args
 
+from plotext._dict import (
+    themes as _themes,
+    type1_to_type2_codes,
+)
+from plotext._utility import get_color_code
+
 from . import plotext
 from .plotext._figure import _figure_class as Figure
 
@@ -187,12 +193,6 @@ def themes() -> tuple[str, ...]:
 # where color_sequence is a sequence of colours that will be used as plots
 # are added (that is, if you plot 3 types of data and don't specify colours,
 # this sequence will be used).
-
-from plotext._dict import (
-    themes as _themes,
-    type1_to_type2_codes,
-)
-from plotext._utility import get_color_code
 
 
 def _rgbify(color: Color) -> tuple[int, int, int] | str:
