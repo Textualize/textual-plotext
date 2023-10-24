@@ -136,6 +136,33 @@ These include:
 - `plt.show`
 - `plt.save_fig`
 
+## Themes
+
+Plotext has [a system of
+themes](https://github.com/piccolomo/plotext/blob/master/readme/aspect.md#themes).
+The themes provided by Plotext are supported by `PlotextPlot`. However, some
+of those themes use "ANSI colors" and so may end up looking different
+depending on which terminal you use, and what terminal theme is in use (if
+your terminal supports themes); the issue here is that your plots may look
+very different in different environments.
+
+To help with this `textual-plotext` provides an additional set of copies of
+those themes, all prefixed with `textual-`, that use full RGB coloring to
+ensure that, when using a given Plotext theme, it will look the same
+everywhere.
+
+In addition to the Plotext themes, `textual-plotext` also adds two themes
+called:
+
+- `textual-design-dark`
+- `textual-design-light`
+
+These are two similar themes designed to look good in dark mode and light
+mode respectively. Out of the box, `PlotextPlot` will use these and will
+switch between them when switching between dark and light mode in your
+Textual application. If you wish to turn off this behaviour, simply set the
+`auto_theme` property of your plot to `False`.
+
 ## Known issues
 
 At the moment, due to what appears to be a bug in Plotext when it comes to
