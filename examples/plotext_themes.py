@@ -33,6 +33,9 @@ class ThemeSample(PlotextPlot):
     marker: var[str] = var("fhd")
     """The type of marker to use for the sample."""
 
+    swatch_mode: var[bool] = var(False)
+    """Should we be in color swatch mode?"""
+
     def __init__(
         self, title: str, id: str, classes: str | None = None
     ) -> None:  # pylint:disable=redefined-builtin
@@ -45,7 +48,7 @@ class ThemeSample(PlotextPlot):
         super().__init__(id=id, classes=classes)
         self.auto_theme = False
         self.border_title = title
-        self._data = [self.plt.sin(phase=n / 4) for n in range(16)]
+        self._data = [self.plt.sin(phase=n / 4) for n in range(19)]
 
     @on(Mount)
     def replot(self) -> None:
@@ -53,8 +56,11 @@ class ThemeSample(PlotextPlot):
         self.plt.clear_figure()
         self.plt.theme(self.theme)
         self.plt.title("This is the title")
-        for data in self._data:
-            self.plt.plot(data, marker=self.marker)
+        if self.swatch_mode:
+            self.plt.multiple_bar(["Swatch sample"], [[1]] * 19)
+        else:
+            for data in self._data:
+                self.plt.plot(data, marker=self.marker)
         self.refresh()
 
     def _watch_theme(self) -> None:
@@ -64,6 +70,10 @@ class ThemeSample(PlotextPlot):
 
     def _watch_marker(self) -> None:
         """React to a change of marker."""
+        self._watch_theme()
+
+    def _watch_swatch_mode(self) -> None:
+        """React to the swatch mode being changed."""
         self._watch_theme()
 
 
@@ -90,6 +100,7 @@ class ThemeApp(App[None]):
     BINDINGS = [
         Binding("d", "toggle_dark", "Light/Dark"),
         Binding("m", "marker", "Change markers"),
+        Binding("s", "toggle_swatch", "Plot/Swatch"),
         Binding("q", "quit", "Quit"),
     ]
 
@@ -155,6 +166,11 @@ class ThemeApp(App[None]):
     def action_marker(self) -> None:
         """Change the marker used for the plots."""
         self.marker = next(self._markers)
+
+    def action_toggle_swatch(self) -> None:
+        """Toggle the samples between plotting and swatch mode."""
+        for sample in self.query(ThemeSample).results():
+            sample.swatch_mode = not sample.swatch_mode
 
 
 if __name__ == "__main__":
