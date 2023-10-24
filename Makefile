@@ -26,6 +26,10 @@ weather:			# Run the weather example.
 scatter:			# Run the scatter plot example.
 	$(python) $(examples)/scatter.py
 
+.PHONY: themes
+themes:			# Explore the Plotext themes.
+	$(python) $(examples)/plotext_themes.py
+
 .PHONY: example
 example: weather		# Run the main example.
 
