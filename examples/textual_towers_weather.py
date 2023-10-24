@@ -14,7 +14,7 @@ from textual import on, work
 from textual.app import App, ComposeResult
 from textual.containers import Grid
 from textual.message import Message
-from textual.reactive import reactive, var
+from textual.reactive import var
 from textual.widgets import Footer, Header
 from typing_extensions import Final
 
@@ -27,7 +27,7 @@ TEXTUAL_ICBM: Final[tuple[float, float]] = (55.9533, -3.1883)
 class Weather(PlotextPlot):
     """A widget for plotting weather data."""
 
-    marker: reactive[str] = reactive("sd")
+    marker: var[str] = var("sd")
     """The type of marker to use for the plot."""
 
     def __init__(
