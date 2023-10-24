@@ -11,7 +11,7 @@ from textual.containers import Horizontal, Vertical
 from textual.events import Mount
 from textual.reactive import var
 from textual.widgets import Header, Footer, OptionList
-from textual.widgets.option_list import Option
+from textual.widgets.option_list import Option, Separator
 
 from textual_plotext import PlotextPlot, themes
 
@@ -33,14 +33,14 @@ class ThemeSample(PlotextPlot):
     marker: var[str] = var("fhd")
     """The type of marker to use for the sample."""
 
-    def __init__(self, title: str, id: str) -> None:
+    def __init__(self, title: str, id: str, classes: str | None = None) -> None:
         """Initialise the theme sample.
 
         Args:
             title: The title for the widget.
             id: The ID for the widget.
         """
-        super().__init__(id=id)
+        super().__init__(id=id, classes=classes)
         self.auto_theme = False
         self.border_title = title
         self._data = [self.plt.sin(phase=n / 4) for n in range(16)]
@@ -77,6 +77,10 @@ class ThemeApp(App[None]):
     #samples {
         width: 4fr;
     }
+
+    .invisible {
+        display: none;
+    }
     """
 
     TITLE = "Plotext theme explorer"
@@ -105,11 +109,20 @@ class ThemeApp(App[None]):
                     for theme in themes()
                     if not theme.startswith("textual-")
                 ],
+                Separator(),
+                Option("Textual Design Dark-Friendly", id="textual-design-dark"),
+                Option("Textual Design Light-Friendly", id="textual-design-light"),
                 id="themes",
             )
             with Vertical(id="samples"):
-                yield ThemeSample("Plotext Theme", id="plotext")
-                yield ThemeSample("Textual Equivalent Theme", id="textual")
+                yield ThemeSample("Plotext Theme", id="plotext", classes="shared")
+                yield ThemeSample(
+                    "Textual Equivalent Theme", id="textual", classes="shared"
+                )
+                yield ThemeSample(
+                    "Textual Theme", id="exclusive", classes="exclusive invisible"
+                )
+
         yield Footer()
 
     @on(OptionList.OptionHighlighted)
@@ -120,8 +133,17 @@ class ThemeApp(App[None]):
             event: The selection highlight event.
         """
         if event.option_id is not None:
-            self.query_one("#plotext", ThemeSample).theme = event.option_id
-            self.query_one("#textual", ThemeSample).theme = f"textual-{event.option_id}"
+            if event.option_id.startswith("textual-design"):
+                self.query_one("#exclusive", ThemeSample).theme = event.option_id
+                self.query(".shared").add_class("invisible")
+                self.query(".exclusive").remove_class("invisible")
+            else:
+                self.query_one("#plotext", ThemeSample).theme = event.option_id
+                self.query_one(
+                    "#textual", ThemeSample
+                ).theme = f"textual-{event.option_id}"
+                self.query(".shared").remove_class("invisible")
+                self.query(".exclusive").add_class("invisible")
 
     def _watch_marker(self) -> None:
         """React to a change of marker."""
