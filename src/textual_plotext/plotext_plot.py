@@ -20,7 +20,7 @@ class PlotextPlot(Widget):
     }
     """
 
-    auto_theme: var[bool] = var(False)
+    auto_theme: var[bool] = var(True)
     """Should the plot automatically adjust the theme depending on light and dark mode?
 
     If set to `True` the theme of the plot will be adjusted to either
@@ -34,14 +34,14 @@ class PlotextPlot(Widget):
     colours appropriate to the current mode.
     """
 
-    light_mode_theme: var[ThemeName] = var("textual-default")
+    light_mode_theme: var[ThemeName] = var("textual-design-light")
     """The Plotext theme to use for light mode.
 
     Note:
         This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
     """
 
-    dark_mode_theme: var[ThemeName] = var("textual-default")
+    dark_mode_theme: var[ThemeName] = var("textual-design-dark")
     """The Plotext theme to use for dark mode.
 
     Note:

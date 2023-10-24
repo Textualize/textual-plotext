@@ -18,6 +18,9 @@ from plotext._dict import (
 )
 from plotext._utility import get_color_code
 
+from textual.app import DEFAULT_COLORS
+from textual.color import Color as TextualColor
+
 from . import plotext
 from .plotext._figure import _figure_class as Figure
 
@@ -39,7 +42,7 @@ ThemeName = Literal[
     "scream",
     "serious",
     "windows",
-    # The additional Textual themes.
+    # Full colour versions of the Plotext themes.
     "textual-clear",
     "textual-dark",
     "textual-default",
@@ -56,6 +59,9 @@ ThemeName = Literal[
     "textual-scream",
     "textual-serious",
     "textual-windows",
+    # Textual extra themes.
+    "textual-design-dark",
+    "textual-design-light",
 ]
 """Literal type that is the list of theme names defined in Plotext.
 
@@ -253,7 +259,7 @@ def _rgbify_theme(
     )
 
 
-# Patch in some Textual-friendly colour sequences.
+# Make full-colour versions of the Plotext themes.
 _themes["textual-default"] = list(
     _rgbify_theme("default", "default", "default", "default", _themes["default"][-1])
 )
@@ -280,3 +286,21 @@ _themes["textual-salad"] = _rgbify_theme(*_themes["salad"])
 _themes["textual-scream"] = _rgbify_theme(*_themes["scream"])
 _themes["textual-serious"] = _rgbify_theme(*_themes["serious"])
 _themes["textual-windows"] = _rgbify_theme(*_themes["windows"])
+
+# Now add a couple of extra themes that are Textual-specific.
+_dark = DEFAULT_COLORS["dark"].generate()
+_light = DEFAULT_COLORS["light"].generate()
+_themes["textual-design-dark"] = [
+    "default",
+    "default",
+    TextualColor.parse(_dark["accent"]).rgb,
+    "",
+    _themes["textual-default"][-1],
+]
+_themes["textual-design-light"] = [
+    "default",
+    "default",
+    TextualColor.parse(_light["accent"]).rgb,
+    "",
+    _themes["textual-default"][-1],
+]

@@ -41,6 +41,7 @@ class ThemeSample(PlotextPlot):
             id: The ID for the widget.
         """
         super().__init__(id=id)
+        self.auto_theme = False
         self.border_title = title
         self._data = [self.plt.sin(phase=n / 4) for n in range(16)]
 
