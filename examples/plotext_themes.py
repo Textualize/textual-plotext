@@ -1,5 +1,9 @@
 """A small app to explore how the different Plotext themes look."""
 
+from __future__ import annotations
+
+from itertools import cycle
+
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
@@ -19,12 +23,15 @@ class ThemeSample(PlotextPlot):
     ThemeSample {
         border-top: panel $accent;
         border-bottom: blank $accent;
-        padding: 2 4;
+        margin: 2 4;
     }
     """
 
     theme: var[str] = var("clear")
     """The theme to show."""
+
+    marker: var[str] = var("fhd")
+    """The type of marker to use for the sample."""
 
     def __init__(self, title: str, id: str) -> None:
         """Initialise the theme sample.
@@ -44,13 +51,17 @@ class ThemeSample(PlotextPlot):
         self.plt.theme(self.theme)
         self.plt.title("This is the title")
         for data in self._data:
-            self.plt.scatter(data)
+            self.plt.plot(data, marker=self.marker)
         self.refresh()
 
     def _watch_theme(self) -> None:
         """React to a change of theme."""
-        self.border_subtitle = self.theme
+        self.border_subtitle = f"{self.theme} ({self.marker})"
         self.replot()
+
+    def _watch_marker(self) -> None:
+        """React to a change of marker."""
+        self._watch_theme()
 
 
 class ThemeApp(App[None]):
@@ -71,8 +82,17 @@ class ThemeApp(App[None]):
 
     BINDINGS = [
         Binding("d", "toggle_dark", "Light/Dark"),
+        Binding("m", "marker", "Change markers"),
         Binding("q", "quit", "Quit"),
     ]
+
+    marker: var[str] = var("fhd")
+    """The marker used for each of the plots."""
+
+    def __init__(self) -> None:
+        """Initialise the application."""
+        super().__init__()
+        self._markers = cycle(("braille", "sd", "dot", "hd", "fhd"))
 
     def compose(self) -> ComposeResult:
         """Compose the main screen."""
@@ -101,6 +121,15 @@ class ThemeApp(App[None]):
         if event.option_id is not None:
             self.query_one("#plotext", ThemeSample).theme = event.option_id
             self.query_one("#textual", ThemeSample).theme = f"textual-{event.option_id}"
+
+    def _watch_marker(self) -> None:
+        """React to a change of marker."""
+        for sample in self.query(ThemeSample):
+            sample.marker = self.marker
+
+    def action_marker(self) -> None:
+        """Change the marker used for the plots."""
+        self.marker = next(self._markers)
 
 
 if __name__ == "__main__":
