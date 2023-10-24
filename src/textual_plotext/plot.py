@@ -259,9 +259,38 @@ def _rgbify_theme(
     )
 
 
-# Make full-colour versions of the Plotext themes.
+_sequence = [
+    (0, 130, 200),
+    (60, 180, 75),
+    (230, 25, 75),
+    (255, 225, 25),
+    (245, 130, 48),
+    (145, 30, 180),
+    (70, 240, 240),
+    (240, 50, 230),
+    (210, 245, 60),
+    (250, 190, 212),
+    (0, 128, 128),
+    (220, 190, 255),
+    (170, 110, 40),
+    (255, 250, 200),
+    (128, 0, 0),
+    (170, 255, 195),
+    (128, 128, 0),
+    (255, 215, 180),
+    (0, 0, 245),
+    (128, 128, 128),
+]
+"""A sequence of colours for multiple plots.
+
+Designed to work with either light or dark mode.
+"""
+
+# Make full-colour versions of the Plotext themes. In almost every case
+# we'll follow the data sequence colours laid down by Plotext; but in a
+# couple of cases we'll use our own curated set.
 _themes["textual-default"] = list(
-    _rgbify_theme("default", "default", "default", "default", _themes["default"][-1])
+    _rgbify_theme("default", "default", "default", "default", _sequence)
 )
 _themes["textual-clear"] = list(
     _rgbify_theme(
@@ -269,7 +298,7 @@ _themes["textual-clear"] = list(
         "default",
         "default",
         "default",
-        ["default"] * len(_themes["clear"][-1]),
+        ["default"],
     )
 )
 _themes["textual-dark"] = _rgbify_theme(*_themes["dark"])
@@ -295,12 +324,12 @@ _themes["textual-design-dark"] = [
     "default",
     TextualColor.parse(_dark["accent-lighten-2"]).rgb,
     "bold",
-    _themes["textual-default"][-1],
+    _sequence,
 ]
 _themes["textual-design-light"] = [
     "default",
     "default",
     TextualColor.parse(_light["accent-darken-2"]).rgb,
     "bold",
-    _themes["textual-default"][-1],
+    _sequence,
 ]
