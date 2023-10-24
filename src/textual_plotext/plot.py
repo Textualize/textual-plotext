@@ -293,14 +293,14 @@ _light = DEFAULT_COLORS["light"].generate()
 _themes["textual-design-dark"] = [
     "default",
     "default",
-    TextualColor.parse(_dark["accent"]).rgb,
-    "",
+    TextualColor.parse(_dark["accent-lighten-2"]).rgb,
+    "bold",
     _themes["textual-default"][-1],
 ]
 _themes["textual-design-light"] = [
     "default",
     "default",
-    TextualColor.parse(_light["accent"]).rgb,
-    "",
+    TextualColor.parse(_light["accent-darken-2"]).rgb,
+    "bold",
     _themes["textual-default"][-1],
 ]
