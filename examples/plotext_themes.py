@@ -33,7 +33,9 @@ class ThemeSample(PlotextPlot):
     marker: var[str] = var("fhd")
     """The type of marker to use for the sample."""
 
-    def __init__(self, title: str, id: str, classes: str | None = None) -> None:
+    def __init__(
+        self, title: str, id: str, classes: str | None = None
+    ) -> None:  # pylint:disable=redefined-builtin
         """Initialise the theme sample.
 
         Args:
