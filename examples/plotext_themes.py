@@ -87,7 +87,7 @@ class ThemeApp(App[None]):
     }
 
     #samples {
-        width: 4fr;
+        width: 5fr;
     }
 
     .invisible {
