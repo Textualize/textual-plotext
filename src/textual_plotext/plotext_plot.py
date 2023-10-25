@@ -99,6 +99,16 @@ class PlotextPlot(Widget):
             The renderable for displaying the plot.
         """
         self._plot.plotsize(self.size.width, self.size.height)
+        # This is a belt-and-braces setting of the size of the plot.
+        # Internally plotsize calls _set_plot, and as best as I can figure
+        # out, what I'm doing here *should* be a no-op (or rather a repeat
+        # of what I've just done). And yet... the resizing of plots just
+        # doesn't work right without this. This *might* be some
+        # as-yet-undiscovered side-effect of dumpster-diving for the figure
+        # class.
+        #
+        # https://github.com/Textualize/textual-plotext/issues/5
+        self._plot._set_size(self.size.width, self.size.height)
         if self.auto_theme:
             self._plot.theme(
                 self.dark_mode_theme if self.app.dark else self.light_mode_theme
