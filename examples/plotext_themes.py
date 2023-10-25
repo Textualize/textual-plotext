@@ -57,7 +57,7 @@ class ThemeSample(PlotextPlot):
         self.plt.theme(self.theme)
         self.plt.title("This is the title")
         if self.swatch_mode:
-            self.plt.multiple_bar(["Swatch sample"], [[1]] * 19)
+            self.plt.multiple_bar(["Swatch sample"], [[1]] * 20)
         else:
             for data in self._data:
                 self.plt.plot(data, marker=self.marker)
