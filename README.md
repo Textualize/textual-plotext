@@ -159,9 +159,10 @@ called:
 
 These are two similar themes designed to look good in dark mode and light
 mode respectively. Out of the box, `PlotextPlot` will use these and will
-switch between them when switching between dark and light mode in your
-Textual application. If you wish to turn off this behaviour, simply set the
-`auto_theme` property of your plot to `False`.
+switch between them when your [Textual application switches between dark and
+light mode](https://textual.textualize.io/api/app/#textual.app.App.dark). If
+you wish to turn off this behaviour, simply set the `auto_theme` property of
+your plot to `False`.
 
 ## Known issues
 
