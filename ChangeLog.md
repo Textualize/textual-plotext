@@ -1,6 +1,6 @@
 # textual-plotext ChangeLog
 
-## [0.2.0] - Unreleased
+## [0.2.0] - 2023-10-25
 
 ### Added
 
