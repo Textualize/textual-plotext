@@ -1,5 +1,12 @@
 # textual-plotext ChangeLog
 
+## [0.2.1] - 2023-10-25
+
+### Fixed
+
+- Fixed an issue with plots' sizes capping at their last `clf` size.
+  https://github.com/Textualize/textual-plotext/issues/5
+
 ## [0.2.0] - 2023-10-25
 
 ### Added
