@@ -28,16 +28,20 @@ class PlotextPlot(Widget):
     [`dark_mode_theme`][PlotextPlot.dark_mode_theme] when
     [`App.dark`](https://textual.textualize.io/api/app/#textual.app.App.dark)
     is changed.
+
+    By default this is set to `False` and `light_mode_theme` and
+    `dark_mode_theme` are both set to the same theme, designed to take on
+    colours appropriate to the current mode.
     """
 
-    light_mode_theme: var[ThemeName] = var("default")
+    light_mode_theme: var[ThemeName] = var("textual-design-light")
     """The Plotext theme to use for light mode.
 
     Note:
         This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
     """
 
-    dark_mode_theme: var[ThemeName] = var("dark")
+    dark_mode_theme: var[ThemeName] = var("textual-design-dark")
     """The Plotext theme to use for dark mode.
 
     Note:
@@ -62,6 +66,11 @@ class PlotextPlot(Widget):
         """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
+        # We use textual-default as the default theme, as that's going to
+        # work well no matter if we're in light or dark mode.
+        self._plot.theme("textual-default")
+        # Watch the application's dark mode switch so that we can react to
+        # any request to auto-change between light and dark themes.
         self.watch(self.app, "dark", self._dark_mode, init=False)
 
     @property

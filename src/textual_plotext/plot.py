@@ -12,10 +12,20 @@ from typing import Any, Tuple, Union
 
 from typing_extensions import Literal, TypeAlias, get_args
 
+from plotext._dict import (
+    themes as _themes,
+    type1_to_type2_codes,
+)
+from plotext._utility import get_color_code
+
+from textual.app import DEFAULT_COLORS
+from textual.color import Color as TextualColor
+
 from . import plotext
 from .plotext._figure import _figure_class as Figure
 
 ThemeName = Literal[
+    # The standard Plotext themes.
     "clear",
     "dark",
     "default",
@@ -32,6 +42,26 @@ ThemeName = Literal[
     "scream",
     "serious",
     "windows",
+    # Full colour versions of the Plotext themes.
+    "textual-clear",
+    "textual-dark",
+    "textual-default",
+    "textual-dreamland",
+    "textual-elegant",
+    "textual-girly",
+    "textual-grandpa",
+    "textual-matrix",
+    "textual-mature",
+    "textual-pro",
+    "textual-retro",
+    "textual-sahara",
+    "textual-salad",
+    "textual-scream",
+    "textual-serious",
+    "textual-windows",
+    # Textual extra themes.
+    "textual-design-dark",
+    "textual-design-light",
 ]
 """Literal type that is the list of theme names defined in Plotext.
 
@@ -158,3 +188,148 @@ def themes() -> tuple[str, ...]:
         A tuple of the names of the themes defined in Plotext.
     """
     return get_args(ThemeName)
+
+
+##############################################################################
+# Here we patch in some textual-friendly themes. A Plotext theme is of the
+# style:
+#
+# [canvas_color, axes_color, ticks_color, ticks_style, color_sequence]
+#
+# where color_sequence is a sequence of colours that will be used as plots
+# are added (that is, if you plot 3 types of data and don't specify colours,
+# this sequence will be used).
+
+
+def _rgbify(color: Color) -> tuple[int, int, int] | str:
+    """Force any Plotext colour into an RGB value.
+
+    Args:
+        color: The colour to convert.
+
+    Returns:
+        An RGB tuple for the colour.
+    """
+    if isinstance(color, str):
+        # For some reason Plotext uses yellow and gold but never defines
+        # them.
+        #
+        # TODO: Figure out a good version of those colours.
+        return (
+            color
+            if color == "default"
+            else _rgbify(
+                get_color_code(
+                    {"yellow": "orange", "gold": "orange+"}.get(color, color)
+                )
+            )
+        )
+    if isinstance(color, int):
+        # A single integer; convert that into an RGB.
+        return type1_to_type2_codes[color]
+    # Must be an RGB already.
+    return color
+
+
+def _rgbify_theme(
+    canvas_color: Color,
+    axes_color: Color,
+    ticks_color: Color,
+    ticks_style: str,
+    data_colors: list[Color],
+) -> tuple[Color, Color, Color, str, list[Color]]:
+    """Turn the given theme into a fully-RGB theme.
+
+    Args:
+        canvas_color: The canvas color.
+        axes_color: The axes color.
+        ticks_color: The ticks color.
+        ticks_style: The styling for the ticks.
+        data_colors: The sequence of colors for the various plots.
+
+    Returns:
+        The theme, made RGB-friendly.
+    """
+    return (
+        _rgbify(canvas_color),
+        _rgbify(axes_color),
+        _rgbify(ticks_color),
+        ticks_style,
+        [_rgbify(data_color) for data_color in data_colors],
+    )
+
+
+_sequence = [
+    (0, 130, 200),
+    (60, 180, 75),
+    (230, 25, 75),
+    (255, 225, 25),
+    (245, 130, 48),
+    (145, 30, 180),
+    (70, 240, 240),
+    (240, 50, 230),
+    (180, 225, 40),
+    (250, 190, 212),
+    (0, 128, 128),
+    (220, 190, 255),
+    (170, 110, 40),
+    (235, 230, 180),
+    (128, 0, 0),
+    (170, 255, 195),
+    (128, 128, 0),
+    (255, 215, 180),
+    (0, 0, 245),
+    (128, 128, 128),
+]
+"""A sequence of colours for multiple plots.
+
+Designed to work with either light or dark mode.
+"""
+
+# Make full-colour versions of the Plotext themes. In almost every case
+# we'll follow the data sequence colours laid down by Plotext; but in a
+# couple of cases we'll use our own curated set.
+_themes["textual-default"] = list(
+    _rgbify_theme("default", "default", "default", "default", _sequence)
+)
+_themes["textual-clear"] = list(
+    _rgbify_theme(
+        "default",
+        "default",
+        "default",
+        "default",
+        ["default"],
+    )
+)
+_themes["textual-dark"] = _rgbify_theme(*_themes["dark"])
+_themes["textual-dreamland"] = _rgbify_theme(*_themes["dreamland"])
+_themes["textual-elegant"] = _rgbify_theme(*_themes["elegant"])
+_themes["textual-girly"] = _rgbify_theme(*_themes["girly"])
+_themes["textual-grandpa"] = _rgbify_theme(*_themes["grandpa"])
+_themes["textual-matrix"] = _rgbify_theme(*_themes["matrix"])
+_themes["textual-mature"] = _rgbify_theme(*_themes["mature"])
+_themes["textual-pro"] = _themes["textual-default"]
+_themes["textual-retro"] = _rgbify_theme(*_themes["retro"])
+_themes["textual-sahara"] = _rgbify_theme(*_themes["sahara"])
+_themes["textual-salad"] = _rgbify_theme(*_themes["salad"])
+_themes["textual-scream"] = _rgbify_theme(*_themes["scream"])
+_themes["textual-serious"] = _rgbify_theme(*_themes["serious"])
+_themes["textual-windows"] = _rgbify_theme(*_themes["windows"])
+
+# Now add a couple of extra themes that are Textual-specific.
+_dark = DEFAULT_COLORS["dark"].generate()
+_light = DEFAULT_COLORS["light"].generate()
+_themes["textual-design-dark"] = [
+    "default",
+    "default",
+    TextualColor.parse(_dark["accent-lighten-2"]).rgb,
+    "bold",
+    _sequence,
+]
+_themes["textual-design-light"] = [
+    "default",
+    "default",
+    TextualColor.parse(_light["accent-darken-2"]).rgb,
+    "bold",
+    _sequence,
+]
