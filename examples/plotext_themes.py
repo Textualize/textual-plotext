@@ -150,6 +150,7 @@ class ThemeApp(App[None]):
                 self.query_one("#exclusive", ThemeSample).theme = event.option_id
                 self.query(".shared").add_class("invisible")
                 self.query(".exclusive").remove_class("invisible")
+                self.dark = event.option_id == "textual-design-dark"
             else:
                 self.query_one("#plotext", ThemeSample).theme = event.option_id
                 self.query_one(
