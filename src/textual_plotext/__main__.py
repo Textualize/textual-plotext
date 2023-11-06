@@ -20,6 +20,7 @@ it will show a demonstration of the library in action.
 
 from __future__ import annotations
 
+import os
 import random
 from datetime import datetime
 from itertools import chain, cycle
@@ -320,7 +321,7 @@ class SpecialPlots(ExamplesPane):
             "special",
             [
                 self.ErrorPlot(),
-                self.EventPlot(),
+                *([] if os.name == "nt" else [self.EventPlot()]),
                 self.StreamingDataPlot(),
                 self.MatrixPlot(),
                 self.ConfusionMatrix(),
