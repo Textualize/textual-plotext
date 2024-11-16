@@ -18,8 +18,8 @@ from plotext._dict import (
 )
 from plotext._utility import get_color_code
 
-from textual.app import DEFAULT_COLORS
 from textual.color import Color as TextualColor
+from textual.design import ColorSystem
 
 from . import plotext
 from .plotext._figure import _figure_class as Figure
@@ -317,8 +317,26 @@ _themes["textual-serious"] = _rgbify_theme(*_themes["serious"])
 _themes["textual-windows"] = _rgbify_theme(*_themes["windows"])
 
 # Now add a couple of extra themes that are Textual-specific.
-_dark = DEFAULT_COLORS["dark"].generate()
-_light = DEFAULT_COLORS["light"].generate()
+_dark = ColorSystem(
+    primary="#004578",
+    secondary="#ffa62b",
+    warning="#ffa62b",
+    error="#ba3c5b",
+    success="#4EBF71",
+    accent="#0178D4",
+    dark=True,
+).generate()
+
+_light = ColorSystem(
+    primary="#004578",
+    secondary="#ffa62b",
+    warning="#ffa62b",
+    error="#ba3c5b",
+    success="#4EBF71",
+    accent="#0178D4",
+    dark=False,
+).generate()
+
 _themes["textual-design-dark"] = [
     "default",
     "default",
