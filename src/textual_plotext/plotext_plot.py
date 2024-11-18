@@ -111,18 +111,20 @@ class PlotextPlot(Widget):
         self._plot._set_size(self.size.width, self.size.height)
         if self.auto_theme:
             self._plot.theme(
-                self.dark_mode_theme if self.app.dark else self.light_mode_theme
+                self.dark_mode_theme
+                if self.app.current_theme.dark
+                else self.light_mode_theme
             )
         return Text.from_ansi(self._plot.build())
 
     def _watch_light_mode_theme(self) -> None:
         """React to changes to the light mode theme."""
-        if self.auto_theme and not self.app.dark:
+        if self.auto_theme and not self.app.current_theme.dark:
             self.refresh()
 
     def _watch_dark_mode_theme(self) -> None:
         """React to changes to the dark mode theme."""
-        if self.auto_theme and self.app.dark:
+        if self.auto_theme and self.app.current_theme.dark:
             self.refresh()
 
     def _dark_mode(self) -> None:

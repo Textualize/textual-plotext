@@ -32,7 +32,7 @@ include = [
 "Bug Tracker" = "https://github.com/Textualize/textual-plotext/issues"
 
 [tool.poetry.dependencies]
-python = ">=3.7.2,<4.0"
+python = "^3.8.1"
 plotext = "^5.2.8"
 textual = ">=0.40.0"
 

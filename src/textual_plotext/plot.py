@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from typing import Any, Tuple, Union
 
+from textual.theme import BUILTIN_THEMES
 from typing_extensions import Literal, TypeAlias, get_args
 
 from plotext._dict import (
@@ -18,7 +19,6 @@ from plotext._dict import (
 )
 from plotext._utility import get_color_code
 
-from textual.app import DEFAULT_COLORS
 from textual.color import Color as TextualColor
 
 from . import plotext
@@ -317,8 +317,8 @@ _themes["textual-serious"] = _rgbify_theme(*_themes["serious"])
 _themes["textual-windows"] = _rgbify_theme(*_themes["windows"])
 
 # Now add a couple of extra themes that are Textual-specific.
-_dark = DEFAULT_COLORS["dark"].generate()
-_light = DEFAULT_COLORS["light"].generate()
+_dark = BUILTIN_THEMES["textual-dark"].to_color_system().generate()
+_light = BUILTIN_THEMES["textual-light"].to_color_system().generate()
 _themes["textual-design-dark"] = [
     "default",
     "default",
