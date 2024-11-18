@@ -6,8 +6,11 @@ from rich.text import Text
 from textual.app import RenderResult
 from textual.reactive import var
 from textual.widget import Widget
+from textual.color import Color
+from textual.theme import Theme
+from .plot import Plot, _rgbify_theme, _sequence
 
-from .plot import Plot, ThemeName
+from plotext._dict import themes as _themes
 
 
 class PlotextPlot(Widget):
@@ -34,20 +37,6 @@ class PlotextPlot(Widget):
     colours appropriate to the current mode.
     """
 
-    light_mode_theme: var[ThemeName] = var("textual-design-light")
-    """The Plotext theme to use for light mode.
-
-    Note:
-        This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
-    """
-
-    dark_mode_theme: var[ThemeName] = var("textual-design-dark")
-    """The Plotext theme to use for dark mode.
-
-    Note:
-        This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
-    """
-
     def __init__(
         self,
         *,
@@ -66,12 +55,12 @@ class PlotextPlot(Widget):
         """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
-        # We use textual-default as the default theme, as that's going to
-        # work well no matter if we're in light or dark mode.
-        self._plot.theme("textual-default")
-        # Watch the application's dark mode switch so that we can react to
+
+    def on_mount(self) -> None:
+        """Set up the plot."""
+        # Watch the application's theme switch so that we can react to
         # any request to auto-change between light and dark themes.
-        self.watch(self.app, "dark", self._dark_mode, init=False)
+        self.app.theme_changed_signal.subscribe(self, self._theme_changed)
 
     @property
     def plt(self) -> Plot:
@@ -109,25 +98,28 @@ class PlotextPlot(Widget):
         #
         # https://github.com/Textualize/textual-plotext/issues/5
         self._plot._set_size(self.size.width, self.size.height)
-        if self.auto_theme:
-            self._plot.theme(
-                self.dark_mode_theme
-                if self.app.current_theme.dark
-                else self.light_mode_theme
-            )
+        plotext_theme_name = f"textual-{self.app.theme}"
+        self._plot.theme(plotext_theme_name)
         return Text.from_ansi(self._plot.build())
 
-    def _watch_light_mode_theme(self) -> None:
-        """React to changes to the light mode theme."""
-        if self.auto_theme and not self.app.current_theme.dark:
-            self.refresh()
-
-    def _watch_dark_mode_theme(self) -> None:
-        """React to changes to the dark mode theme."""
-        if self.auto_theme and self.app.current_theme.dark:
-            self.refresh()
-
-    def _dark_mode(self) -> None:
-        """React to dark mode being toggled."""
-        if self.auto_theme:
-            self.refresh()
+    def _theme_changed(self, theme: Theme) -> None:
+        """React to the theme being changed."""
+        app_theme = self.app.theme_variables
+        plotext_theme = _rgbify_theme(
+            Color.parse(app_theme.get("surface")).rgb,
+            Color.parse(app_theme.get("surface")).rgb,
+            Color.parse(app_theme.get("foreground")).rgb,
+            "default",
+            [
+                Color.parse(app_theme.get("text-accent")).rgb,
+                Color.parse(app_theme.get("text-primary")).rgb,
+                Color.parse(app_theme.get("text-secondary")).rgb,
+                Color.parse(app_theme.get("text-success")).rgb,
+                Color.parse(app_theme.get("text-warning")).rgb,
+                Color.parse(app_theme.get("text-error")).rgb,
+            ],
+        )
+        plotext_theme_name = f"textual-{self.app.theme}"
+        _themes[plotext_theme_name] = plotext_theme
+        self._plot.theme(plotext_theme_name)
+        self.refresh()

@@ -1247,20 +1247,22 @@ name = "textual"
 version = "0.86.1"
 description = "Modern Text User Interface framework"
 optional = false
-python-versions = "<4.0.0,>=3.8.1"
-files = [
-    {file = "textual-0.86.1-py3-none-any.whl", hash = "sha256:ebc2bfd92c2f1a451c12dcbcfda002598a2fc9793d1684be83514b5fba75f915"},
-    {file = "textual-0.86.1.tar.gz", hash = "sha256:a6e68de5383415f222f26b4049c2a92ed204071fdfebe3d729f8dd373ca5f519"},
-]
+python-versions = "^3.8.1"
+files = []
+develop = true
 
 [package.dependencies]
 markdown-it-py = {version = ">=2.1.0", extras = ["linkify", "plugins"]}
 platformdirs = ">=3.6.0,<5"
 rich = ">=13.3.3"
-typing-extensions = ">=4.4.0,<5.0.0"
+typing-extensions = "^4.4.0"
 
 [package.extras]
 syntax = ["tree-sitter (>=0.20.1,<0.21.0)", "tree-sitter-languages (==1.10.2)"]
+
+[package.source]
+type = "directory"
+url = "../textual"
 
 [[package]]
 name = "textual-dev"
@@ -1560,4 +1562,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "d6fdc1a7229ffd1ab3b993af45e32941547a1f941eb37d7eec5a795089112a25"
+content-hash = "ebb30c3e9715097e679672ea513acc8a888e9cd7173d8e4a0c732b0222514a07"

@@ -34,7 +34,7 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.8.1"
 plotext = "^5.2.8"
-textual = ">=0.40.0"
+textual = {path = "../textual", develop = true}
 
 [tool.poetry.group.dev.dependencies]
 textual-dev = "*"
