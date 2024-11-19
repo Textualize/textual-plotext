@@ -52,6 +52,7 @@ class Weather(PlotextPlot):
         self._unit = "Loading..."
         self._data: list[float] = []
         self._time: list[str] = []
+        self.watch(self.app, "theme", lambda: self.call_after_refresh(self.replot))
 
     def on_mount(self) -> None:
         """Plot the data using Plotext."""
@@ -64,6 +65,7 @@ class Weather(PlotextPlot):
         self.plt.clear_data()
         self.plt.ylabel(self._unit)
         self.plt.plot(self._time, self._data, marker=self.marker)
+
         self.refresh()
 
     def update(self, data: dict[str, Any], values: str) -> None:
@@ -102,6 +104,8 @@ class TextualTowersWeatherApp(App[None]):
         ("d", "app.toggle_dark", "Toggle light/dark mode"),
         ("m", "marker", "Cycle example markers"),
         ("q", "app.quit", "Quit the example"),
+        ("[", "previous_theme", "Previous theme"),
+        ("]", "next_theme", "Next theme"),
     ]
 
     MARKERS = {
@@ -119,6 +123,9 @@ class TextualTowersWeatherApp(App[None]):
         """Initialise the application."""
         super().__init__()
         self._markers = cycle(self.MARKERS.keys())
+        self.theme_names = [
+            theme for theme in self.available_themes if theme != "textual-ansi"
+        ]
 
     def compose(self) -> ComposeResult:
         """Compose the display of the example app."""
@@ -197,6 +204,25 @@ class TextualTowersWeatherApp(App[None]):
     def action_marker(self) -> None:
         """Cycle to the next marker type."""
         self.marker = next(self._markers)
+
+    def action_next_theme(self) -> None:
+        themes = self.theme_names
+        index = themes.index(self.current_theme.name)
+        self.theme = themes[(index + 1) % len(themes)]
+        self.notify_new_theme(self.current_theme.name)
+
+    def action_previous_theme(self) -> None:
+        themes = self.theme_names
+        index = themes.index(self.current_theme.name)
+        self.theme = themes[(index - 1) % len(themes)]
+        self.notify_new_theme(self.current_theme.name)
+
+    def notify_new_theme(self, theme_name: str) -> None:
+        self.clear_notifications()
+        self.notify(
+            title="Theme updated",
+            message=f"Theme is {theme_name}.",
+        )
 
 
 if __name__ == "__main__":
