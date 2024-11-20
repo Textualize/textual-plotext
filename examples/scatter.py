@@ -1,6 +1,8 @@
 """A small self-contained example of a Plotext plot in a Textual app."""
 
+from textual import on
 from textual.app import App, ComposeResult
+from textual.events import Mount
 
 from textual_plotext import PlotextPlot
 
@@ -18,16 +20,21 @@ class ScatterApp(App[None]):
         self.theme_names = [
             theme for theme in self.available_themes if theme != "textual-ansi"
         ]
+        self.watch(self.app, "theme", lambda: self.call_after_refresh(self.replot))
 
     def compose(self) -> ComposeResult:
         """Compose the plotting widget."""
         yield PlotextPlot()
 
-    def on_mount(self) -> None:
+    @on(Mount)
+    def replot(self) -> None:
         """Set up the plot."""
         plt = self.query_one(PlotextPlot).plt
+        plt.clear_figure()
+        plt.clear_data()
         plt.title("Scatter Plot")
         plt.scatter(plt.sin())
+        self.refresh()
 
     def action_next_theme(self) -> None:
         themes = self.theme_names

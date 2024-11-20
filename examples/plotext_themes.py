@@ -36,9 +36,7 @@ class ThemeSample(PlotextPlot):
     swatch_mode: var[bool] = var(False)
     """Should we be in color swatch mode?"""
 
-    def __init__(
-        self, title: str, id: str, classes: str | None = None
-    ) -> None:  # pylint:disable=redefined-builtin
+    def __init__(self, title: str, id: str, classes: str | None = None) -> None:  # pylint:disable=redefined-builtin
         """Initialise the theme sample.
 
         Args:
@@ -102,6 +100,8 @@ class ThemeApp(App[None]):
         Binding("m", "marker", "Change markers"),
         Binding("s", "toggle_swatch", "Plot/Swatch"),
         Binding("q", "quit", "Quit"),
+        Binding("[", "previous_theme", "Previous theme"),
+        Binding("]", "next_theme", "Next theme"),
     ]
 
     marker: var[str] = var("fhd")
@@ -111,6 +111,9 @@ class ThemeApp(App[None]):
         """Initialise the application."""
         super().__init__()
         self._markers = cycle(("braille", "sd", "dot", "hd", "fhd"))
+        self.theme_names = [
+            theme for theme in self.available_themes if theme != "textual-ansi"
+        ]
 
     def compose(self) -> ComposeResult:
         """Compose the main screen."""
@@ -172,6 +175,25 @@ class ThemeApp(App[None]):
         """Toggle the samples between plotting and swatch mode."""
         for sample in self.query(ThemeSample).results():
             sample.swatch_mode = not sample.swatch_mode
+
+    def notify_new_theme(self, theme_name: str) -> None:
+        self.clear_notifications()
+        self.notify(
+            title="Theme updated",
+            message=f"Theme is {theme_name}.",
+        )
+
+    def action_next_theme(self) -> None:
+        themes = self.theme_names
+        index = themes.index(self.current_theme.name)
+        self.theme = themes[(index + 1) % len(themes)]
+        self.notify_new_theme(self.current_theme.name)
+
+    def action_previous_theme(self) -> None:
+        themes = self.theme_names
+        index = themes.index(self.current_theme.name)
+        self.theme = themes[(index - 1) % len(themes)]
+        self.notify_new_theme(self.current_theme.name)
 
 
 if __name__ == "__main__":

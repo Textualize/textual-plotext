@@ -5,7 +5,6 @@ from __future__ import annotations
 from rich.text import Text
 from textual.app import RenderResult
 from textual.reactive import reactive, var
-from textual.theme import Theme
 from textual.widget import Widget
 from textual.color import Color
 from .plot import Plot, ThemeName, _rgbify_theme
@@ -126,6 +125,12 @@ class PlotextPlot(Widget):
                 Color.parse(app_theme_variables.get("foreground")).rgb,
                 "default",
                 [
+                    Color.parse(app_theme_variables.get("text-accent")).rgb,
+                    Color.parse(app_theme_variables.get("text-primary")).rgb,
+                    Color.parse(app_theme_variables.get("text-secondary")).rgb,
+                    Color.parse(app_theme_variables.get("text-success")).rgb,
+                    Color.parse(app_theme_variables.get("text-warning")).rgb,
+                    Color.parse(app_theme_variables.get("text-error")).rgb,
                     Color.parse(app_theme_variables.get("text-accent")).rgb,
                     Color.parse(app_theme_variables.get("text-primary")).rgb,
                     Color.parse(app_theme_variables.get("text-secondary")).rgb,

@@ -25,6 +25,7 @@ from . import plotext
 from .plotext._figure import _figure_class as Figure
 
 ThemeName = Literal[
+    "auto",
     # The standard Plotext themes.
     "clear",
     "dark",
