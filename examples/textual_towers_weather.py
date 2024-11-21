@@ -65,7 +65,6 @@ class Weather(PlotextPlot):
         self.plt.clear_data()
         self.plt.ylabel(self._unit)
         self.plt.plot(self._time, self._data, marker=self.marker)
-
         self.refresh()
 
     def update(self, data: dict[str, Any], values: str) -> None:

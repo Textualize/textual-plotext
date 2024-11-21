@@ -11,7 +11,7 @@ from textual.containers import Horizontal, Vertical
 from textual.events import Mount
 from textual.reactive import var
 from textual.widgets import Header, Footer, OptionList
-from textual.widgets.option_list import Option, Separator
+from textual.widgets.option_list import Option
 
 from textual_plotext import PlotextPlot, themes
 
@@ -27,10 +27,7 @@ class ThemeSample(PlotextPlot):
     }
     """
 
-    theme: var[str] = var("clear")
-    """The theme to show."""
-
-    marker: var[str] = var("fhd")
+    marker: var[str] = var("braille")
     """The type of marker to use for the sample."""
 
     swatch_mode: var[bool] = var(False)
@@ -44,15 +41,14 @@ class ThemeSample(PlotextPlot):
             id: The ID for the widget.
         """
         super().__init__(id=id, classes=classes)
-        self.auto_theme = False
         self.border_title = title
         self._data = [self.plt.sin(phase=n / 4) for n in range(19)]
 
     @on(Mount)
     def replot(self) -> None:
         """Replot the sample."""
-        self.plt.clear_figure()
         self.plt.theme(self.theme)
+        self.plt.clear_figure()
         self.plt.title("This is the title")
         if self.swatch_mode:
             self.plt.multiple_bar(["Swatch sample"], [[1]] * 20)
@@ -111,6 +107,7 @@ class ThemeApp(App[None]):
         """Initialise the application."""
         super().__init__()
         self._markers = cycle(("braille", "sd", "dot", "hd", "fhd"))
+        self.marker = next(self._markers)
         self.theme_names = [
             theme for theme in self.available_themes if theme != "textual-ansi"
         ]
@@ -122,12 +119,9 @@ class ThemeApp(App[None]):
             yield OptionList(
                 *[
                     Option(theme.capitalize(), id=theme.lower())
-                    for theme in themes()
+                    for theme in ("auto",) + themes()
                     if not theme.startswith("textual-")
                 ],
-                Separator(),
-                Option("Textual Design Dark-Friendly", id="textual-design-dark"),
-                Option("Textual Design Light-Friendly", id="textual-design-light"),
                 id="themes",
             )
             with Vertical(id="samples"):

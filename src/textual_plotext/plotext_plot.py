@@ -1,13 +1,14 @@
 """Provides a widget for creating and displaying a Plotext plot."""
 
 from __future__ import annotations
+from typing import Literal
 
 from rich.text import Text
 from textual.app import RenderResult
-from textual.reactive import reactive, var
+from textual.reactive import reactive
 from textual.widget import Widget
 from textual.color import Color
-from .plot import Plot, ThemeName, _rgbify_theme
+from .plot import Plot, PlotextThemeName, _rgbify_theme, _sequence
 
 from plotext._dict import themes as _themes
 
@@ -22,11 +23,16 @@ class PlotextPlot(Widget):
     }
     """
 
-    theme: var[ThemeName] = reactive("auto", always_update=True)
+    theme: reactive[Literal["auto"] | PlotextThemeName] = reactive("auto")
     """The theme to use for the plot.
 
     If set to `"auto"` the theme will be dynamically generated based on the
     current theme of the Textual app.
+
+    Note that this will just alter the background and foreground colors of the
+    plot to match the current Textual theme, not the colors of the plotted graph.
+
+    If set to a specific Plotext theme name, that theme will be used.
     """
 
     def __init__(
@@ -50,7 +56,9 @@ class PlotextPlot(Widget):
 
     def on_mount(self) -> None:
         """Set up the plot."""
-        self.app.theme_changed_signal.subscribe(self, self._register_theme)
+        self.app.theme_changed_signal.subscribe(
+            self, lambda theme: self._register_theme(theme.name)
+        )
         self._register_theme(self.app.theme)
 
     @property
@@ -90,20 +98,9 @@ class PlotextPlot(Widget):
         # https://github.com/Textualize/textual-plotext/issues/5
         self._plot._set_size(self.size.width, self.size.height)
         # If the theme is set to "auto" ensure the theme is registered with Plotext.
-        self._register_theme(self.app.theme)
-        self._plot.theme(self._get_plotext_theme_name(self.app.theme))
+        plotext_theme_name = self._get_plotext_theme_name(self.app.theme)
+        self._plot.theme(plotext_theme_name)
         return Text.from_ansi(self._plot.build())
-
-    def _get_plotext_theme_name(self, app_theme_name: str) -> str:
-        if self.theme == "auto":
-            return f"textual-auto-{app_theme_name}"
-        else:
-            return self.theme
-
-    def watch_theme(self, theme: ThemeName) -> None:
-        """If the theme is 'auto' register the theme with Plotext (if not already registered)."""
-        if theme == "auto":
-            self._register_theme(self.app.theme)
 
     def _register_theme(self, app_theme_name: str) -> None:
         """Register the theme with Plotext if necessary.
@@ -113,29 +110,34 @@ class PlotextPlot(Widget):
               This will only be used if the `theme` reactive of this plot
               is set to `"auto"`.
         """
-        # When the app theme changes, register it with Plotext so that we
-        # can switch to it if required.
+        # If we're not using auto theme, we don't need to register
+        # the Textual app theme with Plotext.
+        if self.theme != "auto":
+            return
 
         plotext_theme_name = self._get_plotext_theme_name(app_theme_name)
+        app_theme_variables = self.app.theme_variables
         if plotext_theme_name not in _themes:
-            app_theme_variables = self.app.theme_variables
             _themes[plotext_theme_name] = _rgbify_theme(
                 Color.parse(app_theme_variables.get("surface")).rgb,
                 Color.parse(app_theme_variables.get("surface")).rgb,
                 Color.parse(app_theme_variables.get("foreground")).rgb,
                 "default",
-                [
-                    Color.parse(app_theme_variables.get("text-accent")).rgb,
-                    Color.parse(app_theme_variables.get("text-primary")).rgb,
-                    Color.parse(app_theme_variables.get("text-secondary")).rgb,
-                    Color.parse(app_theme_variables.get("text-success")).rgb,
-                    Color.parse(app_theme_variables.get("text-warning")).rgb,
-                    Color.parse(app_theme_variables.get("text-error")).rgb,
-                    Color.parse(app_theme_variables.get("text-accent")).rgb,
-                    Color.parse(app_theme_variables.get("text-primary")).rgb,
-                    Color.parse(app_theme_variables.get("text-secondary")).rgb,
-                    Color.parse(app_theme_variables.get("text-success")).rgb,
-                    Color.parse(app_theme_variables.get("text-warning")).rgb,
-                    Color.parse(app_theme_variables.get("text-error")).rgb,
-                ],
+                _sequence,
             )
+        self.refresh()
+
+    def _get_plotext_theme_name(self, app_theme_name: str) -> str:
+        """Get the name of the Plotext theme to use.
+
+        If the theme is set to `"auto"` the theme name will be of the form
+        `textual-auto-<app_theme_name>`. Otherwise the theme name will be the
+        Plotext theme name, which will be directly set on the plot..
+
+        Args:
+            app_theme_name: The name of the theme from the Textual app.
+        """
+        if self.theme == "auto":
+            return f"textual-auto-{app_theme_name}"
+        else:
+            return self.theme
