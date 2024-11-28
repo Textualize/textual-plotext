@@ -1,13 +1,16 @@
 """Provides a widget for creating and displaying a Plotext plot."""
 
 from __future__ import annotations
+from typing import Literal
 
 from rich.text import Text
 from textual.app import RenderResult
-from textual.reactive import var
+from textual.reactive import reactive
 from textual.widget import Widget
+from textual.color import Color
+from .plot import Plot, PlotextThemeName, _rgbify_theme, _sequence
 
-from .plot import Plot, ThemeName
+from plotext._dict import themes as _themes
 
 
 class PlotextPlot(Widget):
@@ -20,32 +23,16 @@ class PlotextPlot(Widget):
     }
     """
 
-    auto_theme: var[bool] = var(True)
-    """Should the plot automatically adjust the theme depending on light and dark mode?
+    theme: reactive[Literal["auto"] | PlotextThemeName] = reactive("auto")
+    """The theme to use for the plot.
 
-    If set to `True` the theme of the plot will be adjusted to either
-    [`light_mode_theme`][PlotextPlot.light_mode_theme] or
-    [`dark_mode_theme`][PlotextPlot.dark_mode_theme] when
-    [`App.dark`](https://textual.textualize.io/api/app/#textual.app.App.dark)
-    is changed.
+    If set to `"auto"` the theme will be dynamically generated based on the
+    current theme of the Textual app.
 
-    By default this is set to `False` and `light_mode_theme` and
-    `dark_mode_theme` are both set to the same theme, designed to take on
-    colours appropriate to the current mode.
-    """
+    Note that this will just alter the background and foreground colors of the
+    plot to match the current Textual theme, not the colors of the plotted graph.
 
-    light_mode_theme: var[ThemeName] = var("textual-design-light")
-    """The Plotext theme to use for light mode.
-
-    Note:
-        This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
-    """
-
-    dark_mode_theme: var[ThemeName] = var("textual-design-dark")
-    """The Plotext theme to use for dark mode.
-
-    Note:
-        This theme is only used when [`auto_theme`][PlotextPlot.auto_theme] is `True`.
+    If set to a specific Plotext theme name, that theme will be used.
     """
 
     def __init__(
@@ -66,12 +53,13 @@ class PlotextPlot(Widget):
         """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         self._plot = Plot()
-        # We use textual-default as the default theme, as that's going to
-        # work well no matter if we're in light or dark mode.
-        self._plot.theme("textual-default")
-        # Watch the application's dark mode switch so that we can react to
-        # any request to auto-change between light and dark themes.
-        self.watch(self.app, "dark", self._dark_mode, init=False)
+
+    def on_mount(self) -> None:
+        """Set up the plot."""
+        self.app.theme_changed_signal.subscribe(
+            self, lambda theme: self._register_theme(theme.name)
+        )
+        self._register_theme(self.app.theme)
 
     @property
     def plt(self) -> Plot:
@@ -109,23 +97,47 @@ class PlotextPlot(Widget):
         #
         # https://github.com/Textualize/textual-plotext/issues/5
         self._plot._set_size(self.size.width, self.size.height)
-        if self.auto_theme:
-            self._plot.theme(
-                self.dark_mode_theme if self.app.dark else self.light_mode_theme
-            )
+        # If the theme is set to "auto" ensure the theme is registered with Plotext.
+        plotext_theme_name = self._get_plotext_theme_name(self.app.theme)
+        self._plot.theme(plotext_theme_name)
         return Text.from_ansi(self._plot.build())
 
-    def _watch_light_mode_theme(self) -> None:
-        """React to changes to the light mode theme."""
-        if self.auto_theme and not self.app.dark:
-            self.refresh()
+    def _register_theme(self, app_theme_name: str) -> None:
+        """Register the theme with Plotext if necessary.
 
-    def _watch_dark_mode_theme(self) -> None:
-        """React to changes to the dark mode theme."""
-        if self.auto_theme and self.app.dark:
-            self.refresh()
+        Args:
+            app_theme_name: The name of the theme from the Textual app.
+              This will only be used if the `theme` reactive of this plot
+              is set to `"auto"`.
+        """
+        # If we're not using auto theme, we don't need to register
+        # the Textual app theme with Plotext.
+        if self.theme != "auto":
+            return
 
-    def _dark_mode(self) -> None:
-        """React to dark mode being toggled."""
-        if self.auto_theme:
-            self.refresh()
+        plotext_theme_name = self._get_plotext_theme_name(app_theme_name)
+        app_theme_variables = self.app.theme_variables
+        if plotext_theme_name not in _themes:
+            _themes[plotext_theme_name] = _rgbify_theme(
+                Color.parse(app_theme_variables.get("surface")).rgb,
+                Color.parse(app_theme_variables.get("surface")).rgb,
+                Color.parse(app_theme_variables.get("foreground")).rgb,
+                "default",
+                _sequence,
+            )
+        self.refresh()
+
+    def _get_plotext_theme_name(self, app_theme_name: str) -> str:
+        """Get the name of the Plotext theme to use.
+
+        If the theme is set to `"auto"` the theme name will be of the form
+        `textual-auto-<app_theme_name>`. Otherwise the theme name will be the
+        Plotext theme name, which will be directly set on the plot..
+
+        Args:
+            app_theme_name: The name of the theme from the Textual app.
+        """
+        if self.theme == "auto":
+            return f"textual-auto-{app_theme_name}"
+        else:
+            return self.theme
