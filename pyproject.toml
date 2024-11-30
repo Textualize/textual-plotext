@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "textual-plotext"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Textual widget wrapper for the Plotext plotting library"
 homepage = "https://github.com/Textualize/textual-plotext"
 repository = "https://github.com/Textualize/textual-plotext"
@@ -34,7 +34,7 @@ include = [
 [tool.poetry.dependencies]
 python = "^3.8.1"
 plotext = "^5.2.8"
-textual = "^0.86.2"
+textual = ">=0.86.2"
 
 [tool.poetry.group.dev.dependencies]
 textual-dev = "*"
