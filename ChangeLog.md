@@ -1,5 +1,11 @@
 # textual-plotext ChangeLog
 
+## [1.0.1] - 2024-11-29
+- Relax `textual` dependency to allow for newer textual versions
+
+## [1.0.0] - 2024-11-21
+- Update to use new theme-feature of `textual`
+
 ## [0.2.1] - 2023-10-25
 
 ### Fixed
